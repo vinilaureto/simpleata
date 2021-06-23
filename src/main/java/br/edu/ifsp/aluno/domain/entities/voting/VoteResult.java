@@ -1,0 +1,26 @@
+package br.edu.ifsp.aluno.domain.entities.voting;
+
+import java.util.Arrays;
+
+public enum VoteResult {
+    APPROVED ("Aprovado"),
+    REJECT ("Reprovado"),
+    DRAW ("Empate");
+
+    private String label;
+    VoteResult(String label) {
+        this.label = label;
+    }
+
+    @Override
+    public String toString() {
+        return label;
+    }
+
+    public static VoteResult toEnun(String value) {
+        return Arrays.stream(VoteResult.values())
+                .filter(c -> value.equals(c.toString()))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+}
