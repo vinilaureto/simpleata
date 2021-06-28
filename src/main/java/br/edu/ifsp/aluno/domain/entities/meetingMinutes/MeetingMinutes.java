@@ -2,7 +2,6 @@ package br.edu.ifsp.aluno.domain.entities.meetingMinutes;
 
 import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.inform.Inform;
-import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 
 import java.time.LocalDate;
@@ -19,13 +18,13 @@ public class MeetingMinutes {
     private Group group;
     private List<Inform> informs = new ArrayList<>();
     private List<Schedule> schedules = new ArrayList<>();
-    private MeetingMinuteStatus status;
+    private MeetingMinutesStatus status;
 
     public MeetingMinutes() {
-        status = MeetingMinuteStatus.PREMEETING;
+        status = MeetingMinutesStatus.PREMEETING;
     }
 
-    public MeetingMinutes(String logo, String identifier, String local, String title, LocalDate creationDate, LocalDate closingDate, Group group, List<Inform> informs, List<Schedule> schedules, MeetingMinuteStatus status) {
+    public MeetingMinutes(String logo, String identifier, String local, String title, LocalDate creationDate, LocalDate closingDate, Group group, List<Inform> informs, List<Schedule> schedules, MeetingMinutesStatus status) {
         this.logo = logo;
         this.identifier = identifier;
         this.local = local;
@@ -39,11 +38,11 @@ public class MeetingMinutes {
     }
 
     public void closeMeetingMinute() {
-        status = MeetingMinuteStatus.CLOSED;
+        status = MeetingMinutesStatus.CLOSED;
     }
 
     public void startMeetingMinute() {
-        status = MeetingMinuteStatus.OPENED;
+        status = MeetingMinutesStatus.OPENED;
     }
 
     public void addInform(Inform inform) {
@@ -114,7 +113,7 @@ public class MeetingMinutes {
         return schedules;
     }
 
-    public MeetingMinuteStatus getStatus() {
+    public MeetingMinutesStatus getStatus() {
         return status;
     }
 
