@@ -20,6 +20,20 @@ public class FindParticipantUseCase {
         return participantDAO.findOne(email);
     }
 
+    public List<Participant> findByName(String name) {
+        if (Validator.isNullOrEmpty(name)) {
+            throw new IllegalArgumentException("Name can not be null.");
+        }
+        return participantDAO.findOneByName(name);
+    }
+
+    public List<Participant> findByTitle(String title) {
+        if (Validator.isNullOrEmpty(title)) {
+            throw new IllegalArgumentException("Title can not be null.");
+        }
+        return participantDAO.findOneByName(title);
+    }
+
     public List<Participant> findAll() {
         return participantDAO.findAll();
     }

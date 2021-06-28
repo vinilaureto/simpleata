@@ -5,10 +5,10 @@ import br.edu.ifsp.aluno.domain.usecases.utils.EntityAlreadyExistsException;
 import br.edu.ifsp.aluno.domain.usecases.utils.Notification;
 import br.edu.ifsp.aluno.domain.usecases.utils.Validator;
 
-public class InsertParticipantUseCase {
+public class CreateParticipantUseCase {
     private ParticipantDAO participantDAO;
 
-    public InsertParticipantUseCase(ParticipantDAO participantDAO) {
+    public CreateParticipantUseCase(ParticipantDAO participantDAO) {
         this.participantDAO = participantDAO;
     }
 
