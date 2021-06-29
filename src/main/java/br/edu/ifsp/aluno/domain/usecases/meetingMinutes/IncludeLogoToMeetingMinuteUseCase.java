@@ -2,10 +2,10 @@ package br.edu.ifsp.aluno.domain.usecases.meetingMinutes;
 
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 
-public class IncludeLogoMeetingMinuteUseCase {
+public class IncludeLogoToMeetingMinuteUseCase {
     private UpdateMeetingMinutesUseCase updateMeetingMinutesUseCase;
 
-    public IncludeLogoMeetingMinuteUseCase(UpdateMeetingMinutesUseCase updateMeetingMinutesUseCase) {
+    public IncludeLogoToMeetingMinuteUseCase(UpdateMeetingMinutesUseCase updateMeetingMinutesUseCase) {
         this.updateMeetingMinutesUseCase = updateMeetingMinutesUseCase;
     }
 

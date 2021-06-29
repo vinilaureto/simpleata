@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Voting {
+    private Integer id;
     private VoteResult result;
     private List<Vote> votes = new ArrayList<>();
 
@@ -22,8 +23,7 @@ public class Voting {
         votes.add(vote);
     }
 
-    public void registerVote(VoteValue value, Participant participant) {
-        Vote vote = new Vote(value, participant);
+    public void registerVote(Vote vote) {
         votes.add(vote);
     }
 
@@ -52,6 +52,14 @@ public class Voting {
 
     public List<Vote> getVotes() {
         return votes;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
