@@ -3,6 +3,7 @@ package br.edu.ifsp.aluno.domain.entities.comment;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 
 public class Comment {
+    private Integer id;
     private Participant participant;
     private String message;
 
@@ -29,6 +30,14 @@ public class Comment {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override

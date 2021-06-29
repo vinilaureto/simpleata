@@ -14,7 +14,7 @@ public class InMemoryVotingDAO implements VotingDAO {
     public Integer insert(Voting voting) {
         Integer id = voting.getId();
         db.put(id, voting);
-        return null;
+        return id;
     }
 
     @Override
