@@ -18,15 +18,11 @@ public class RemoveParticipantFromGroupUseCase {
         this.updateGroupUseCase = updateGroupUseCase;
     }
 
-    public boolean removeParticipantFromGroup(Participant participant, Group group) throws Exception {
+    public boolean removeParticipantFromGroup(Participant participant, Group group) {
         Optional<Group> savedGroup = findGroupUseCase.findOne(group.getName());
 
         if (savedGroup.isEmpty()) {
             throw new EntityNotFoundException("Group not found");
-        }
-
-        if (savedGroup.get().getParticipants().isEmpty()) {
-            throw new Exception("Group is already empty");
         }
 
         if (findParticipantUseCase.findOne(participant.getEmail()).isEmpty()) {
