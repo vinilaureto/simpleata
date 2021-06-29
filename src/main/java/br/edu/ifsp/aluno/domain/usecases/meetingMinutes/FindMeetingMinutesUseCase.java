@@ -34,14 +34,14 @@ public class FindMeetingMinutesUseCase {
         return meetingMinutesDAO.findByGroup(group);
     }
 
-    public List<MeetingMinutes> findByParticipan(Participant participant) {
+    public List<MeetingMinutes> findByParticipant(Participant participant) {
         Validator<Participant> validator = new ParticipantInputRequestValidator();
         Notification notification = validator.validate(participant);
 
         if (notification.hasErrors()) {
             throw new IllegalArgumentException(notification.errorMessage());
         }
-        return meetingMinutesDAO.findByParticipan(participant);
+        return meetingMinutesDAO.findByParticipant(participant);
     }
 
     public Optional<MeetingMinutes> findByIdentifier(String identifier) {

@@ -11,11 +11,13 @@ public class RegisterVoteToVoting {
     private FindVotingUseCase findVotingUseCase;
     private UpdateVotingUseCase updateVotingUseCase;
 
-    public RegisterVoteToVoting(FindVoteUseCase findVoteUseCase) {
+    public RegisterVoteToVoting(FindVoteUseCase findVoteUseCase, FindVotingUseCase findVotingUseCase, UpdateVotingUseCase updateVotingUseCase) {
         this.findVoteUseCase = findVoteUseCase;
+        this.findVotingUseCase = findVotingUseCase;
+        this.updateVotingUseCase = updateVotingUseCase;
     }
 
-    public boolean registerVoteToVoting(Vote vote, Voting voting, Participant participant) {
+    public boolean registerVoteToVoting(Vote vote, Voting voting) {
         if (findVoteUseCase.findOne(vote.getId()).isEmpty()) {
             throw new EntityNotFoundException("Vote not found");
         }
