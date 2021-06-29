@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface MeetingMinutesDAO extends DAO<MeetingMinutes, String> {
     List<MeetingMinutes> findByGroup(Group group);
 
-    List<MeetingMinutes> findByParticipan(Participant participant);
+    List<MeetingMinutes> findByParticipant(Participant participant);
 
     Optional<MeetingMinutes> findByIdentifier(String identifier);
 }
