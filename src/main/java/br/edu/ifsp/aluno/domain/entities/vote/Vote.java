@@ -4,6 +4,7 @@ package br.edu.ifsp.aluno.domain.entities.vote;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 
 public class Vote {
+    private Integer id;
     private Participant participant;
     private VoteValue value;
 
@@ -30,6 +31,14 @@ public class Vote {
 
     public void setValue(VoteValue value) {
         this.value = value;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

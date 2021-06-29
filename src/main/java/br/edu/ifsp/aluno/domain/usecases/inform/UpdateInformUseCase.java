@@ -1,18 +1,21 @@
 package br.edu.ifsp.aluno.domain.usecases.inform;
 
 import br.edu.ifsp.aluno.domain.entities.inform.Inform;
-import br.edu.ifsp.aluno.domain.usecases.utils.EntityAlreadyExistsException;
+import br.edu.ifsp.aluno.domain.entities.participant.Participant;
+import br.edu.ifsp.aluno.domain.usecases.participant.ParticipantDAO;
+import br.edu.ifsp.aluno.domain.usecases.participant.ParticipantInputRequestValidator;
+import br.edu.ifsp.aluno.domain.usecases.utils.EntityNotFoundException;
 import br.edu.ifsp.aluno.domain.usecases.utils.Notification;
 import br.edu.ifsp.aluno.domain.usecases.utils.Validator;
 
-public class CreateInformUseCase {
+public class UpdateInformUseCase {
     private InformDAO informDAO;
 
-    public CreateInformUseCase(InformDAO informDAO) {
+    public UpdateInformUseCase(InformDAO informDAO) {
         this.informDAO = informDAO;
     }
 
-    public String insert(Inform inform) {
+    public boolean update(Inform inform) {
         Validator<Inform> validator = new InformInputRequestValidator();
         Notification notification = validator.validate(inform);
 
@@ -21,10 +24,10 @@ public class CreateInformUseCase {
         }
 
         String title = inform.getTitle();
-        if (informDAO.findOne(title).isPresent()) {
-            throw new EntityAlreadyExistsException("This inform already exists.");
+        if (informDAO.findOne(title).isEmpty()) {
+            throw new EntityNotFoundException("Inform not found.");
         }
 
-        return informDAO.insert(inform);
+        return informDAO.update(inform);
     }
 }
