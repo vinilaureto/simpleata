@@ -4,10 +4,10 @@ import br.edu.ifsp.aluno.domain.entities.vote.Vote;
 import br.edu.ifsp.aluno.domain.usecases.utils.Notification;
 import br.edu.ifsp.aluno.domain.usecases.utils.Validator;
 
-public class CreateVotingUseCase {
+public class CreateVoteUseCase {
     private VoteDAO voteDAO;
 
-    public CreateVotingUseCase(VoteDAO voteDAO) {
+    public CreateVoteUseCase(VoteDAO voteDAO) {
         this.voteDAO = voteDAO;
     }
 
