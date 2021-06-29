@@ -12,7 +12,7 @@ public class InMemoryVoteDAO implements VoteDAO {
     public Integer insert(Vote vote) {
         Integer id = vote.getId();
         db.put(id, vote);
-        return null;
+        return id;
     }
 
     @Override
