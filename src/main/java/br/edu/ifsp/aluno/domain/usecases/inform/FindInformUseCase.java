@@ -13,11 +13,11 @@ public class FindInformUseCase {
         this.informDAO = informDAO;
     }
 
-    public Optional<Inform> findOne(String title) {
-        if (Validator.isNullOrEmpty(title)) {
-            throw new IllegalArgumentException("Inform can not be null.");
+    public Optional<Inform> findOne(Integer id) {
+        if (id == 0) {
+            throw new IllegalArgumentException("Inform's ID can not be 0.");
         }
-        return informDAO.findOne(title);
+        return informDAO.findOne(id);
     }
 
     public List<Inform> findAll() {

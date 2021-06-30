@@ -25,13 +25,13 @@ public class InMemoryParticipantDAO implements ParticipantDAO {
     }
 
     @Override
-    public List<Participant> findOneByName(String name) {
+    public List<Participant> findByName(String name) {
         return (List<Participant>) db.values().stream()
                 .filter(participant -> participant.getName().equals(name));
     }
 
     @Override
-    public List<Participant> findOneByTitle(String title) {
+    public List<Participant> findByTitle(String title) {
         return (List<Participant>) db.values().stream()
                 .filter(participant -> participant.getTitle().equals(title));
     }

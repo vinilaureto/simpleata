@@ -23,8 +23,8 @@ public class UpdateInformUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
         }
 
-        String title = inform.getTitle();
-        if (informDAO.findOne(title).isEmpty()) {
+        Integer id = inform.getId();
+        if (informDAO.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Inform not found.");
         }
 

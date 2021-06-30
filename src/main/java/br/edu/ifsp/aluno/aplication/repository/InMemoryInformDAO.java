@@ -6,19 +6,21 @@ import br.edu.ifsp.aluno.domain.usecases.inform.InformDAO;
 import java.util.*;
 
 public class InMemoryInformDAO implements InformDAO {
-    private static final Map<String, Inform> db = new LinkedHashMap<>();
+    private static final Map<Integer, Inform> db = new LinkedHashMap<>();
+    private static int informIdCounter;
 
     @Override
-    public String insert(Inform inform) {
-        String title = inform.getTitle();
-        db.put(title, inform);
-        return null;
+    public Integer insert(Inform inform) {
+        informIdCounter++;
+        inform.setId(informIdCounter);
+        db.put(informIdCounter, inform);
+        return informIdCounter;
     }
 
     @Override
-    public Optional<Inform> findOne(String title) {
-        if (db.containsKey(title)) {
-            return Optional.of(db.get(title));
+    public Optional<Inform> findOne(Integer id) {
+        if (db.containsKey(id)) {
+            return Optional.of(db.get(id));
         }
         return Optional.empty();
     }
@@ -30,18 +32,18 @@ public class InMemoryInformDAO implements InformDAO {
 
     @Override
     public boolean update(Inform inform) {
-        String title = inform.getTitle();
-        if (db.containsKey(title)) {
-            db.replace(title, inform);
+        Integer id = inform.getId();
+        if (db.containsKey(id)) {
+            db.replace(id, inform);
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean deleteByKey(String title) {
-        if (db.containsKey(title)) {
-            db.remove(title);
+    public boolean deleteByKey(Integer id) {
+        if (db.containsKey(id)) {
+            db.remove(id);
             return true;
         }
         return false;
@@ -49,6 +51,6 @@ public class InMemoryInformDAO implements InformDAO {
 
     @Override
     public boolean delete(Inform inform) {
-        return deleteByKey(inform.getTitle());
+        return deleteByKey(inform.getId());
     }
 }

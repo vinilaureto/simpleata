@@ -1,7 +1,9 @@
 package br.edu.ifsp.aluno.aplication.main;
 
 import br.edu.ifsp.aluno.aplication.repository.*;
+import br.edu.ifsp.aluno.domain.entities.comment.Comment;
 import br.edu.ifsp.aluno.domain.entities.group.Group;
+import br.edu.ifsp.aluno.domain.entities.inform.Inform;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.usecases.comment.*;
@@ -12,6 +14,8 @@ import br.edu.ifsp.aluno.domain.usecases.participant.*;
 import br.edu.ifsp.aluno.domain.usecases.schedule.*;
 import br.edu.ifsp.aluno.domain.usecases.vote.*;
 import br.edu.ifsp.aluno.domain.usecases.voting.*;
+
+import java.time.LocalDate;
 
 public class Main {
     private static CreateParticipantUseCase createParticipantUseCase;
@@ -78,12 +82,12 @@ public class Main {
         createParticipantUseCase.insert(participant2); // ok
         createParticipantUseCase.insert(participant3); // ok
 
-        System.out.println(findParticipantUseCase.findOne("joao@gmail.com").toString()); // ok
+//        System.out.println(findParticipantUseCase.findOne("joao@gmail.com").toString()); // ok
 
         deleteParticipantUseCase.delete(participant2); // ok
         participant3.setName("JULIO");
         updateParticipantUseCase.update(participant3); // ok
-        System.out.println(findParticipantUseCase.findAll().toString()); // ok
+//        System.out.println(findParticipantUseCase.findAll().toString()); // ok
 
 
         // TESTES COM GRUPOS
@@ -92,26 +96,78 @@ public class Main {
 
         System.out.println(findGroupUseCase.findOne("Grupo legal").toString()); // ok
         addParticipantToGroupUseCase.addParticipantToGroup(participant1, group1); // ok
-        //addParticipantToGroupUseCase.addParticipantToGroup(participant2, group1); // ok - dispara a excessão certa
+        //addParticipantToGroupUseCase.addParticipantToGroup(participant2, group1); // ok - dispara a exceção certa
         addParticipantToGroupUseCase.addParticipantToGroup(participant3, group1); // ok
         removeParticipantFromGroupUseCase.removeParticipantFromGroup(participant3, group1); // ok
         System.out.println(findGroupUseCase.findOne("Grupo legal").toString()); // ok
 
+        Group group2 = new Group("Grupo bacana");
+        createGroupUseCase.insert(group2);
+        addParticipantToGroupUseCase.addParticipantToGroup(participant1, group2);
+        System.out.println(findGroupUseCase.findAll());
 
         // TESTES COM ATA
         MeetingMinutes meetingMinutes1 = new MeetingMinutes();
-        meetingMinutes1.setTitle("Meeting1");
-        meetingMinutes1.setIdentifier("2021/01");
+        meetingMinutes1.setGroup(group1);
+        meetingMinutes1.setTitle("G1Meeting1");
+        meetingMinutes1.setCreationDate(LocalDate.now());
         createMeetingMinutesUseCase.insert(meetingMinutes1); // ok
+        MeetingMinutes meetingMinutes2 = new MeetingMinutes();
+        meetingMinutes2.setGroup(group2);
+        meetingMinutes2.setTitle("G2Meeting1");
+        meetingMinutes2.setCreationDate(LocalDate.now());
+        createMeetingMinutesUseCase.insert(meetingMinutes2);
+        MeetingMinutes meetingMinutes3 = new MeetingMinutes();
+        meetingMinutes3.setGroup(group2);
+        meetingMinutes3.setTitle("G2Meeting2");
+        meetingMinutes3.setCreationDate(LocalDate.now());
+        createMeetingMinutesUseCase.insert(meetingMinutes3);
+        //meetingMinutes1.setIdentifier("2021/01");
         includeLogoToMeetingMinuteUseCase.includeLogo("Logo bonito", meetingMinutes1); // ok
-        System.out.println(findMeetingMinutesUseCase.findOne("Meeting1").toString()); // ok
+        System.out.println(findMeetingMinutesUseCase.findOne("G1Meeting1").toString()); // ok
+        System.out.println("Todas atas G2: " + findMeetingMinutesUseCase.findByGroup(group2));
 
-        // registerMeetingMinutesToGroup.registerMeetingMinutesToGroup(meetingMinutes1, group1); // verificar aqui
+
+        // registerMeetingMinutesToGroup.registerMeetingMinutesToGroup(meetingMinutes1, group1); //
         //System.out.println(findGroupUseCase.findOne("Grupo legal"));
 
-        
+        // TESTES COM CASOS DE USOS DOS COMENTÁRIOS OK
+//        Comment commentError1 = new Comment();
+//        createCommentUseCase.insert(commentError1);
+//        Comment commentError2 = new Comment(participant3, "");
+//        createCommentUseCase.insert(commentError2);
+        Comment comment1 = new Comment(participant1, "Comentário do participante 1.");
+        createCommentUseCase.insert(comment1);
+        System.out.println(findCommentUseCase.findOne(1));
+        System.out.println(findCommentUseCase.findOne(2));
+        Comment comment2 = new Comment(participant2, "Comentário do participante 2.");
+        createCommentUseCase.insert(comment2);
+        comment1.setMessage("Mensagem atualizada.");
+        updateCommentUseCase.update(comment1);
+        System.out.println(findCommentUseCase.findAll());
+        deleteCommentUseCase.delete(comment1);
+        deleteCommentUseCase.delete(2);
+        System.out.println(findCommentUseCase.findAll());
 
-
+        // TESTES COM CASOS DE USOS DOS INFORMES OK
+//        Inform informError1 = new Inform();
+//        createInformUseCase.insert(informError1);
+//        Inform informError2 = new Inform("", "Descrição");
+//        createInformUseCase.insert(informError2);
+//        Inform informError3 = new Inform("Título", "");
+//        createInformUseCase.insert(informError3);
+        Inform inform1 = new Inform("Título 1", "Descrição 1.");
+        createInformUseCase.insert(inform1);
+        System.out.println(findInformUseCase.findOne(1));
+        System.out.println(findInformUseCase.findOne(2));
+        Inform inform2 = new Inform("Título 2", "Descrição 2.");
+        createInformUseCase.insert(inform2);
+        inform1.setTitle("Novo Título");
+        updateInformUseCase.update(inform1);
+        System.out.println(findInformUseCase.findAll());
+        deleteInformUseCase.delete(1);
+        deleteInformUseCase.delete(inform2);
+        System.out.println(findInformUseCase.findAll());
 
 
     }
@@ -141,7 +197,7 @@ public class Main {
                 findGroupUseCase,
                 updateGroupUseCase);
 
-        MeetingMinutesDAO meetingMinutesDAO = new InMemorymeetingMinutesDAO();
+        MeetingMinutesDAO meetingMinutesDAO = new InMemoryMeetingMinutesDAO();
         createMeetingMinutesUseCase = new CreateMeetingMinutesUseCase(meetingMinutesDAO);
         findMeetingMinutesUseCase = new FindMeetingMinutesUseCase(meetingMinutesDAO);
         deleteMeetingMinuteUseCase = new DeleteMeetingMinuteUseCase(meetingMinutesDAO);

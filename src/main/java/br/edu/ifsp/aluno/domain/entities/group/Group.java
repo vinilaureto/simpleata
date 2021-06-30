@@ -3,8 +3,11 @@ package br.edu.ifsp.aluno.domain.entities.group;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Group {
     private String name;
@@ -49,12 +52,27 @@ public class Group {
         return participants;
     }
 
+    public List<MeetingMinutes> getMeetingMinutesList() {
+        return meetingMinutesList;
+    }
+
+    public Integer getTotalMeetingMinutesOfAYear(MeetingMinutes meetingMinutes) {
+        Integer count = 0;
+        for (MeetingMinutes mt: meetingMinutesList) {
+            if (mt.getCreationDate().getYear() == meetingMinutes.getCreationDate().getYear()) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
     @Override
     public String toString() {
         return "Group{" +
                 "name='" + name + '\'' +
                 ", participants=" + participants +
-                ", meetingMinutesList=" + meetingMinutesList +
+                //", meetingMinutesList=" + meetingMinutesList +
                 '}';
     }
 }

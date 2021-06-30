@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.domain.entities.inform;
 
 public class Inform {
+    private Integer id;
     private String title;
     private String description;
 
@@ -11,6 +12,10 @@ public class Inform {
         this.title = title;
         this.description = description;
     }
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
 
     public String getTitle() {
         return title;
@@ -31,7 +36,8 @@ public class Inform {
     @Override
     public String toString() {
         return "Inform{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

@@ -12,7 +12,7 @@ public class CreateInformUseCase {
         this.informDAO = informDAO;
     }
 
-    public String insert(Inform inform) {
+    public Integer insert(Inform inform) {
         Validator<Inform> validator = new InformInputRequestValidator();
         Notification notification = validator.validate(inform);
 
@@ -20,7 +20,7 @@ public class CreateInformUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
         }
 
-        String title = inform.getTitle();
+        Integer title = inform.getId();
         if (informDAO.findOne(title).isPresent()) {
             throw new EntityAlreadyExistsException("This inform already exists.");
         }

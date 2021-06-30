@@ -19,7 +19,7 @@ public class DeleteCommentUseCase {
 
     public boolean delete(Comment comment) {
         if (comment == null || commentDAO.findOne(comment.getId()).isEmpty()) {
-            throw new EntityNotFoundException("Schedule not found.");
+            throw new EntityNotFoundException("Comment not found.");
         }
         return commentDAO.delete(comment);
     }
