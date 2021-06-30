@@ -7,12 +7,14 @@ import java.util.*;
 
 public class InMemoryCommentDAO implements CommentDAO {
     private static final Map<Integer, Comment> db = new LinkedHashMap<>();
+    private static int commentIdCounter;
 
     @Override
     public Integer insert(Comment comment) {
-        Integer id = comment.getId();
-        db.put(id, comment);
-        return id;
+        commentIdCounter++;
+        comment.setId(commentIdCounter);
+        db.put(commentIdCounter, comment);
+        return commentIdCounter;
     }
 
     @Override

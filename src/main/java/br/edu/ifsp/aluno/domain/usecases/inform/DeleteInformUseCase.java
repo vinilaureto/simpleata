@@ -7,19 +7,19 @@ public class DeleteInformUseCase {
     private InformDAO informDao;
 
     public DeleteInformUseCase(InformDAO informDao) {
-        this.informDao = DeleteInformUseCase.this.informDao;
+        this.informDao = informDao;
     }
 
-    public boolean delete(String title) {
-        if (title == null || informDao.findOne(title).isEmpty()) {
+    public boolean delete(Integer id) {
+        if (id == null || informDao.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Inform not found.");
         }
-        return informDao.deleteByKey(title);
+        return informDao.deleteByKey(id);
     }
 
     public boolean delete(Inform inform) {
-        if (inform == null || informDao.findOne(inform.getTitle()).isEmpty()) {
-            throw new EntityNotFoundException("Participant not found.");
+        if (inform == null || informDao.findOne(inform.getId()).isEmpty()) {
+            throw new EntityNotFoundException("Inform not found.");
         }
         return informDao.delete(inform);
     }

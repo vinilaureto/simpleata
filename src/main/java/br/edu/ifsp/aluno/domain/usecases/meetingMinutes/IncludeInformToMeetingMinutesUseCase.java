@@ -17,7 +17,7 @@ public class IncludeInformToMeetingMinutesUseCase {
     }
 
     public boolean includeInformToMeetingMinutes(Inform inform, MeetingMinutes meetingMinutes) {
-        if (findInformUseCase.findOne(inform.getTitle()).isEmpty()) {
+        if (findInformUseCase.findOne(inform.getId()).isEmpty()) {
             throw new EntityNotFoundException("Inform not found");
         }
 

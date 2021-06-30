@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.domain.usecases.meetingMinutes;
 
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
+import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutesStatus;
 import br.edu.ifsp.aluno.domain.usecases.utils.EntityNotFoundException;
 import br.edu.ifsp.aluno.domain.usecases.utils.Notification;
 import br.edu.ifsp.aluno.domain.usecases.utils.Validator;
@@ -20,11 +21,14 @@ public class UpdateMeetingMinutesUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
         }
 
+        if (meetingMinutes.getStatus() == MeetingMinutesStatus.CLOSED) {
+            throw new IllegalArgumentException("A closed meeting minutes can not be updated.");
+        }
+
         String title = meetingMinutes.getTitle();
         if (meetingMinutesDAO.findOne(title).isEmpty()) {
             throw new EntityNotFoundException("Meeting minutes not found");
         }
-        // todo: Precisa verificar se a ata do banco tem status diferente de CLOSED
 
         return meetingMinutesDAO.update(meetingMinutes);
     }

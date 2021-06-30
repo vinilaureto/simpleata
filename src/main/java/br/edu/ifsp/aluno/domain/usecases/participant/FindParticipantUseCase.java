@@ -24,14 +24,14 @@ public class FindParticipantUseCase {
         if (Validator.isNullOrEmpty(name)) {
             throw new IllegalArgumentException("Name can not be null.");
         }
-        return participantDAO.findOneByName(name);
+        return participantDAO.findByName(name);
     }
 
     public List<Participant> findByTitle(String title) {
         if (Validator.isNullOrEmpty(title)) {
             throw new IllegalArgumentException("Title can not be null.");
         }
-        return participantDAO.findOneByName(title);
+        return participantDAO.findByTitle(title);
     }
 
     public List<Participant> findAll() {

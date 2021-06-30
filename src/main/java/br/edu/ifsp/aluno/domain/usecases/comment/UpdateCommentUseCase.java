@@ -22,7 +22,7 @@ public class UpdateCommentUseCase {
 
         Integer id = comment.getId();
         if (commentDAO.findOne(id).isEmpty()) {
-            throw new EntityNotFoundException("Voting not found.");
+            throw new EntityNotFoundException("Comment not found.");
         }
 
         return commentDAO.update(comment);

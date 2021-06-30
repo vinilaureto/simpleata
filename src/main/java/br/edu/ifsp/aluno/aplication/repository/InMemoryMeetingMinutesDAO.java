@@ -6,15 +6,27 @@ import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.usecases.meetingMinutes.MeetingMinutesDAO;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class InMemorymeetingMinutesDAO implements MeetingMinutesDAO {
+public class InMemoryMeetingMinutesDAO implements MeetingMinutesDAO {
     private static final Map<String, MeetingMinutes> db = new LinkedHashMap<>();
 
     @Override
     public String insert(MeetingMinutes meetingMinutes) {
-        String title = meetingMinutes.getTitle();
-        db.put(title, meetingMinutes);
-        return title;
+        meetingMinutes.getGroup().addMeetingMinutes(meetingMinutes);
+        String meetingMinutesId = setMeetingMinutesId(meetingMinutes);
+        db.put(meetingMinutes.getTitle(), meetingMinutes);
+        meetingMinutes.setIdentifier(meetingMinutesId);
+
+        return meetingMinutesId;
+    }
+
+    private String setMeetingMinutesId(MeetingMinutes meetingMinutes) {
+        String meetingMinutesId = meetingMinutes.getGroup().getTotalMeetingMinutesOfAYear(meetingMinutes).toString()
+                + "/"
+                + meetingMinutes.getCreationDate().getYear();
+
+        return meetingMinutesId;
     }
 
     @Override
@@ -27,13 +39,24 @@ public class InMemorymeetingMinutesDAO implements MeetingMinutesDAO {
 
     @Override
     public List<MeetingMinutes> findByGroup(Group group) {
-        // Implementação pendente
-        return null;
+        return new ArrayList<>(db.values().stream()
+                .filter(m -> m.getGroup().equals(group))
+                .collect(Collectors.toList())
+        );
     }
 
     @Override
     public List<MeetingMinutes> findByParticipant(Participant participant) {
-        // Implementação pendente
+        /*ArrayList<MeetingMinutes> resolveMeetingMinutes = new ArrayList<>();
+        db.values().stream().map(m -> {
+            ArrayList<Participant> participants = new ArrayList<>(m.getGroup().getParticipants());
+            if (participants.contains(participant)) {
+                resolveMeetingMinutes.add(m);
+            }
+            return null;
+        });
+        return resolveMeetingMinutes;*/
+        //todo: Implementar
         return null;
     }
 

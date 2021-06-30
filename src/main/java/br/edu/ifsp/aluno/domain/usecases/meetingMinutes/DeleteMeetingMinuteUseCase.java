@@ -36,5 +36,5 @@ public class DeleteMeetingMinuteUseCase {
         return meetingMinutesDAO.delete(meetingMinutes);
     }
 
-    // todo: esse use case esta um pouco confuso em relação ao status da ata
+    //  esse use case esta um pouco confuso em relação ao status da ata
 }

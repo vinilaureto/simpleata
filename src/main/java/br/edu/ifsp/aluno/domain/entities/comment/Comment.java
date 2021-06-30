@@ -7,6 +7,9 @@ public class Comment {
     private Participant participant;
     private String message;
 
+    public Comment() {
+    }
+
     public Comment(Participant participant, String message) {
         this.participant = participant;
         this.message = message;
@@ -43,7 +46,8 @@ public class Comment {
     @Override
     public String toString() {
         return "Comment{" +
-                "participant=" + participant +
+                "id=" + id +
+                ", participant=" + participant +
                 ", message='" + message + '\'' +
                 '}';
     }

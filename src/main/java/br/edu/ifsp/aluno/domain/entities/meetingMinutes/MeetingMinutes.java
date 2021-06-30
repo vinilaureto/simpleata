@@ -101,6 +101,8 @@ public class MeetingMinutes {
         this.closingDate = closingDate;
     }
 
+    public void setGroup(Group group) { this.group = group; }
+
     public Group getGroup() {
         return group;
     }
