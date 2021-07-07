@@ -1,4 +1,4 @@
-package br.edu.ifsp.aluno.aplication.repository;
+package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.usecases.participant.ParticipantDAO;

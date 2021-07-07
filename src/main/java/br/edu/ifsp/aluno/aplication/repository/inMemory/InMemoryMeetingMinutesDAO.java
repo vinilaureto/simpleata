@@ -1,4 +1,4 @@
-package br.edu.ifsp.aluno.aplication.repository;
+package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
 import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
@@ -47,17 +47,10 @@ public class InMemoryMeetingMinutesDAO implements MeetingMinutesDAO {
 
     @Override
     public List<MeetingMinutes> findByParticipant(Participant participant) {
-        /*ArrayList<MeetingMinutes> resolveMeetingMinutes = new ArrayList<>();
-        db.values().stream().map(m -> {
-            ArrayList<Participant> participants = new ArrayList<>(m.getGroup().getParticipants());
-            if (participants.contains(participant)) {
-                resolveMeetingMinutes.add(m);
-            }
-            return null;
-        });
-        return resolveMeetingMinutes;*/
-        //todo: Implementar
-        return null;
+        return new ArrayList<>(db.values().stream()
+                .filter(m -> m.getGroup().getParticipants().iterator().next().equals(participant))
+                .collect(Collectors.toList())
+        );
     }
 
     @Override

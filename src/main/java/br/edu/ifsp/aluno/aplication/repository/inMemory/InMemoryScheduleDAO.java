@@ -1,4 +1,4 @@
-package br.edu.ifsp.aluno.aplication.repository;
+package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.usecases.schedule.ScheduleDAO;
@@ -12,7 +12,7 @@ public class InMemoryScheduleDAO implements ScheduleDAO {
     public String insert(Schedule schedule) {
         String topic = schedule.getTopic();
         db.put(topic, schedule);
-        return null;
+        return topic;
     }
 
     @Override
