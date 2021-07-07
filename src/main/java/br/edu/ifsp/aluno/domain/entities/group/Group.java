@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Group {
     private String name;
@@ -69,10 +70,9 @@ public class Group {
 
     @Override
     public String toString() {
-        return "Group{" +
-                "name='" + name + '\'' +
-                ", participants=" + participants +
-                //", meetingMinutesList=" + meetingMinutesList +
-                '}';
+        return "\n Group " + name
+                + "\n\t Participantes:"
+                + "\t\t" + participants.stream().map(p -> p.toString()).collect(Collectors.joining("\n\t\t"));
+
     }
 }

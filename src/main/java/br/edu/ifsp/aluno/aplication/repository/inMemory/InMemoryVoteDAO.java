@@ -1,24 +1,22 @@
-package br.edu.ifsp.aluno.aplication.repository;
+package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
 import br.edu.ifsp.aluno.domain.entities.vote.Vote;
-import br.edu.ifsp.aluno.domain.entities.voting.Voting;
 import br.edu.ifsp.aluno.domain.usecases.vote.VoteDAO;
-import br.edu.ifsp.aluno.domain.usecases.voting.VotingDAO;
 
 import java.util.*;
 
-public class InMemoryVotingDAO implements VotingDAO {
-    private static final Map<Integer, Voting> db = new LinkedHashMap<>();
+public class InMemoryVoteDAO implements VoteDAO {
+    private static final Map<Integer, Vote> db = new LinkedHashMap<>();
 
     @Override
-    public Integer insert(Voting voting) {
-        Integer id = voting.getId();
-        db.put(id, voting);
+    public Integer insert(Vote vote) {
+        Integer id = vote.getId();
+        db.put(id, vote);
         return id;
     }
 
     @Override
-    public Optional<Voting> findOne(Integer id) {
+    public Optional<Vote> findOne(Integer id) {
         if (db.containsKey(id)) {
             return Optional.of(db.get(id));
         }
@@ -26,15 +24,15 @@ public class InMemoryVotingDAO implements VotingDAO {
     }
 
     @Override
-    public List<Voting> findAll() {
+    public List<Vote> findAll() {
         return new ArrayList<>(db.values());
     }
 
     @Override
-    public boolean update(Voting voting) {
-        Integer id = voting.getId();
+    public boolean update(Vote vote) {
+        Integer id = vote.getId();
         if (db.containsKey(id)) {
-            db.replace(id, voting);
+            db.replace(id, vote);
             return true;
         }
         return false;
@@ -50,7 +48,7 @@ public class InMemoryVotingDAO implements VotingDAO {
     }
 
     @Override
-    public boolean delete(Voting voting) {
-        return deleteByKey(voting.getId());
+    public boolean delete(Vote vote) {
+        return deleteByKey(vote.getId());
     }
 }

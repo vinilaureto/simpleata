@@ -1,4 +1,4 @@
-package br.edu.ifsp.aluno.aplication.repository;
+package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
 import br.edu.ifsp.aluno.domain.entities.inform.Inform;
 import br.edu.ifsp.aluno.domain.usecases.inform.InformDAO;

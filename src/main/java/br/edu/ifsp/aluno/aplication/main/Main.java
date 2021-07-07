@@ -1,11 +1,12 @@
 package br.edu.ifsp.aluno.aplication.main;
 
-import br.edu.ifsp.aluno.aplication.repository.*;
+import br.edu.ifsp.aluno.aplication.repository.inMemory.*;
 import br.edu.ifsp.aluno.domain.entities.comment.Comment;
 import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.inform.Inform;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
+import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.usecases.comment.*;
 import br.edu.ifsp.aluno.domain.usecases.group.*;
 import br.edu.ifsp.aluno.domain.usecases.inform.*;
@@ -74,7 +75,7 @@ public class Main {
     public static void main(String[] args) {
         configureInjection();
 
-        // TESTES COM PARTICIPANTES
+        /*// TESTES COM PARTICIPANTES
         Participant participant1 = new Participant("João", "joao@gmail.com", "Dr");
         Participant participant2 = new Participant("João2", "joao2@gmail.com", "Dr");
         Participant participant3 = new Participant("João3", "joao3@gmail.com", "Dr");
@@ -87,27 +88,31 @@ public class Main {
         deleteParticipantUseCase.delete(participant2); // ok
         participant3.setName("JULIO");
         updateParticipantUseCase.update(participant3); // ok
-//        System.out.println(findParticipantUseCase.findAll().toString()); // ok
+//        System.out.println(findParticipantUseCase.findAll().toString()); // ok*/
 
 
         // TESTES COM GRUPOS
-        Group group1 = new Group("Grupo legal");
+        /*Group group1 = new Group("Grupo legal");
         createGroupUseCase.insert(group1); // ok
 
         System.out.println(findGroupUseCase.findOne("Grupo legal").toString()); // ok
         addParticipantToGroupUseCase.addParticipantToGroup(participant1, group1); // ok
         //addParticipantToGroupUseCase.addParticipantToGroup(participant2, group1); // ok - dispara a exceção certa
         addParticipantToGroupUseCase.addParticipantToGroup(participant3, group1); // ok
+
+        System.out.println("Todos participantes do grupo 1:" + findParticipantUseCase.findAll());
+
         removeParticipantFromGroupUseCase.removeParticipantFromGroup(participant3, group1); // ok
         System.out.println(findGroupUseCase.findOne("Grupo legal").toString()); // ok
 
         Group group2 = new Group("Grupo bacana");
         createGroupUseCase.insert(group2);
         addParticipantToGroupUseCase.addParticipantToGroup(participant1, group2);
-        System.out.println(findGroupUseCase.findAll());
+        System.out.println(findGroupUseCase.findAll());*/
 
         // TESTES COM ATA
-        MeetingMinutes meetingMinutes1 = new MeetingMinutes();
+        /*MeetingMinutes meetingMinutes1 = new MeetingMinutes();
+
         meetingMinutes1.setGroup(group1);
         meetingMinutes1.setTitle("G1Meeting1");
         meetingMinutes1.setCreationDate(LocalDate.now());
@@ -127,16 +132,18 @@ public class Main {
         System.out.println(findMeetingMinutesUseCase.findOne("G1Meeting1").toString()); // ok
         System.out.println("Todas atas G2: " + findMeetingMinutesUseCase.findByGroup(group2));
 
+        System.out.println("Atas do participante 1: " + findMeetingMinutesUseCase.findByParticipant(participant1));*/
+
 
         // registerMeetingMinutesToGroup.registerMeetingMinutesToGroup(meetingMinutes1, group1); //
         //System.out.println(findGroupUseCase.findOne("Grupo legal"));
 
         // TESTES COM CASOS DE USOS DOS COMENTÁRIOS OK
-//        Comment commentError1 = new Comment();
+//        Comment commentError1 = null;
 //        createCommentUseCase.insert(commentError1);
 //        Comment commentError2 = new Comment(participant3, "");
 //        createCommentUseCase.insert(commentError2);
-        Comment comment1 = new Comment(participant1, "Comentário do participante 1.");
+        /*Comment comment1 = new Comment(participant1, "Comentário do participante 1.");
         createCommentUseCase.insert(comment1);
         System.out.println(findCommentUseCase.findOne(1));
         System.out.println(findCommentUseCase.findOne(2));
@@ -147,16 +154,16 @@ public class Main {
         System.out.println(findCommentUseCase.findAll());
         deleteCommentUseCase.delete(comment1);
         deleteCommentUseCase.delete(2);
-        System.out.println(findCommentUseCase.findAll());
+        System.out.println(findCommentUseCase.findAll());*/
 
         // TESTES COM CASOS DE USOS DOS INFORMES OK
-//        Inform informError1 = new Inform();
+//        Inform informError1 = null;
 //        createInformUseCase.insert(informError1);
 //        Inform informError2 = new Inform("", "Descrição");
 //        createInformUseCase.insert(informError2);
 //        Inform informError3 = new Inform("Título", "");
 //        createInformUseCase.insert(informError3);
-        Inform inform1 = new Inform("Título 1", "Descrição 1.");
+        /*Inform inform1 = new Inform("Título 1", "Descrição 1.");
         createInformUseCase.insert(inform1);
         System.out.println(findInformUseCase.findOne(1));
         System.out.println(findInformUseCase.findOne(2));
@@ -167,7 +174,26 @@ public class Main {
         System.out.println(findInformUseCase.findAll());
         deleteInformUseCase.delete(1);
         deleteInformUseCase.delete(inform2);
-        System.out.println(findInformUseCase.findAll());
+        System.out.println(findInformUseCase.findAll());*/
+
+//        TESTES COM CASOS DE USO DE PAUTAS
+//        Schedule scheduleError1 = null;
+//        createScheduleUseCase.insert(scheduleError1);
+//        Schedule scheduleError2 = new Schedule("", "Descrição");
+//        createScheduleUseCase.insert(scheduleError2);
+//        Schedule scheduleError3 = new Schedule("Tópico", "");
+//        createScheduleUseCase.insert(scheduleError3);
+        Schedule schedule1 = new Schedule("Pauta1", "Descrição da Pauta1");
+        createScheduleUseCase.insert(schedule1);
+        System.out.println(findScheduleUseCase.findOne("Pauta1"));
+        System.out.println(findScheduleUseCase.findOne("Pauta2"));
+        Schedule schedule2 = new Schedule("Pauta2", "Descrição da Pauta2");
+        createScheduleUseCase.insert(schedule2);
+        schedule1.setDescription("Nova descricação da Pauta1");
+        updateScheduleUseCase.update(schedule1);
+        System.out.println(findScheduleUseCase.findAll());
+        deleteScheduleUseCase.delete(schedule1);
+        System.out.println(findScheduleUseCase.findAll());
 
 
     }
@@ -224,6 +250,7 @@ public class Main {
         ScheduleDAO scheduleDAO = new InMemoryScheduleDAO();
         createScheduleUseCase = new CreateScheduleUseCase(scheduleDAO);
         deleteScheduleUseCase = new DeleteScheduleUseCase(scheduleDAO);
+        findScheduleUseCase = new FindScheduleUseCase(scheduleDAO);
         updateScheduleUseCase = new UpdateScheduleUseCase(scheduleDAO);
         registerVotingToScheduleUseCase = new RegisterVotingToScheduleUseCase(
                 findVotingUseCase,

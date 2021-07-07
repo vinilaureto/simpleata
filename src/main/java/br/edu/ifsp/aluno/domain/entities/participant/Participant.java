@@ -40,10 +40,8 @@ public class Participant {
 
     @Override
     public String toString() {
-        return "Participant{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", title='" + title + '\'' +
-                '}';
+        return "\n\t Nome: " + name
+                +"\n\t\t E-mail: " + email
+                +"\n\t\t Título: " + title;
     }
 }
