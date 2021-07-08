@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.domain.entities.participant;
 
 public class Participant {
+    private Integer id;
     private String name;
     private String email;
     private String title;
@@ -12,6 +13,21 @@ public class Participant {
         this.name = name;
         this.email = email;
         this.title = title;
+    }
+
+    public Participant(Integer id, String name, String email, String title) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.title = title;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -40,8 +56,11 @@ public class Participant {
 
     @Override
     public String toString() {
-        return "\n\t Nome: " + name
-                +"\n\t\t E-mail: " + email
-                +"\n\t\t Título: " + title;
+        return "Participant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", title='" + title + '\'' +
+                '}';
     }
 }

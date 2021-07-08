@@ -13,11 +13,18 @@ public class FindParticipantUseCase {
         this.participantDAO = participantDAO;
     }
 
-    public Optional<Participant> findOne(String email) {
-        if (Validator.isNullOrEmpty(email)) {
-            throw new IllegalArgumentException("E-mail can not be null.");
+    public Optional<Participant> findOne(Integer id) {
+        if (id == 0) {
+            throw new IllegalArgumentException("Id can not be 0.");
         }
-        return participantDAO.findOne(email);
+        return participantDAO.findOne(id);
+    }
+
+    public Optional<Participant> findByEmail(String email) {
+        if (Validator.isNullOrEmpty(email)) {
+            throw new IllegalArgumentException("Email can not be Null.");
+        }
+        return participantDAO.findByEmail(email);
     }
 
     public List<Participant> findByName(String name) {

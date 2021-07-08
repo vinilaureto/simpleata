@@ -17,7 +17,7 @@ public class AddParticipantToGroupUseCase {
     }
 
     public boolean addParticipantToGroup(Participant participant, Group group) {
-        if (findGroupUseCase.findOne(group.getName()).isEmpty()) {
+        if (findGroupUseCase.findOne(group.getId()).isEmpty()) {
             throw new EntityNotFoundException("Group not found");
         }
 

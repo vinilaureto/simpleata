@@ -14,27 +14,26 @@ public class DeleteMeetingMinuteUseCase {
         this.meetingMinutesDAO = meetingMinutesDAO;
     }
 
-    public boolean Delete(String title) {
-        if (Validator.isNullOrEmpty(title)) {
-            throw new EntityNotFoundException("Title is null or empty");
+    public boolean Delete(Integer id) {
+        if (id == 0) {
+            throw new EntityNotFoundException("Id is null or empty");
         }
 
-        MeetingMinutes meetingMinutes = meetingMinutesDAO.findOne(title)
-                .orElseThrow(() -> new EntityNotFoundException("Can't find meeting minute with title" + title));
+        MeetingMinutes meetingMinutes = meetingMinutesDAO.findOne(id)
+                .orElseThrow(() -> new EntityNotFoundException("Can't find meeting minute with Id" + id));
 
         if (meetingMinutes.getStatus() == MeetingMinutesStatus.CLOSED) {
             throw new IllegalArgumentException("Can't delete a closed meeting minutes");
         }
 
-        return meetingMinutesDAO.deleteByKey(title);
+        return meetingMinutesDAO.deleteByKey(id);
     }
 
     public boolean Delete (MeetingMinutes meetingMinutes) {
-        if (meetingMinutes == null || meetingMinutesDAO.findOne(meetingMinutes.getTitle()).isEmpty()) {
+        if (meetingMinutes == null || meetingMinutesDAO.findOne(meetingMinutes.getId()).isEmpty()) {
             throw new EntityNotFoundException("Meeting minutes not found");
         }
         return meetingMinutesDAO.delete(meetingMinutes);
     }
 
-    //  esse use case esta um pouco confuso em relação ao status da ata
 }

@@ -16,6 +16,9 @@ public class CommentInputRequestValidator extends Validator<Comment> {
         if (isNullOrEmpty(comment.getMessage())) {
             notification.addError("Comment message is null or empty.");
         }
+        if (isNullOrEmpty(comment.getParticipant().getName())) {
+            notification.addError("Comment participant is null or empty.");
+        }
 
         return notification;
     }

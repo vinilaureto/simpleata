@@ -11,7 +11,7 @@ public class DeleteInformUseCase {
     }
 
     public boolean delete(Integer id) {
-        if (id == null || informDao.findOne(id).isEmpty()) {
+        if (id == 0 || informDao.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Inform not found.");
         }
         return informDao.deleteByKey(id);

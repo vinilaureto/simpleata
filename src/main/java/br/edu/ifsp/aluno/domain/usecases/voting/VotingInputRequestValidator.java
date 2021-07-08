@@ -14,12 +14,6 @@ public class VotingInputRequestValidator extends Validator<Voting> {
             notification.addError("Voting is null.");
             return notification;
         }
-        if (voting.getId() == 0) {
-            notification.addError("Voting ID can't be 0.");
-        }
-        if (voting.getResult() == null) {
-            notification.addError("Voting result can't be null");
-        }
 
         return notification;
     }

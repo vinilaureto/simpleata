@@ -12,7 +12,7 @@ public class DeleteVoteUseCase {
     }
 
     public boolean delete(Integer id) {
-        if (id == null || voteDAO.findOne(id).isEmpty()) {
+        if (id == 0 || voteDAO.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Vote not found.");
         }
         return voteDAO.deleteByKey(id);

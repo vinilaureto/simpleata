@@ -7,27 +7,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Schedule {
+    private Integer id;
     private String topic;
-    private String description; // entendemos que uma pauta deve conter um tópico e uma descrição do assunto
     private List<Comment> comments = new ArrayList<>();
     private Voting voting;
 
     public Schedule() {
     }
 
-    public Schedule(String topic, String title) {
+    public Schedule(String topic, List<Comment> comments, Voting voting) {
         this.topic = topic;
-        this.description = title;
+        this.comments = comments;
+        this.voting = voting;
     }
 
-    public Schedule(String topic, String title, List<Comment> comments) {
+    public Schedule(Integer id, String topic, List<Comment> comments, Voting voting) {
+        this.id = id;
         this.topic = topic;
-        this.description = title;
         this.comments = comments;
+        this.voting = voting;
     }
 
     public void addComment(Comment comment) {
         comments.add(comment);
+    }
+
+    public void removeComment(Comment comment){
+        comments.remove(comment);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTopic() {
@@ -36,14 +50,6 @@ public class Schedule {
 
     public void setTopic(String topic) {
         this.topic = topic;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public List<Comment> getComments() {
@@ -65,8 +71,8 @@ public class Schedule {
     @Override
     public String toString() {
         return "Schedule{" +
-                "topic='" + topic + '\'' +
-                ", description='" + description + '\'' +
+                "id=" + id +
+                ", topic='" + topic + '\'' +
                 ", comments=" + comments +
                 ", voting=" + voting +
                 '}';

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingMinutes {
+    private Integer id;
     private String logo;
     private String identifier;
     private String local;
@@ -37,6 +38,20 @@ public class MeetingMinutes {
         this.status = status;
     }
 
+    public MeetingMinutes(Integer id, String logo, String identifier, String local, String title, LocalDate creationDate, LocalDate closingDate, Group group, List<Inform> informs, List<Schedule> schedules, MeetingMinutesStatus status) {
+        this.id = id;
+        this.logo = logo;
+        this.identifier = identifier;
+        this.local = local;
+        this.title = title;
+        this.creationDate = creationDate;
+        this.closingDate = closingDate;
+        this.group = group;
+        this.informs = informs;
+        this.schedules = schedules;
+        this.status = status;
+    }
+
     public void closeMeetingMinute() {
         status = MeetingMinutesStatus.CLOSED;
     }
@@ -51,6 +66,14 @@ public class MeetingMinutes {
 
     public void addSchedule(Schedule schedule) {
         schedules.add(schedule);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getLogo() {
@@ -122,7 +145,8 @@ public class MeetingMinutes {
     @Override
     public String toString() {
         return "MeetingMinutes{" +
-                "logo='" + logo + '\'' +
+                "id=" + id +
+                ", logo='" + logo + '\'' +
                 ", identifier='" + identifier + '\'' +
                 ", local='" + local + '\'' +
                 ", title='" + title + '\'' +

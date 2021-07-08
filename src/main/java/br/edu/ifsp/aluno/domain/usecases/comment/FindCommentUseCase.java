@@ -7,8 +7,8 @@ import java.util.Optional;
 public class FindCommentUseCase {
     private CommentDAO commentDAO;
 
-    public FindCommentUseCase(CommentDAO votingDAO) {
-        this.commentDAO = votingDAO;
+    public FindCommentUseCase(CommentDAO commentDAO) {
+        this.commentDAO = commentDAO;
     }
 
     public Optional<Comment> findOne(Integer id) {

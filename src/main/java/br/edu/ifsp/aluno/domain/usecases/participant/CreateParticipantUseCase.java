@@ -12,7 +12,7 @@ public class CreateParticipantUseCase {
         this.participantDAO = participantDAO;
     }
 
-    public String insert(Participant participant) {
+    public Integer insert(Participant participant) {
         Validator<Participant> validator = new ParticipantInputRequestValidator();
         Notification notification = validator.validate(participant);
 
@@ -21,7 +21,7 @@ public class CreateParticipantUseCase {
         }
 
         String email = participant.getEmail();
-        if (participantDAO.findOne(email).isPresent()) {
+        if (participantDAO.findByEmail(email).isPresent()) {
             throw new EntityAlreadyExistsException("This e-mail is already in use.");
         }
 

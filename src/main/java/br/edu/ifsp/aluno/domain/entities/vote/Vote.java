@@ -8,14 +8,21 @@ public class Vote {
     private Participant participant;
     private VoteValue value;
 
-    public Vote(VoteValue value, Participant participant) {
-        this.value = value;
+    public Vote(Participant participant, VoteValue value) {
         this.participant = participant;
+        this.value = value;
     }
 
     public Vote(VoteValue value) {
         this.value = value;
     }
+
+    public Vote(Integer id, Participant participant, VoteValue value) {
+        this.id = id;
+        this.participant = participant;
+        this.value = value;
+    }
+
 
     public Participant getParticipant() {
         return participant;
@@ -44,7 +51,8 @@ public class Vote {
     @Override
     public String toString() {
         return "Vote{" +
-                "participant=" + participant +
+                "id=" + id +
+                ", participant=" + participant +
                 ", value=" + value +
                 '}';
     }

@@ -18,10 +18,17 @@ public class FindMeetingMinutesUseCase {
         this.meetingMinutesDAO = meetingMinutesDAO;
     }
 
-    public Optional<MeetingMinutes> findOne(String title) {
-        if (title == null)
-            throw new IllegalArgumentException("Title can't be null");
-        return meetingMinutesDAO.findOne(title);
+    public Optional<MeetingMinutes> findOne(Integer id) {
+        if (id == 0)
+            throw new IllegalArgumentException("Id can't be 0");
+        return meetingMinutesDAO.findOne(id);
+    }
+
+    public List<MeetingMinutes> findByTitle(String title){
+        if (Validator.isNullOrEmpty(title)) {
+            throw new IllegalArgumentException("Title can't be empty or null");
+        }
+        return meetingMinutesDAO.findByTitle(title);
     }
 
     public List<MeetingMinutes> findByGroup(Group group) {
@@ -44,7 +51,7 @@ public class FindMeetingMinutesUseCase {
         return meetingMinutesDAO.findByParticipant(participant);
     }
 
-    public Optional<MeetingMinutes> findByIdentifier(String identifier) {
+    public List<MeetingMinutes> findByIdentifier(String identifier) {
         if (Validator.isNullOrEmpty(identifier)) {
             throw new IllegalArgumentException("Identifier can't be empty or null");
         }

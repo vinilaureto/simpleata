@@ -15,7 +15,9 @@ public class Comment {
         this.message = message;
     }
 
-    public Comment(String message) {
+    public Comment(Integer id, Participant participant, String message) {
+        this.id = id;
+        this.participant = participant;
         this.message = message;
     }
 

@@ -14,11 +14,11 @@ public class FindScheduleUseCase {
         this.scheduleDAO = scheduleDAO;
     }
 
-    public Optional<Schedule> findOne(String topic) {
-        if (Validator.isNullOrEmpty(topic)) {
-            throw new IllegalArgumentException("Topic can not be null.");
+    public Optional<Schedule> findOne(Integer id) {
+        if (id == 0) {
+            throw new IllegalArgumentException("Id can not be 0.");
         }
-        return scheduleDAO.findOne(topic);
+        return scheduleDAO.findOne(id);
     }
 
     public List<Schedule> findAll() {

@@ -8,10 +8,12 @@ import br.edu.ifsp.aluno.domain.usecases.utils.DAO;
 import java.util.List;
 import java.util.Optional;
 
-public interface MeetingMinutesDAO extends DAO<MeetingMinutes, String> {
+public interface MeetingMinutesDAO extends DAO<MeetingMinutes, Integer> {
+    List<MeetingMinutes> findByTitle(String title);
+
     List<MeetingMinutes> findByGroup(Group group);
 
     List<MeetingMinutes> findByParticipant(Participant participant);
 
-    Optional<MeetingMinutes> findByIdentifier(String identifier);
+    List<MeetingMinutes> findByIdentifier(String identifier);
 }

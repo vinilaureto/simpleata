@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Group {
+    private Integer id;
     private String name;
     private List<Participant> participants = new ArrayList<>();
     private List<MeetingMinutes> meetingMinutesList = new ArrayList<>();
@@ -20,6 +21,13 @@ public class Group {
     }
 
     public Group(String name, List<Participant> participants, List<MeetingMinutes> meetingMinutesList) {
+        this.name = name;
+        this.participants = participants;
+        this.meetingMinutesList = meetingMinutesList;
+    }
+
+    public Group(Integer id, String name, List<Participant> participants, List<MeetingMinutes> meetingMinutesList) {
+        this.id = id;
         this.name = name;
         this.participants = participants;
         this.meetingMinutesList = meetingMinutesList;
@@ -39,6 +47,14 @@ public class Group {
 
     public void removeParticipant(Participant participant) {
         participants.remove(participant);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

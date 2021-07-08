@@ -25,8 +25,8 @@ public class UpdateMeetingMinutesUseCase {
             throw new IllegalArgumentException("A closed meeting minutes can not be updated.");
         }
 
-        String title = meetingMinutes.getTitle();
-        if (meetingMinutesDAO.findOne(title).isEmpty()) {
+        Integer id = meetingMinutes.getId();
+        if (meetingMinutesDAO.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Meeting minutes not found");
         }
 
