@@ -8,8 +8,8 @@ import br.edu.ifsp.aluno.domain.usecases.utils.Validator;
 public class UpdateCommentUseCase {
     private CommentDAO commentDAO;
 
-    public UpdateCommentUseCase(CommentDAO votingDAO) {
-        this.commentDAO = votingDAO;
+    public UpdateCommentUseCase(CommentDAO commentDAO) {
+        this.commentDAO = commentDAO;
     }
 
     public boolean update(Comment comment) {

@@ -16,9 +16,6 @@ public class ScheduleInputRequestValidator extends Validator<Schedule> {
         if (isNullOrEmpty(schedule.getTopic())) {
             notification.addError("Schedule's topic is null or empty.");
         }
-        if (isNullOrEmpty(schedule.getDescription())) {
-            notification.addError("Schedule's description is null or empty.");
-        }
 
         return notification;
     }

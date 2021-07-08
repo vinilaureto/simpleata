@@ -20,8 +20,8 @@ public class UpdateParticipantUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
         }
 
-        String email = participant.getEmail();
-        if (participantDAO.findOne(email).isEmpty()) {
+        Integer id = participant.getId();
+        if (participantDAO.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Participant not found.");
         }
 

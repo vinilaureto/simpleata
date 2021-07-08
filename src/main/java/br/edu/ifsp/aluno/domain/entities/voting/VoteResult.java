@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum VoteResult {
     APPROVED ("Aprovado"),
-    REJECT ("Reprovado"),
+    REJECTED ("Reprovado"),
     DRAW ("Empate");
 
     private String label;

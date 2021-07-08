@@ -20,8 +20,8 @@ public class UpdateGroupUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
         }
 
-        String name = group.getName();
-        if (groupDAO.findOne(name).isEmpty()) {
+        Integer id = group.getId();
+        if (groupDAO.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Group not found.");
         }
 

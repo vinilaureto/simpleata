@@ -1,7 +1,6 @@
 package br.edu.ifsp.aluno.domain.entities.voting;
 
 
-import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.vote.Vote;
 import br.edu.ifsp.aluno.domain.entities.vote.VoteValue;
 
@@ -13,18 +12,26 @@ public class Voting {
     private VoteResult result;
     private List<Vote> votes = new ArrayList<>();
 
+    public Voting() {
+    }
+
     public Voting(VoteResult result, List<Vote> votes) {
         this.result = result;
         this.votes = votes;
     }
 
-    public void registerVote(VoteValue value) {
-        Vote vote = new Vote(value);
-        votes.add(vote);
+    public Voting(Integer id, VoteResult result, List<Vote> votes) {
+        this.id = id;
+        this.result = result;
+        this.votes = votes;
     }
 
     public void registerVote(Vote vote) {
         votes.add(vote);
+    }
+
+    public void unregisterVote(Vote vote){
+        votes.remove(vote);
     }
 
     public void resolveVoting() {
@@ -40,7 +47,7 @@ public class Voting {
         if (result > 0) {
             this.result = VoteResult.APPROVED;
         } else if (result < 0) {
-            this.result = VoteResult.REJECT;
+            this.result = VoteResult.REJECTED;
         } else {
             this.result = VoteResult.DRAW;
         }
@@ -65,7 +72,8 @@ public class Voting {
     @Override
     public String toString() {
         return "Voting{" +
-                "result=" + result +
+                "id=" + id +
+                ", result=" + result +
                 ", votes=" + votes +
                 '}';
     }

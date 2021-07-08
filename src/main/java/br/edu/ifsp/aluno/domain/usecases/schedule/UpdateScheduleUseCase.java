@@ -20,8 +20,8 @@ public class UpdateScheduleUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
         }
 
-        String topic = schedule.getTopic();
-        if (scheduleDAO.findOne(topic).isEmpty()) {
+        Integer id = schedule.getId();
+        if (scheduleDAO.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Schedule not found.");
         }
 

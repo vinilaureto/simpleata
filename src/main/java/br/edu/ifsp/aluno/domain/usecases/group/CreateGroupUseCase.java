@@ -12,7 +12,7 @@ public class CreateGroupUseCase {
         this.groupDAO = groupDAO;
     }
 
-    public String insert(Group group) {
+    public Integer insert(Group group) {
         Validator<Group> validator = new GroupInputRequestValidator();
         Notification notification = validator.validate(group);
 
@@ -21,7 +21,7 @@ public class CreateGroupUseCase {
         }
 
         String name = group.getName();
-        if (groupDAO.findOne(name).isPresent()) {
+        if (groupDAO.findByName(name).isPresent()) {
             throw new EntityAlreadyExistsException("This group name is already in use");
         }
         return groupDAO.insert(group);

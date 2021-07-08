@@ -20,11 +20,6 @@ public class CreateInformUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
         }
 
-        Integer title = inform.getId();
-        if (informDAO.findOne(title).isPresent()) {
-            throw new EntityAlreadyExistsException("This inform already exists.");
-        }
-
         return informDAO.insert(inform);
     }
 }

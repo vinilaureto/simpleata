@@ -12,7 +12,7 @@ public class CreateMeetingMinutesUseCase {
         this.meetingMinutesDAO = meetingMinutesDAO;
     }
 
-    public String insert(MeetingMinutes meetingMinutes) {
+    public Integer insert(MeetingMinutes meetingMinutes) {
         Validator<MeetingMinutes> validator = new MeetingMinutesInputRequestValidator();
         Notification notification = validator.validate(meetingMinutes);
 
@@ -20,10 +20,6 @@ public class CreateMeetingMinutesUseCase {
             throw new IllegalArgumentException(notification.errorMessage());
         }
 
-        String title = meetingMinutes.getTitle();
-        if (meetingMinutesDAO.findOne(title).isPresent()) {
-            throw new EntityAlreadyExistsException("This meeting minutes' title is already in use");
-        }
         return meetingMinutesDAO.insert(meetingMinutes);
     }
 }

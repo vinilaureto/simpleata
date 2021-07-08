@@ -15,7 +15,7 @@ public class CreateScheduleUseCase {
         this.scheduleDAO = scheduleDAO;
     }
 
-    public String insert(Schedule schedule) {
+    public Integer insert(Schedule schedule) {
         Validator<Schedule> validator = new ScheduleInputRequestValidator();
         Notification notification = validator.validate(schedule);
 

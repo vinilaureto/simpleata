@@ -10,15 +10,15 @@ public class DeleteParticipantUseCase {
         this.participantDAO = participantDAO;
     }
 
-    public boolean delete(String email) {
-        if (email == null || participantDAO.findOne(email).isEmpty()) {
+    public boolean delete(Integer id) {
+        if (id == 0 || participantDAO.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Participant not found.");
         }
-        return participantDAO.deleteByKey(email);
+        return participantDAO.deleteByKey(id);
     }
 
     public boolean delete(Participant participant) {
-        if (participant == null || participantDAO.findOne(participant.getEmail()).isEmpty()) {
+        if (participant == null || participantDAO.findOne(participant.getId()).isEmpty()) {
             throw new EntityNotFoundException("Participant not found.");
         }
         return participantDAO.delete(participant);

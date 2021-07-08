@@ -10,15 +10,15 @@ public class DeleteScheduleUseCase {
         this.scheduleDAO = scheduleDAO;
     }
 
-    public boolean delete(String topic) {
-        if (topic == null || scheduleDAO.findOne(topic).isEmpty()) {
+    public boolean delete(Integer id) {
+        if (id == 0 || scheduleDAO.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Schedule not found.");
         }
-        return scheduleDAO.deleteByKey(topic);
+        return scheduleDAO.deleteByKey(id);
     }
 
     public boolean delete(Schedule schedule) {
-        if (schedule == null || scheduleDAO.findOne(schedule.getTopic()).isEmpty()) {
+        if (schedule == null || scheduleDAO.findOne(schedule.getId()).isEmpty()) {
             throw new EntityNotFoundException("Schedule not found.");
         }
         return scheduleDAO.delete(schedule);

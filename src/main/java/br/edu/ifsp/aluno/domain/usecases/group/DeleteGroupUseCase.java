@@ -10,15 +10,15 @@ public class DeleteGroupUseCase {
         this.groupDAO = groupDAO;
     }
 
-    public boolean delete(String name) {
-        if (name == null || groupDAO.findOne(name).isEmpty()) {
+    public boolean delete(Integer id) {
+        if (id == 0 || groupDAO.findOne(id).isEmpty()) {
             throw new EntityNotFoundException("Group not found.");
         }
-        return groupDAO.deleteByKey(name);
+        return groupDAO.deleteByKey(id);
     }
 
     public boolean delete(Group group) {
-        if (group == null || groupDAO.findOne(group.getName()).isEmpty()) {
+        if (group == null || groupDAO.findOne(group.getId()).isEmpty()) {
             throw new EntityNotFoundException("Participant not found.");
         }
         return groupDAO.delete(group);

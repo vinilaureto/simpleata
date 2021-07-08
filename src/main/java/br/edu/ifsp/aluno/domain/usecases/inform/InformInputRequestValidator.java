@@ -13,9 +13,6 @@ public class InformInputRequestValidator extends Validator<Inform> {
             notification.addError("Inform is null.");
             return notification;
         }
-        if (isNullOrEmpty(inform.getTitle())) {
-            notification.addError("Inform's title is null or empty.");
-        }
         if (isNullOrEmpty(inform.getDescription())) {
             notification.addError("Inform's description is null or empty.");
         }

@@ -13,9 +13,6 @@ public class MeetingMinutesInputRequestValidator extends Validator<MeetingMinute
             notification.addError("Meeting Minutes is null.");
             return notification;
         }
-        /*if (isNullOrEmpty(meetingMinutes.getIdentifier())) {
-            notification.addError("Meeting minutes' identifier is null or empty.");
-        }*/
         if (isNullOrEmpty(meetingMinutes.getTitle())) {
             notification.addError("Meeting minutes' title is null or empty.");
         }

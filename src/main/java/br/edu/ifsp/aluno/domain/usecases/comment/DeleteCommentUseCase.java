@@ -6,8 +6,8 @@ import br.edu.ifsp.aluno.domain.usecases.utils.EntityNotFoundException;
 public class DeleteCommentUseCase {
     private CommentDAO commentDAO;
 
-    public DeleteCommentUseCase(CommentDAO votingDAO) {
-        this.commentDAO = votingDAO;
+    public DeleteCommentUseCase(CommentDAO commentDAO) {
+        this.commentDAO = commentDAO;
     }
 
     public boolean delete(Integer id) {
