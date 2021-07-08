@@ -10,13 +10,25 @@ public class ChangeStatusMeetingMinutesUseCase {
         this.updateMeetingMinutesUseCase = updateMeetingMinutesUseCase;
     }
 
-    public boolean changeStatus(MeetingMinutesStatus status, MeetingMinutes meetingMinutes) {
-        if (status == MeetingMinutesStatus.OPENED) {
-            meetingMinutes.startMeetingMinute();
-        } else if (status == MeetingMinutesStatus.CLOSED) {
-            meetingMinutes.closeMeetingMinute();
+    public boolean openMeetingMinutes(MeetingMinutes meetingMinutes) {
+        if (meetingMinutes.getStatus() == MeetingMinutesStatus.OPENED) {
+            throw new IllegalArgumentException("Meeting minutes is already opened");
         }
 
+        if (meetingMinutes.getStatus() == MeetingMinutesStatus.CLOSED) {
+            throw new IllegalArgumentException("Meeting minutes is already closed and can't be updated");
+        }
+
+        meetingMinutes.startMeetingMinute();
+        return updateMeetingMinutesUseCase.update(meetingMinutes);
+    }
+
+    public boolean closeMeetingMinutes(MeetingMinutes meetingMinutes) {
+        if (meetingMinutes.getStatus() == MeetingMinutesStatus.CLOSED) {
+            throw new IllegalArgumentException("Meeting minutes is already closed");
+        }
+
+        meetingMinutes.closeMeetingMinute();
         return updateMeetingMinutesUseCase.update(meetingMinutes);
     }
 }

@@ -21,7 +21,7 @@ public class RegisterVotingToScheduleUseCase {
             throw new EntityNotFoundException("Voting not found");
         }
 
-        if (findScheduleUseCase.findOne(schedule.getTopic()).isEmpty()) {
+        if (findScheduleUseCase.findOne(schedule.getId()).isEmpty()) {
             throw new EntityNotFoundException("Schedule not found");
         }
 

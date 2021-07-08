@@ -19,13 +19,13 @@ public class RemoveParticipantFromGroupUseCase {
     }
 
     public boolean removeParticipantFromGroup(Participant participant, Group group) {
-        Optional<Group> savedGroup = findGroupUseCase.findOne(group.getName());
+        Optional<Group> savedGroup = findGroupUseCase.findOne(group.getId());
 
         if (savedGroup.isEmpty()) {
             throw new EntityNotFoundException("Group not found");
         }
 
-        if (findParticipantUseCase.findOne(participant.getEmail()).isEmpty()) {
+        if (findParticipantUseCase.findOne(participant.getId()).isEmpty()) {
             throw new EntityNotFoundException("Participant not found");
         }
 

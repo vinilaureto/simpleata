@@ -21,7 +21,7 @@ public class AddParticipantToGroupUseCase {
             throw new EntityNotFoundException("Group not found");
         }
 
-        if (findParticipantUseCase.findOne(participant.getEmail()).isEmpty()) {
+        if (findParticipantUseCase.findOne(participant.getId()).isEmpty()) {
             throw new EntityNotFoundException("Participant not found");
         }
 

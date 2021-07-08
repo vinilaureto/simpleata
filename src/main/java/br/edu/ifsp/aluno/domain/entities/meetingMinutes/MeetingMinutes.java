@@ -20,6 +20,7 @@ public class MeetingMinutes {
     private List<Inform> informs = new ArrayList<>();
     private List<Schedule> schedules = new ArrayList<>();
     private MeetingMinutesStatus status;
+    private boolean active = true;
 
     public MeetingMinutes() {
         status = MeetingMinutesStatus.PREMEETING;
@@ -38,7 +39,7 @@ public class MeetingMinutes {
         this.status = status;
     }
 
-    public MeetingMinutes(Integer id, String logo, String identifier, String local, String title, LocalDate creationDate, LocalDate closingDate, Group group, List<Inform> informs, List<Schedule> schedules, MeetingMinutesStatus status) {
+    public MeetingMinutes(Integer id, String logo, String identifier, String local, String title, LocalDate creationDate, LocalDate closingDate, Group group, List<Inform> informs, List<Schedule> schedules, MeetingMinutesStatus status, boolean active) {
         this.id = id;
         this.logo = logo;
         this.identifier = identifier;
@@ -50,6 +51,7 @@ public class MeetingMinutes {
         this.informs = informs;
         this.schedules = schedules;
         this.status = status;
+        this.active = active;
     }
 
     public void closeMeetingMinute() {
@@ -66,6 +68,18 @@ public class MeetingMinutes {
 
     public void addSchedule(Schedule schedule) {
         schedules.add(schedule);
+    }
+
+    public boolean isDeactived() {
+        return !active;
+    }
+
+    public boolean deactiveMeetingMinutes() {
+        return active = false;
+    }
+
+    public boolean activeMeetingMinutes() {
+        return active = true;
     }
 
     public Integer getId() {

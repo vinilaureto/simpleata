@@ -21,7 +21,7 @@ public class IncludeInformToMeetingMinutesUseCase {
             throw new EntityNotFoundException("Inform not found");
         }
 
-        if (findMeetingMinutesUseCase.findOne(meetingMinutes.getTitle()).isEmpty()) {
+        if (findMeetingMinutesUseCase.findOne(meetingMinutes.getId()).isEmpty()) {
             throw new EntityNotFoundException("Meeting minutes not found");
         }
 

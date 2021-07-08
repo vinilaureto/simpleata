@@ -5,18 +5,18 @@ import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.usecases.meetingMinutes.FindMeetingMinutesUseCase;
 import br.edu.ifsp.aluno.domain.usecases.utils.EntityNotFoundException;
 
-public class RegisterMeetingMinutesToGroup {
+public class UnregisterMeetingMinutesToGroup {
     private FindMeetingMinutesUseCase findMeetingMinutesUseCase;
     private FindGroupUseCase findGroupUseCase;
     private UpdateGroupUseCase updateGroupUseCase;
 
-    public RegisterMeetingMinutesToGroup(FindMeetingMinutesUseCase findMeetingMinutesUseCase, FindGroupUseCase findGroupUseCase, UpdateGroupUseCase updateGroupUseCase) {
+    public UnregisterMeetingMinutesToGroup(FindMeetingMinutesUseCase findMeetingMinutesUseCase, FindGroupUseCase findGroupUseCase, UpdateGroupUseCase updateGroupUseCase) {
         this.findMeetingMinutesUseCase = findMeetingMinutesUseCase;
         this.findGroupUseCase = findGroupUseCase;
         this.updateGroupUseCase = updateGroupUseCase;
     }
 
-    public boolean registerMeetingMinutesToGroup(MeetingMinutes meetingMinutes, Group group) {
+    public boolean unregisterMeetingMinutesToGroup(MeetingMinutes meetingMinutes, Group group) {
         if (findMeetingMinutesUseCase.findOne(meetingMinutes.getId()).isEmpty()) {
             throw new EntityNotFoundException("Meeting minutes not found");
         }
@@ -25,7 +25,7 @@ public class RegisterMeetingMinutesToGroup {
             throw new EntityNotFoundException("Group not found");
         }
 
-        group.addMeetingMinutes(meetingMinutes);
+        group.removeMeetingMinutes(meetingMinutes);
         return updateGroupUseCase.update(group);
     }
 }

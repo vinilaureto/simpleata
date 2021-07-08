@@ -17,11 +17,11 @@ public class IncludeScheduleToMeetingMinutesUseCase {
     }
 
     public boolean includeScheduleToMeetingMinutes(Schedule schedule, MeetingMinutes meetingMinutes) {
-        if (findScheduleUseCase.findOne(schedule.getTopic()).isEmpty()) {
+        if (findScheduleUseCase.findOne(schedule.getId()).isEmpty()) {
             throw new EntityNotFoundException("Schedule not found");
         }
 
-        if (findMeetingMinutesUseCase.findOne(meetingMinutes.getTitle()).isEmpty()) {
+        if (findMeetingMinutesUseCase.findOne(meetingMinutes.getId()).isEmpty()) {
             throw new EntityNotFoundException("Meeting not found");
         }
 

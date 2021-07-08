@@ -5,6 +5,7 @@ import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.usecases.group.GroupInputRequestValidator;
 import br.edu.ifsp.aluno.domain.usecases.participant.ParticipantInputRequestValidator;
+import br.edu.ifsp.aluno.domain.usecases.utils.EntityNotFoundException;
 import br.edu.ifsp.aluno.domain.usecases.utils.Notification;
 import br.edu.ifsp.aluno.domain.usecases.utils.Validator;
 
@@ -21,6 +22,11 @@ public class FindMeetingMinutesUseCase {
     public Optional<MeetingMinutes> findOne(Integer id) {
         if (id == 0)
             throw new IllegalArgumentException("Id can't be 0");
+
+        /*if (meetingMinutesDAO.findOne(id).get().isDeactived()) {
+            throw new EntityNotFoundException("This meeting minutes has been deleted");
+        }*/
+
         return meetingMinutesDAO.findOne(id);
     }
 
