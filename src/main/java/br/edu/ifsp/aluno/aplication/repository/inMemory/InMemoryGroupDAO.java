@@ -6,22 +6,28 @@ import br.edu.ifsp.aluno.domain.usecases.group.GroupDAO;
 import java.util.*;
 
 public class InMemoryGroupDAO implements GroupDAO {
-
-    private static final Map<String, Group> db = new LinkedHashMap<>();
-
+    private static final Map<Integer, Group> db = new LinkedHashMap<>();
+    private static int groupIdCounter;
 
     @Override
-    public String insert(Group group) {
-        String name = group.getName();
-        db.put(name, group);
-        return name;
+    public Integer insert(Group group) {
+        groupIdCounter++;
+        group.setId(groupIdCounter);
+        db.put(groupIdCounter, group);
+        return groupIdCounter;
     }
 
     @Override
-    public Optional<Group> findOne(String name) {
-        if (db.containsKey(name)) {
-            return Optional.of(db.get(name));
+    public Optional<Group> findOne(Integer id) {
+        if (db.containsKey(id)) {
+            return Optional.of(db.get(id));
         }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Group> findByName(String name) {
+        // TODO: implementar método
         return Optional.empty();
     }
 
@@ -32,18 +38,18 @@ public class InMemoryGroupDAO implements GroupDAO {
 
     @Override
     public boolean update(Group group) {
-        String name = group.getName();
-        if (db.containsKey(name)) {
-            db.replace(name, group);
+        Integer id = group.getId();
+        if (db.containsKey(id)) {
+            db.replace(id, group);
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean deleteByKey(String email) {
-        if (db.containsKey(email)) {
-            db.remove(email);
+    public boolean deleteByKey(Integer id) {
+        if (db.containsKey(id)) {
+            db.remove(id);
             return true;
         }
         return false;
@@ -51,6 +57,6 @@ public class InMemoryGroupDAO implements GroupDAO {
 
     @Override
     public boolean delete(Group group) {
-        return deleteByKey(group.getName());
+        return deleteByKey(group.getId());
     }
 }

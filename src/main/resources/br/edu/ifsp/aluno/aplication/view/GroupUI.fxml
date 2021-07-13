@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="476.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.aluno.aplication.controller.GroupUIController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Nome do grupo:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+      <TextField fx:id="txtGroupName" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="236.0" promptText="Nome do grupo" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="38.0" />
+      <TableView layoutX="14.0" layoutY="169.0" prefHeight="241.0" prefWidth="236.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="169.0">
+        <columns>
+          <TableColumn prefWidth="235.0" text="Participantes" />
+        </columns>
+      </TableView>
+      <TableView layoutX="350.0" layoutY="169.0" prefHeight="241.0" prefWidth="236.0" AnchorPane.bottomAnchor="66.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="169.0">
+         <columns>
+            <TableColumn prefWidth="235.0" text="Participantes no grupo" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnAddParticipant" layoutX="258.0" layoutY="265.0" mnemonicParsing="false" onAction="#btnAddParticipant" text="Adicionar -&gt;" AnchorPane.bottomAnchor="186.0" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="259.0" />
+      <Button layoutX="258.0" layoutY="297.0" mnemonicParsing="false" onAction="#btnRemoveParticipant" prefHeight="25.0" prefWidth="83.0" text="&lt;- Remover" AnchorPane.bottomAnchor="154.0" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="259.0" />
+      <Button fx:id="btnBackToPreviousScene" layoutX="424.0" layoutY="437.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="25.0" prefWidth="77.0" text="Cancelar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="99.0" />
+      <Button fx:id="btnSaveOrUpdate" layoutX="509.0" layoutY="437.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="25.0" prefWidth="77.0" text="Salvar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+      <Label layoutX="14.0" layoutY="106.0" text="Buscar participante:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="106.0" />
+      <TextField fx:id="txtParticipantName" layoutX="14.0" layoutY="130.0" prefHeight="25.0" prefWidth="166.0" promptText="Nome" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="130.0" />
+      <Button fx:id="btnFinxParticipant" layoutX="190.0" layoutY="130.0" mnemonicParsing="false" onAction="#findParticipant" prefHeight="25.0" prefWidth="57.0" text="Buscar" AnchorPane.leftAnchor="190.0" AnchorPane.topAnchor="130.0" />
+   </children>
+</AnchorPane>

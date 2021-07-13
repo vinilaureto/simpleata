@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+
+<AnchorPane prefHeight="632.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.aluno.aplication.controller.MeetingMinutesUIController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Título da ata:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+      <TextField fx:id="txtMeetingMinutesTitle" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="313.0" promptText="Título da ata" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="35.0" />
+      <Label layoutX="339.0" layoutY="14.0" text="Grupo:" AnchorPane.leftAnchor="339.0" AnchorPane.topAnchor="14.0" />
+      <ComboBox fx:id="cbGroup" layoutX="339.0" layoutY="35.0" prefHeight="25.0" prefWidth="153.0" promptText="Selecione o grupo" AnchorPane.leftAnchor="339.0" AnchorPane.topAnchor="35.0" />
+      <Label layoutX="14.0" layoutY="68.0" text="Logo:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="68.0" />
+      <Button fx:id="btnMeetingMinutesFindLogo" layoutX="14.0" layoutY="89.0" mnemonicParsing="false" onAction="#meetingMinutesFindLogo" prefHeight="25.0" prefWidth="125.0" text="Procurar logo" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="89.0" />
+      <Line endX="456.0" layoutX="115.0" layoutY="138.0" startX="-100.0" stroke="#b2b2b297" AnchorPane.leftAnchor="14.5" AnchorPane.rightAnchor="18.5" AnchorPane.topAnchor="137.5" />
+      <TableView layoutX="15.0" layoutY="152.0" prefHeight="144.0" prefWidth="557.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="152.0">
+        <columns>
+          <TableColumn prefWidth="556.0" text="Informes" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnNewInform" layoutX="447.0" layoutY="307.0" mnemonicParsing="false" onAction="#newInform" prefHeight="25.0" prefWidth="125.0" text="Novo infome" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="307.0" />
+      <Button fx:id="btnEditInform" layoutX="313.0" layoutY="307.0" mnemonicParsing="false" onAction="#editInform" prefHeight="25.0" prefWidth="125.0" text="Editar infome" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="307.0" />
+      <Button fx:id="btnRemoveInform" layoutX="179.0" layoutY="307.0" mnemonicParsing="false" onAction="#removeInform" prefHeight="25.0" prefWidth="125.0" text="Remover informe" AnchorPane.rightAnchor="286.0" AnchorPane.topAnchor="307.0" />
+      <Line endX="456.0" layoutX="117.0" layoutY="349.0" startX="-100.0" stroke="#b2b2b297" AnchorPane.topAnchor="348.5" />
+      <TableView layoutX="17.0" layoutY="363.0" prefHeight="144.0" prefWidth="557.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="363.0">
+         <columns>
+            <TableColumn prefWidth="556.0" text="Pautas" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnNewSchedule" layoutX="449.0" layoutY="515.0" mnemonicParsing="false" onAction="#newSchedule" prefHeight="25.0" prefWidth="125.0" text="Nova pauta" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="515.0" />
+      <Button fx:id="btnEditSchedule" layoutX="315.0" layoutY="515.0" mnemonicParsing="false" onAction="#editSchedule" prefHeight="25.0" prefWidth="125.0" text="Editar pauta" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="515.0" />
+      <Button fx:id="btnRemoveSchedule" layoutX="181.0" layoutY="515.0" mnemonicParsing="false" onAction="#removeSchedule" prefHeight="25.0" prefWidth="125.0" text="Remover pauta" AnchorPane.rightAnchor="284.0" AnchorPane.topAnchor="515.0" />
+      <Button fx:id="btnBackToPreviousScreen" layoutX="382.0" layoutY="593.0" mnemonicParsing="false" onAction="#backToPreviousScreen" prefHeight="25.0" prefWidth="92.0" text="Cancelar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="116.0" />
+      <Button fx:id="btnSaveOrUpdate" layoutX="484.0" layoutY="593.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="25.0" prefWidth="92.0" text="Savlar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+      <Line endX="456.0" layoutX="115.0" layoutY="553.0" startX="-100.0" stroke="#b2b2b297" AnchorPane.topAnchor="552.5" />
+      <Button fx:id="btnExportMeetingMinutes" layoutX="17.0" layoutY="593.0" mnemonicParsing="false" onAction="#exportMeetingMinutes" prefHeight="25.0" prefWidth="92.0" text="Exportar ata" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="17.0" />
+   </children>
+</AnchorPane>

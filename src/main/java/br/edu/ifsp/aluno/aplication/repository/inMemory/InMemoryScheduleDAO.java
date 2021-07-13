@@ -6,19 +6,21 @@ import br.edu.ifsp.aluno.domain.usecases.schedule.ScheduleDAO;
 import java.util.*;
 
 public class InMemoryScheduleDAO implements ScheduleDAO {
-    private static final Map<String, Schedule> db = new LinkedHashMap<>();
+    private static final Map<Integer, Schedule> db = new LinkedHashMap<>();
+    private static int scheduleIdCounter;
 
     @Override
-    public String insert(Schedule schedule) {
-        String topic = schedule.getTopic();
-        db.put(topic, schedule);
-        return topic;
+    public Integer insert(Schedule schedule) {
+        scheduleIdCounter++;
+        schedule.setId(scheduleIdCounter);
+        db.put(scheduleIdCounter, schedule);
+        return scheduleIdCounter;
     }
 
     @Override
-    public Optional<Schedule> findOne(String topic) {
-        if (db.containsKey(topic)) {
-            return Optional.of(db.get(topic));
+    public Optional<Schedule> findOne(Integer id) {
+        if (db.containsKey(id)) {
+            return Optional.of(db.get(id));
         }
         return Optional.empty();
     }
@@ -30,18 +32,18 @@ public class InMemoryScheduleDAO implements ScheduleDAO {
 
     @Override
     public boolean update(Schedule schedule) {
-        String topic = schedule.getTopic();
-        if (db.containsKey(topic)) {
-            db.replace(topic, schedule);
+        Integer id = schedule.getId();
+        if (db.containsKey(id)) {
+            db.replace(id, schedule);
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean deleteByKey(String title) {
-        if (db.containsKey(title)) {
-            db.remove(title);
+    public boolean deleteByKey(Integer id) {
+        if (db.containsKey(id)) {
+            db.remove(id);
             return true;
         }
         return false;
@@ -49,6 +51,6 @@ public class InMemoryScheduleDAO implements ScheduleDAO {
 
     @Override
     public boolean delete(Schedule schedule) {
-        return deleteByKey(schedule.getTopic());
+        return deleteByKey(schedule.getId());
     }
 }
