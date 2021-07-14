@@ -7,6 +7,7 @@ module br.edu.ifsp.aluno {
     opens br.edu.ifsp.aluno.aplication.view to javafx.fxml;
     opens br.edu.ifsp.aluno.aplication.controller to javafx.fxml;
     opens br.edu.ifsp.aluno.domain.entities.participant to javafx.base;
+    opens br.edu.ifsp.aluno.domain.entities.group to javafx.base;
 
     exports br.edu.ifsp.aluno.aplication.view;
     exports br.edu.ifsp.aluno.aplication.controller;

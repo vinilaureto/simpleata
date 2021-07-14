@@ -69,6 +69,10 @@ public class Group {
         return participants;
     }
 
+    public String getParticipantsNames() {
+        return participants.stream().map(p -> p.getName()).collect(Collectors.joining(", "));
+    }
+
     public List<MeetingMinutes> getMeetingMinutesList() {
         return meetingMinutesList;
     }

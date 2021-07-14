@@ -7,8 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import static br.edu.ifsp.aluno.aplication.main.Main.deleteParticipantUseCase;
@@ -19,6 +21,8 @@ import java.util.List;
 
 public class ManageParticipantUIController {
 
+    @FXML
+    private TextField txtSearchParticipant;
     @FXML
     private TableView<Participant> tableView;
     @FXML
@@ -49,9 +53,9 @@ public class ManageParticipantUIController {
     }
 
     private void loadDataAndShow() {
-        List<Participant> participants = findParticipantUseCase.findAll();
+        List<Participant> participantList = findParticipantUseCase.findAll();
         tableData.clear();
-        tableData.addAll(participants);
+        tableData.addAll(participantList);
     }
 
     public void newParticipant(ActionEvent actionEvent) throws IOException {
@@ -71,9 +75,18 @@ public class ManageParticipantUIController {
     }
 
     public void searchParticipant(ActionEvent actionEvent) {
+        List<Participant> list = findParticipantUseCase.findByName(txtSearchParticipant.getText());
+        if (!list.isEmpty()) {
+            tableData.clear();
+            tableData.addAll(list);
+        } else {
+            showAlert("Erro!", "Participante não encontrado", Alert.AlertType.ERROR);
+            loadDataAndShow();
+        }
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) {
+    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("ManageGroupUI");
     }
 
     private void showParticipantInMode(UIMode mode) throws IOException {
@@ -83,5 +96,13 @@ public class ManageParticipantUIController {
             ParticipantUIController controller = (ParticipantUIController) WindowLoader.getController();
             controller.setParticipant(selectedItem, mode);
         }
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 }
