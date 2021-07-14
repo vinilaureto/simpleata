@@ -7,12 +7,14 @@ import java.util.*;
 
 public class InMemoryVoteDAO implements VoteDAO {
     private static final Map<Integer, Vote> db = new LinkedHashMap<>();
+    private static int voteIdCounter;
 
     @Override
     public Integer insert(Vote vote) {
-        Integer id = vote.getId();
-        db.put(id, vote);
-        return id;
+        voteIdCounter++;
+        vote.setId(voteIdCounter);
+        db.put(voteIdCounter, vote);
+        return voteIdCounter;
     }
 
     @Override

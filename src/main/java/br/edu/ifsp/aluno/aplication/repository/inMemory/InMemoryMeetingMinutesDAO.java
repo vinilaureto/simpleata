@@ -9,32 +9,29 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class InMemoryMeetingMinutesDAO implements MeetingMinutesDAO {
-    private static final Map<String, MeetingMinutes> db = new LinkedHashMap<>();
+    private static final Map<Integer, MeetingMinutes> db = new LinkedHashMap<>();
+    private static int meetingMinutesIdCounter;
 
     @Override
-    public String insert(MeetingMinutes meetingMinutes) {
-        meetingMinutes.getGroup().addMeetingMinutes(meetingMinutes);
-        String meetingMinutesId = setMeetingMinutesId(meetingMinutes);
-        db.put(meetingMinutes.getTitle(), meetingMinutes);
-        meetingMinutes.setIdentifier(meetingMinutesId);
-
-        return meetingMinutesId;
-    }
-
-    private String setMeetingMinutesId(MeetingMinutes meetingMinutes) {
-        String meetingMinutesId = meetingMinutes.getGroup().getTotalMeetingMinutesOfAYear(meetingMinutes).toString()
-                + "/"
-                + meetingMinutes.getCreationDate().getYear();
-
-        return meetingMinutesId;
+    public Integer insert(MeetingMinutes meetingMinutes) {
+        meetingMinutesIdCounter++;
+        meetingMinutes.setId(meetingMinutesIdCounter);
+        db.put(meetingMinutesIdCounter, meetingMinutes);
+        return meetingMinutesIdCounter;
     }
 
     @Override
-    public Optional<MeetingMinutes> findOne(String title) {
-        if (db.containsKey(title)) {
-            return Optional.of(db.get(title));
+    public Optional<MeetingMinutes> findOne(Integer id) {
+        if (db.containsKey(id)) {
+            return Optional.of(db.get(id));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<MeetingMinutes> findByTitle(String title) {
+        // TODO: implementar medoto
+        return null;
     }
 
     @Override
@@ -54,9 +51,11 @@ public class InMemoryMeetingMinutesDAO implements MeetingMinutesDAO {
     }
 
     @Override
-    public Optional<MeetingMinutes> findByIdentifier(String identifier) {
-        return db.values().stream()
-                .filter(meetingMinutes -> meetingMinutes.getIdentifier().equals(identifier)).findAny();
+    public List<MeetingMinutes> findByIdentifier(String identifier) {
+        // TODO: Implementar método
+//        return db.values().stream()
+//                .filter(meetingMinutes -> meetingMinutes.getIdentifier().equals(identifier)).findAny();
+        return null;
     }
 
     @Override
@@ -66,18 +65,18 @@ public class InMemoryMeetingMinutesDAO implements MeetingMinutesDAO {
 
     @Override
     public boolean update(MeetingMinutes meetingMinutes) {
-        String title = meetingMinutes.getTitle();
-        if (db.containsKey(title)) {
-            db.replace(title, meetingMinutes);
+        Integer id = meetingMinutes.getId();
+        if (db.containsKey(id)) {
+            db.replace(id, meetingMinutes);
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean deleteByKey(String title) {
-        if (db.containsKey(title)) {
-            db.remove(title);
+    public boolean deleteByKey(Integer id) {
+        if (db.containsKey(id)) {
+            db.remove(id);
             return true;
         }
         return false;
@@ -85,6 +84,6 @@ public class InMemoryMeetingMinutesDAO implements MeetingMinutesDAO {
 
     @Override
     public boolean delete(MeetingMinutes meetingMinutes) {
-        return deleteByKey(meetingMinutes.getTitle());
+        return deleteByKey(meetingMinutes.getId());
     }
 }

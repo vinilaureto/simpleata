@@ -41,7 +41,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.4</version>
                 <configuration>
-                    <mainClass>br.edu.ifsp.aluno.App</mainClass>
+                    <mainClass>br.edu.ifsp.aluno.aplication.view.WindowLoader</mainClass>
                 </configuration>
             </plugin>
         </plugins>

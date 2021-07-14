@@ -6,22 +6,29 @@ import br.edu.ifsp.aluno.domain.usecases.participant.ParticipantDAO;
 import java.util.*;
 
 public class InMemoryParticipantDAO implements ParticipantDAO {
-
-    private static final Map<String, Participant> db = new LinkedHashMap<>();
+    private static final Map<Integer, Participant> db = new LinkedHashMap<>();
+    private static int participantIdCounter;
 
     @Override
-    public String insert(Participant participant) {
-        String email = participant.getEmail();
-        db.put(email, participant);
-        return email;
+    public Integer insert(Participant participant) {
+        participantIdCounter++;
+        participant.setId(participantIdCounter);
+        db.put(participantIdCounter, participant);
+        return participantIdCounter;
     }
 
     @Override
-    public Optional<Participant> findOne(String email) {
-        if (db.containsKey(email)) {
-            return Optional.of(db.get(email));
+    public Optional<Participant> findOne(Integer id) {
+        if (db.containsKey(id)) {
+            return Optional.of(db.get(id));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<Participant> findByEmail(String email) {
+        return Optional.empty();
+        //todo: implementar método
     }
 
     @Override
@@ -43,18 +50,18 @@ public class InMemoryParticipantDAO implements ParticipantDAO {
 
     @Override
     public boolean update(Participant participant) {
-        String email = participant.getEmail();
-        if (db.containsKey(email)) {
-            db.replace(email, participant);
+        Integer id = participant.getId();
+        if (db.containsKey(id)) {
+            db.replace(id, participant);
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean deleteByKey(String email) {
-        if (db.containsKey(email)) {
-            db.remove(email);
+    public boolean deleteByKey(Integer id) {
+        if (db.containsKey(id)) {
+            db.remove(id);
             return true;
         }
         return false;
@@ -62,6 +69,6 @@ public class InMemoryParticipantDAO implements ParticipantDAO {
 
     @Override
     public boolean delete(Participant participant) {
-        return deleteByKey(participant.getEmail());
+        return deleteByKey(participant.getId());
     }
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.aluno.aplication.controller.ManageMeetingMinutesUIController">
+   <children>
+      <TableView fx:id="tableView" layoutX="24.0" layoutY="112.0" prefHeight="236.0" prefWidth="553.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="112.0">
+        <columns>
+          <TableColumn fx:id="cIdentifier" prefWidth="102.0" text="Identificador" />
+          <TableColumn fx:id="cTitle" prefWidth="221.0" text="Título" />
+            <TableColumn fx:id="cGroup" prefWidth="114.0" text="Grupo" />
+            <TableColumn fx:id="cStatus" prefWidth="115.0" text="Status" />
+        </columns>
+      </TableView>
+      <Label layoutX="24.0" layoutY="13.0" text="Buscar ata:" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="13.0" />
+      <TextField fx:id="txtSearchMeetingMinute" layoutX="24.0" layoutY="37.0" prefHeight="25.0" prefWidth="233.0" promptText="Busca" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="37.0" />
+      <RadioButton layoutX="24.0" layoutY="73.0" mnemonicParsing="false" selected="true" text="Título" AnchorPane.leftAnchor="24.0">
+         <toggleGroup>
+            <ToggleGroup fx:id="search" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="99.0" layoutY="73.0" mnemonicParsing="false" text="Grupo" toggleGroup="$search" AnchorPane.leftAnchor="99.0" AnchorPane.topAnchor="73.0" />
+      <RadioButton layoutX="179.0" layoutY="73.0" mnemonicParsing="false" text="Participante" toggleGroup="$search" AnchorPane.leftAnchor="179.0" AnchorPane.topAnchor="73.0" />
+      <RadioButton layoutX="282.0" layoutY="73.0" mnemonicParsing="false" text="Identificador" toggleGroup="$search" AnchorPane.leftAnchor="282.0" AnchorPane.topAnchor="73.0" />
+      <Button fx:id="btnSearchMeetingMinutes" layoutX="263.0" layoutY="37.0" mnemonicParsing="false" onDragDetected="#searchMeetingMinutes" prefHeight="25.0" prefWidth="84.0" text="Buscar" AnchorPane.leftAnchor="263.0" AnchorPane.topAnchor="37.0" />
+      <Button fx:id="btnManageGroups" layoutX="170.0" layoutY="361.0" mnemonicParsing="false" onAction="#manageGroups" text="Gerenciar grupos" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="170.0" />
+      <Button fx:id="btnManageParticipants" layoutX="24.0" layoutY="361.0" mnemonicParsing="false" onAction="#manageParticipants" text="Gerenciar participantes" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="24.0" />
+      <Button fx:id="btnNewMeetingMinutes" layoutX="493.0" layoutY="361.0" mnemonicParsing="false" onAction="#newMeetingMinutes" prefHeight="25.0" prefWidth="84.0" text="Nova ata" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="23.0" />
+      <Button fx:id="btnEditMeetingMinutes" layoutX="402.0" layoutY="361.0" mnemonicParsing="false" onAction="#editMeetingMinutes" prefHeight="25.0" prefWidth="84.0" text="Editar ata" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="114.0" />
+      <Button fx:id="btnRemoveMeetingMinutes" layoutX="306.0" layoutY="361.0" mnemonicParsing="false" onAction="#removeMeetingMinutes" prefHeight="25.0" prefWidth="88.0" text="Remover ata" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="206.0" />
+   </children>
+</AnchorPane>

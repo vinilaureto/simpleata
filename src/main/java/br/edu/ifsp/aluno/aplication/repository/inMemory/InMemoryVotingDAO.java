@@ -1,20 +1,20 @@
 package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
-import br.edu.ifsp.aluno.domain.entities.vote.Vote;
 import br.edu.ifsp.aluno.domain.entities.voting.Voting;
-import br.edu.ifsp.aluno.domain.usecases.vote.VoteDAO;
 import br.edu.ifsp.aluno.domain.usecases.voting.VotingDAO;
 
 import java.util.*;
 
 public class InMemoryVotingDAO implements VotingDAO {
     private static final Map<Integer, Voting> db = new LinkedHashMap<>();
+    private static int votingIdCounter;
 
     @Override
     public Integer insert(Voting voting) {
-        Integer id = voting.getId();
-        db.put(id, voting);
-        return id;
+        votingIdCounter++;
+        voting.setId(votingIdCounter);
+        db.put(votingIdCounter, voting);
+        return votingIdCounter;
     }
 
     @Override
