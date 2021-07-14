@@ -4,6 +4,7 @@ import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.usecases.participant.ParticipantDAO;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InMemoryParticipantDAO implements ParticipantDAO {
     private static final Map<Integer, Participant> db = new LinkedHashMap<>();
@@ -34,13 +35,13 @@ public class InMemoryParticipantDAO implements ParticipantDAO {
     @Override
     public List<Participant> findByName(String name) {
         return (List<Participant>) db.values().stream()
-                .filter(participant -> participant.getName().equals(name));
+                .filter(participant -> participant.getName().equals(name)).collect(Collectors.toList());
     }
 
     @Override
     public List<Participant> findByTitle(String title) {
-        return (List<Participant>) db.values().stream()
-                .filter(participant -> participant.getTitle().equals(title));
+        return  (List<Participant>) db.values().stream()
+                .filter(participant -> participant.getTitle().equals(title)).collect(Collectors.toList());
     }
 
     @Override
