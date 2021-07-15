@@ -79,7 +79,7 @@ public class ManageGroupUIController {
             tableData.clear();
             tableData.addAll(group.get());
         } else {
-//            showAlert("Erro!", "Groupe não encontrado", Alert.AlertType.ERROR);
+            showAlert("Erro!", "Grupo não encontrado", Alert.AlertType.ERROR);
             loadDataAndShow();
         }
     }
@@ -92,7 +92,15 @@ public class ManageGroupUIController {
         if (selectedItem != null) {
             WindowLoader.setRoot("GroupUI");
             GroupUIController controller = (GroupUIController) WindowLoader.getController();
-//            controller.setGroup(selectedItem, mode);
+            controller.setGroup(selectedItem, mode);
         }
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 }

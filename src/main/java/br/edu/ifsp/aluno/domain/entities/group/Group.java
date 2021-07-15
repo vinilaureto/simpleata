@@ -16,6 +16,9 @@ public class Group {
     private List<Participant> participants = new ArrayList<>();
     private List<MeetingMinutes> meetingMinutesList = new ArrayList<>();
 
+    public Group() {
+    }
+
     public Group(String name) {
         this.name = name;
     }
@@ -67,6 +70,11 @@ public class Group {
 
     public List<Participant> getParticipants() {
         return participants;
+    }
+
+//   todo: Verificar se precisa; parece que sim
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
     }
 
     public String getParticipantsNames() {
