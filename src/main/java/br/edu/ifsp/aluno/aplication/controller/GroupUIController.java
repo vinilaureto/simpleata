@@ -36,6 +36,8 @@ public class GroupUIController {
     @FXML
     private Button btnAddParticipant;
     @FXML
+    private Button btnRemoveParticipant;
+    @FXML
     private Button btnBackToPreviousScene;
     @FXML
     private Button btnSaveOrUpdate;
@@ -70,18 +72,24 @@ public class GroupUIController {
 
     private void loadDataAndShow() {
         List<Participant> participantList = findParticipantUseCase.findAll();
-        //List<Participant> groupParticipants = findGroupUseCase.findByName(group.getName()).get().getParticipants();
-//        participantList.remove(group.getParticipants());
         tableDataAllParticipants.clear();
         tableDataAllParticipants.addAll(participantList);
-        tableDataGroupParticipants.clear();
-//        tableDataGroupParticipants.addAll(group.getParticipants());
     }
 
-    public void btnAddParticipant(ActionEvent actionEvent) throws IOException {
+    public void btnAddParticipant(ActionEvent actionEvent) {
+        Participant selectedItem = allParticipants.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            tableDataAllParticipants.remove(selectedItem);
+            tableDataGroupParticipants.add(selectedItem);
+        }
     }
 
-    public void btnRemoveParticipant(ActionEvent actionEvent) throws IOException {
+    public void btnRemoveParticipant(ActionEvent actionEvent) {
+        Participant selectedItem = groupParticipants.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            tableDataGroupParticipants.remove(selectedItem);
+            tableDataAllParticipants.add(selectedItem);
+        }
     }
 
     public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
@@ -106,14 +114,16 @@ public class GroupUIController {
         group.setParticipants(groupParticipants.getItems());
     }
 
-    public void findParticipant(ActionEvent actionEvent) throws IOException {
+    public void findParticipant(ActionEvent actionEvent) {
         List<Participant> list = findParticipantUseCase.findByName(txtParticipantName.getText());
         if (!list.isEmpty()) {
-            tableDataGroupParticipants.clear();
+            tableDataAllParticipants.clear();
             tableDataAllParticipants.addAll(list);
+            group.getParticipants().forEach(p -> tableDataAllParticipants.remove(p));
         } else {
             showAlert("Erro!", "Participante não encontrado", Alert.AlertType.ERROR);
             loadDataAndShow();
+            group.getParticipants().forEach(p -> tableDataAllParticipants.remove(p));
         }
     }
 
@@ -132,6 +142,10 @@ public class GroupUIController {
 
     private void setEntityIntoView() {
         txtGroupName.setText(group.getName());
+
+        group.getParticipants().forEach(p -> tableDataAllParticipants.remove(p));
+
+        tableDataGroupParticipants.clear();
         tableDataGroupParticipants.addAll(group.getParticipants());
     }
 

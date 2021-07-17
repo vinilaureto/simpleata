@@ -16,8 +16,20 @@ public class InMemoryMeetingMinutesDAO implements MeetingMinutesDAO {
     public Integer insert(MeetingMinutes meetingMinutes) {
         meetingMinutesIdCounter++;
         meetingMinutes.setId(meetingMinutesIdCounter);
+        meetingMinutes.getGroup().addMeetingMinutes(meetingMinutes);
+        String identifier = setMeetingMinutesIdentifier(meetingMinutes);
+        meetingMinutes.setIdentifier(identifier);
         db.put(meetingMinutesIdCounter, meetingMinutes);
         return meetingMinutesIdCounter;
+    }
+
+    @Override
+    public String setMeetingMinutesIdentifier(MeetingMinutes meetingMinutes) {
+        String identifier = meetingMinutes.getGroup().getTotalMeetingMinutesOfAYear(meetingMinutes).toString()
+                + "/"
+                + meetingMinutes.getCreationDate().getYear();
+
+        return identifier;
     }
 
     @Override
