@@ -6,12 +6,12 @@ import br.edu.ifsp.aluno.domain.usecases.participant.FindParticipantUseCase;
 import br.edu.ifsp.aluno.domain.usecases.utils.EntityNotFoundException;
 
 public class AddParticipantToGroupUseCase {
-    private UpdateGroupUseCase updateGroupUseCase;
+    private GroupDAO groupDAO;
     private FindGroupUseCase findGroupUseCase;
     private FindParticipantUseCase findParticipantUseCase;
 
-    public AddParticipantToGroupUseCase(UpdateGroupUseCase updateGroupUseCase, FindGroupUseCase findGroupUseCase, FindParticipantUseCase findParticipantUseCase) {
-        this.updateGroupUseCase = updateGroupUseCase;
+    public AddParticipantToGroupUseCase(GroupDAO groupDAO, FindGroupUseCase findGroupUseCase, FindParticipantUseCase findParticipantUseCase) {
+        this.groupDAO = groupDAO;
         this.findGroupUseCase = findGroupUseCase;
         this.findParticipantUseCase = findParticipantUseCase;
     }
@@ -26,6 +26,6 @@ public class AddParticipantToGroupUseCase {
         }
 
         group.addParticipant(participant);
-        return updateGroupUseCase.update(group);
+        return groupDAO.addParticipantToGroup(participant, group);
     }
 }

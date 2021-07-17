@@ -1,9 +1,11 @@
 package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
 import br.edu.ifsp.aluno.domain.entities.inform.Inform;
+import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.usecases.inform.InformDAO;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InMemoryInformDAO implements InformDAO {
     private static final Map<Integer, Inform> db = new LinkedHashMap<>();
@@ -52,5 +54,16 @@ public class InMemoryInformDAO implements InformDAO {
     @Override
     public boolean delete(Inform inform) {
         return deleteByKey(inform.getId());
+    }
+
+    @Override
+    public List<Inform> findByMeetingMinutes(MeetingMinutes meetingMinutes) {
+        List<Inform> informList = findAll();
+        List<Inform> informMeetingMinutes;
+
+       return null;
+
+//                db.values().stream().filter(inform -> inform.getId()
+//                .equals(meetingMinutes.getInforms().forEach(m -> m.getId())));
     }
 }

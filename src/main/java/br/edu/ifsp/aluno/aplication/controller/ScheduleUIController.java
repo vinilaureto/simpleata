@@ -122,7 +122,6 @@ public class ScheduleUIController {
     }
 
     public void addVote(ActionEvent actionEvent) {
-
     }
 
     public void removeVote(ActionEvent actionEvent) {
@@ -136,9 +135,7 @@ public class ScheduleUIController {
         alert.showAndWait();
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) {
-        // mandar o window para onde?
-    }
+
 
     public void saveOrUpdate(ActionEvent actionEvent) {
         getEntityFromView();
@@ -171,6 +168,10 @@ public class ScheduleUIController {
 
     private void setEntityIntoView() {
 
+    }
+
+    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("MeetingMinutesUI");
     }
 
 

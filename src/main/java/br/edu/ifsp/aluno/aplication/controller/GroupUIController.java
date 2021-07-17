@@ -43,6 +43,8 @@ public class GroupUIController {
     private Button btnSaveOrUpdate;
     @FXML
     private Button btnFindParticipant;
+    @FXML
+    private Button btnCreateGroup;
 
     private ObservableList<Participant> tableDataAllParticipants;
     private ObservableList<Participant> tableDataGroupParticipants;
@@ -81,6 +83,7 @@ public class GroupUIController {
         if (selectedItem != null) {
             tableDataAllParticipants.remove(selectedItem);
             tableDataGroupParticipants.add(selectedItem);
+            addParticipantToGroupUseCase.addParticipantToGroup(selectedItem, group);
         }
     }
 
@@ -89,20 +92,13 @@ public class GroupUIController {
         if (selectedItem != null) {
             tableDataGroupParticipants.remove(selectedItem);
             tableDataAllParticipants.add(selectedItem);
+            removeParticipantFromGroupUseCase.removeParticipantFromGroup(selectedItem, group);
         }
-    }
-
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
-        WindowLoader.setRoot("ManageGroupUI");
     }
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
         getEntityFromView();
-        if (group.getId() == null) {
-            createGroupUseCase.insert(group);
-        } else {
-            updateGroupUseCase.update(group);
-        }
+        updateGroupUseCase.update(group);
         WindowLoader.setRoot("ManageGroupUI");
     }
 
@@ -133,10 +129,15 @@ public class GroupUIController {
         }
 
         this.group = group;
+        System.out.println(group);
         setEntityIntoView();
 
         if (mode == UIMode.VIEW) {
             configureViewMode();
+        }
+
+        if (mode == UIMode.UPDATE) {
+            enableEditFields();
         }
     }
 
@@ -166,5 +167,27 @@ public class GroupUIController {
         alert.setContentText(message);
         alert.setHeaderText(null);
         alert.showAndWait();
+    }
+
+    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("ManageGroupUI");
+    }
+
+    public void createGroup(ActionEvent actionEvent) {
+        getEntityFromView();
+        Integer newGroupId = createGroupUseCase.insert(group);
+        group.setId(newGroupId);
+        enableEditFields();
+    }
+
+    private void enableEditFields() {
+        btnCreateGroup.setDisable(true);
+        txtParticipantName.setDisable(false);
+        btnFindParticipant.setDisable(false);
+        btnAddParticipant.setDisable(false);
+        btnRemoveParticipant.setDisable(false);
+        allParticipants.setDisable(false);
+        groupParticipants.setDisable(false);
+        btnBackToPreviousScene.setVisible(false);
     }
 }

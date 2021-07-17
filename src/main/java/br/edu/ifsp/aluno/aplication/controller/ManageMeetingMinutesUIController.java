@@ -1,5 +1,6 @@
 package br.edu.ifsp.aluno.aplication.controller;
 
+import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import static br.edu.ifsp.aluno.aplication.main.Main.findMeetingMinutesUseCase;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ManageMeetingMinutesUIController {
@@ -58,16 +60,20 @@ public class ManageMeetingMinutesUIController {
     public void searchMeetingMinutes(MouseEvent mouseEvent) {
     }
 
-    public void manageParticipants(ActionEvent actionEvent) {
+    public void manageParticipants(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("ManageParticipantUI");
     }
 
-    public void manageGroups(ActionEvent actionEvent) {
+    public void manageGroups(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("ManageGroupUI");
     }
 
-    public void newMeetingMinutes(ActionEvent actionEvent) {
+    public void newMeetingMinutes(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("MeetingMinutesUI");
     }
 
     public void editMeetingMinutes(ActionEvent actionEvent) {
+
     }
 
     public void removeMeetingMinutes(ActionEvent actionEvent) {

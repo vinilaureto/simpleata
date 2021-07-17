@@ -10,12 +10,12 @@ import java.util.Optional;
 public class RemoveParticipantFromGroupUseCase {
     private FindGroupUseCase findGroupUseCase;
     private FindParticipantUseCase findParticipantUseCase;
-    private UpdateGroupUseCase updateGroupUseCase;
+    private GroupDAO groupDAO;
 
-    public RemoveParticipantFromGroupUseCase(FindGroupUseCase findGroupUseCase, FindParticipantUseCase findParticipantUseCase, UpdateGroupUseCase updateGroupUseCase) {
+    public RemoveParticipantFromGroupUseCase(FindGroupUseCase findGroupUseCase, FindParticipantUseCase findParticipantUseCase,  GroupDAO groupDAO) {
         this.findGroupUseCase = findGroupUseCase;
         this.findParticipantUseCase = findParticipantUseCase;
-        this.updateGroupUseCase = updateGroupUseCase;
+        this.groupDAO = groupDAO;
     }
 
     public boolean removeParticipantFromGroup(Participant participant, Group group) {
@@ -30,6 +30,6 @@ public class RemoveParticipantFromGroupUseCase {
         }
 
         group.removeParticipant(participant);
-        return updateGroupUseCase.update(group);
+        return groupDAO.removeParticipantFromGroup(participant, group);
     }
 }

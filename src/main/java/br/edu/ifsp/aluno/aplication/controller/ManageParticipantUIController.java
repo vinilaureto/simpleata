@@ -86,7 +86,7 @@ public class ManageParticipantUIController {
     }
 
     public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
-        WindowLoader.setRoot("ManageGroupUI");
+        WindowLoader.setRoot("ManageMeetingMinutesUI");
     }
 
     private void showParticipantInMode(UIMode mode) throws IOException {

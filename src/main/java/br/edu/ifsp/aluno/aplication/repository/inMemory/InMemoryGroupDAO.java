@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
 import br.edu.ifsp.aluno.domain.entities.group.Group;
+import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.usecases.group.GroupDAO;
 
 import java.util.*;
@@ -30,6 +31,17 @@ public class InMemoryGroupDAO implements GroupDAO {
         // TODO: implementar método
         return Optional.empty();
     }
+
+    @Override
+    public boolean addParticipantToGroup(Participant participant, Group group) {
+        return false;
+    }
+
+    @Override
+    public boolean removeParticipantFromGroup(Participant participant, Group group) {
+        return false;
+    }
+
 
     @Override
     public List<Group> findAll() {

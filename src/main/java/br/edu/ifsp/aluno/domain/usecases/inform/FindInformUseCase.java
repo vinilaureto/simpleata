@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.domain.usecases.inform;
 
 import br.edu.ifsp.aluno.domain.entities.inform.Inform;
+import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.usecases.utils.Validator;
 
 import java.util.List;
@@ -22,5 +23,11 @@ public class FindInformUseCase {
 
     public List<Inform> findAll() {
         return informDAO.findAll();
+    }
+
+    public List<Inform> findByMeetingMinutes(MeetingMinutes meetingMinutes) {
+        if (meetingMinutes == null)
+            throw new IllegalArgumentException("meetingMinutes can not be 0.");
+        return informDAO.findByMeetingMinutes(meetingMinutes);
     }
 }

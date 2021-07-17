@@ -19,6 +19,11 @@ public class Group {
     public Group() {
     }
 
+    public Group(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Group(String name) {
         this.name = name;
     }
@@ -98,9 +103,11 @@ public class Group {
 
     @Override
     public String toString() {
-        return "\n Group " + name
-                + "\n\t Participantes:"
-                + "\t\t" + participants.stream().map(p -> p.toString()).collect(Collectors.joining("\n\t\t"));
-
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", participants=" + participants +
+                ", meetingMinutesList=" + meetingMinutesList +
+                '}';
     }
 }
