@@ -19,16 +19,12 @@ public class ManageGroupUIController {
 
     @FXML
     private TextField txtSearchGroup;
-
     @FXML
     private Button btnSearchGroup;
-
     @FXML
     private TableView<Group> tableView;
-
     @FXML
     private TableColumn<Group, String> cGroup;
-
     @FXML
     private TableColumn<Group, String> cParticipants;
 
@@ -75,16 +71,17 @@ public class ManageGroupUIController {
 
     public void searchGroup(ActionEvent actionEvent) {
         Optional<Group> group = findGroupUseCase.findByName(txtSearchGroup.getText());
-        if (!group.isEmpty()) {
+        if (group.isPresent()) {
             tableData.clear();
             tableData.addAll(group.get());
         } else {
-//            showAlert("Erro!", "Groupe não encontrado", Alert.AlertType.ERROR);
+            showAlert("Erro!", "Grupo não encontrado", Alert.AlertType.ERROR);
             loadDataAndShow();
         }
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) {
+    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("ManageMeetingMinutesUI");
     }
 
     private void showGroupInMode(UIMode mode) throws IOException {
@@ -92,7 +89,15 @@ public class ManageGroupUIController {
         if (selectedItem != null) {
             WindowLoader.setRoot("GroupUI");
             GroupUIController controller = (GroupUIController) WindowLoader.getController();
-//            controller.setGroup(selectedItem, mode);
+            controller.setGroup(selectedItem, mode);
         }
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 }

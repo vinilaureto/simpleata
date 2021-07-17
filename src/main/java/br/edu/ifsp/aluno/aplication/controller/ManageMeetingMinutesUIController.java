@@ -1,5 +1,6 @@
 package br.edu.ifsp.aluno.aplication.controller;
 
+import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,7 +44,8 @@ public class ManageMeetingMinutesUIController {
     private void bindColumnsToValueSource() {
         cIdentifier.setCellValueFactory(new PropertyValueFactory<>("identifier"));
         cTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        //cGroup.setCellValueFactory(new PropertyValueFactory<>(""));
+//        easy way
+        cGroup.setCellValueFactory(new PropertyValueFactory<>("groupName"));
         cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 

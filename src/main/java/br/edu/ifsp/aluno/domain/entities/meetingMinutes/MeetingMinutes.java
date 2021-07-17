@@ -144,6 +144,11 @@ public class MeetingMinutes {
         return group;
     }
 
+//    todo: easy way
+    public String getGroupName() {
+        return group.getName();
+    }
+
     public List<Inform> getInforms() {
         return informs;
     }

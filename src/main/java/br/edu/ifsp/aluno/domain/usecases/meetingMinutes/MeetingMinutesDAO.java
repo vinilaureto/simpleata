@@ -15,5 +15,7 @@ public interface MeetingMinutesDAO extends DAO<MeetingMinutes, Integer> {
 
     List<MeetingMinutes> findByParticipant(Participant participant);
 
+    String setMeetingMinutesIdentifier(MeetingMinutes meetingMinutes);
+
     List<MeetingMinutes> findByIdentifier(String identifier);
 }
