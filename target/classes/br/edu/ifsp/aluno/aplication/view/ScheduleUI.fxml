@@ -10,16 +10,15 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="718.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.aluno.aplication.controller.ScheduleUIController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Tópico da pauta:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
       <TextField fx:id="txtScheduleTopic" layoutX="14.0" layoutY="37.0" prefHeight="25.0" prefWidth="282.0" promptText="Tópico da pauta" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="37.0" />
       <Label layoutX="14.0" layoutY="88.0" text="Comentários" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="88.0" />
-      <TableView layoutX="14.0" layoutY="112.0" prefHeight="152.0" prefWidth="576.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="112.0">
+      <TableView fx:id="tableViewComments" layoutX="14.0" layoutY="112.0" prefHeight="152.0" prefWidth="576.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="112.0">
         <columns>
-          <TableColumn prefWidth="174.0" text="Participante" />
-          <TableColumn prefWidth="401.0" text="Comentário" />
+          <TableColumn fx:id="cCommentParticipantName" prefWidth="174.0" text="Participante" />
+          <TableColumn fx:id="cCommentComment" prefWidth="401.0" text="Comentário" />
         </columns>
       </TableView>
       <Button fx:id="btnNewComment" layoutX="463.0" layoutY="272.0" mnemonicParsing="false" onAction="#newComment" prefHeight="25.0" prefWidth="125.0" text="Novo comentário" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="272.0" />
@@ -33,10 +32,10 @@
       </RadioButton>
       <RadioButton fx:id="rdVotingNamed" layoutX="145.0" layoutY="361.0" mnemonicParsing="false" text="Votação nominal" toggleGroup="$voting" AnchorPane.leftAnchor="145.0" AnchorPane.topAnchor="361.0" />
       <RadioButton fx:id="rdVotingAnonymous" layoutX="292.0" layoutY="361.0" mnemonicParsing="false" text="Votação anônima" toggleGroup="$voting" AnchorPane.leftAnchor="292.0" AnchorPane.topAnchor="361.0" />
-      <TableView layoutX="14.0" layoutY="427.0" prefHeight="152.0" prefWidth="576.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="427.0">
+      <TableView fx:id="tableViewVotes" layoutX="14.0" layoutY="427.0" prefHeight="152.0" prefWidth="576.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="427.0">
          <columns>
-            <TableColumn prefWidth="174.0" text="Participante" />
-            <TableColumn prefWidth="401.0" text="Comentário" />
+            <TableColumn fx:id="cVoteParticipantName" prefWidth="174.0" text="Participante" />
+            <TableColumn fx:id="cVoteVote" prefWidth="401.0" text="Voto" />
          </columns>
       </TableView>
       <ComboBox fx:id="cbParticipant" disable="true" layoutX="15.0" layoutY="392.0" prefHeight="25.0" prefWidth="219.0" promptText="Participante" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="392.0" />

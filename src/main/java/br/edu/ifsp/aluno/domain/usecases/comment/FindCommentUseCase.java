@@ -1,6 +1,8 @@
 package br.edu.ifsp.aluno.domain.usecases.comment;
 
 import br.edu.ifsp.aluno.domain.entities.comment.Comment;
+import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +18,10 @@ public class FindCommentUseCase {
             throw new IllegalArgumentException("Comment ID can not be 0.");
         }
         return commentDAO.findOne(id);
+    }
+
+    public List<Comment> findBySchedule(Schedule schedule) {
+        return commentDAO.findBySchedule(schedule);
     }
 
     public List<Comment> findAll() {

@@ -48,6 +48,13 @@ public class Vote {
         this.id = id;
     }
 
+    public String getParticipantName() {
+        if (participant != null) {
+            return participant.getName();
+        }
+        return "anônimo";
+    }
+
     @Override
     public String toString() {
         return "Vote{" +

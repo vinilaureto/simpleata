@@ -45,6 +45,10 @@ public class Comment {
         this.id = id;
     }
 
+    public String getParticipanName() {
+        return participant.getName();
+    }
+
     @Override
     public String toString() {
         return "Comment{" +

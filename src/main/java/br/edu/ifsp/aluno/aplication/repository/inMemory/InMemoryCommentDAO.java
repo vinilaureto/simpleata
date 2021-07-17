@@ -1,9 +1,11 @@
 package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
 import br.edu.ifsp.aluno.domain.entities.comment.Comment;
+import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.usecases.comment.CommentDAO;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InMemoryCommentDAO implements CommentDAO {
     private static final Map<Integer, Comment> db = new LinkedHashMap<>();
@@ -24,6 +26,12 @@ public class InMemoryCommentDAO implements CommentDAO {
         }
         return Optional.empty();
     }
+
+    @Override
+    public List<Comment> findBySchedule(Schedule schedule) {
+        return null;
+    }
+
 
     @Override
     public List<Comment> findAll() {
