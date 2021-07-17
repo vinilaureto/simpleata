@@ -1,5 +1,6 @@
 package br.edu.ifsp.aluno.aplication.main;
 
+import br.edu.ifsp.aluno.aplication.controller.utils.ApplicationContext;
 import br.edu.ifsp.aluno.aplication.repository.inMemory.*;
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.entities.comment.Comment;
@@ -294,6 +295,9 @@ public class Main {
         deleteScheduleUseCase.delete(schedule1);
 //        System.out.println(findScheduleUseCase.findAll());
 
+        // Teste com o contexto
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        applicationContext.setCurrentGroup(group1);
 
     }
 
