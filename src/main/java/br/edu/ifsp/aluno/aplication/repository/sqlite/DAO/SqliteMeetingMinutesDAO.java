@@ -70,7 +70,7 @@ public class SqliteMeetingMinutesDAO implements MeetingMinutesDAO {
             LocalDate.parse(rs.getString("creation_date")),
             LocalDate.parse(rs.getString("closing_date")),
             MeetingMinutesStatus.toEnum(rs.getString("status")),
-            findGroupUseCase.findOne(rs.getInt("id_group"))
+            findGroupUseCase.findOne(rs.getInt("id_group")).get()
         );
     }
 

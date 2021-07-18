@@ -46,9 +46,11 @@ public class SqliteGroupDAO implements GroupDAO {
     }
 
     private Group resultSetIntoEntity(ResultSet rs) throws SQLException {
+        SqliteParticipantDAO sqliteParticipantDAO = new SqliteParticipantDAO();
         return new Group(
                 rs.getInt("id"),
-                rs.getString("name")
+                rs.getString("name"),
+                sqliteParticipantDAO.findParticipantsByGroup(rs.getInt("id"))
         );
     }
 

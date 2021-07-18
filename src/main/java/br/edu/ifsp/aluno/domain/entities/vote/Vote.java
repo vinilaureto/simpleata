@@ -2,11 +2,15 @@ package br.edu.ifsp.aluno.domain.entities.vote;
 
 
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
+import br.edu.ifsp.aluno.domain.entities.voting.Voting;
+
+import java.util.Optional;
 
 public class Vote {
     private Integer id;
     private Participant participant;
     private VoteValue value;
+    private Voting voting;
 
     public Vote(Participant participant, VoteValue value) {
         this.participant = participant;
@@ -23,6 +27,12 @@ public class Vote {
         this.value = value;
     }
 
+    public Vote(Integer id, Participant participant, VoteValue value, Voting voting) {
+        this.id = id;
+        this.participant = participant;
+        this.value = value;
+        this.voting = voting;
+    }
 
     public Participant getParticipant() {
         return participant;
@@ -40,12 +50,20 @@ public class Vote {
         this.value = value;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Voting getVoting() {
+        return voting;
+    }
+
+    public void setVoting(Voting voting) {
+        this.voting = voting;
     }
 
     public String getParticipantName() {
