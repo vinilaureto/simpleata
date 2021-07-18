@@ -17,4 +17,11 @@ public enum MeetingMinutesStatus {
     public String toString() {
         return label;
     }
+
+    public static MeetingMinutesStatus toEnum(String value){
+        return Arrays.stream(MeetingMinutesStatus.values())
+                .filter(c -> value.equals(c.toString()))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+    }
 }

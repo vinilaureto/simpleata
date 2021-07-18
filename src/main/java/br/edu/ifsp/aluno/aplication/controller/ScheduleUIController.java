@@ -63,12 +63,12 @@ public class ScheduleUIController {
 
     @FXML
     private void initialize() {
-        ApplicationContext applicationContext = ApplicationContext.getInstance();
-        group = applicationContext.getCurrentGroup();
+//        ApplicationContext applicationContext = ApplicationContext.getInstance();
+//        group = applicationContext.getCurrentGroup();
 
-        bindTableViewToItemsList();
-        bindColumnsToValueSource();
-        loadDataAndShow();
+//        bindTableViewToItemsList();
+//        bindColumnsToValueSource();
+//        loadDataAndShow();
     }
 
     private void bindTableViewToItemsList() {
@@ -90,15 +90,7 @@ public class ScheduleUIController {
     }
 
     private void loadDataAndShow() {
-        List<Comment> commentList = schedule.getComments(); // erro aqui
-        tableDataComment.clear();
-        tableDataComment.addAll(commentList);
 
-        if (schedule.getVoting() != null) {
-            List<Vote> voteList = schedule.getVoting().getVotes();
-            tableDataVote.clear();
-            tableDataVote.addAll(voteList);
-        }
     }
 
     public void newComment(ActionEvent actionEvent) throws IOException {

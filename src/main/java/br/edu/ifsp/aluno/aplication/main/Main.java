@@ -2,8 +2,7 @@ package br.edu.ifsp.aluno.aplication.main;
 
 import br.edu.ifsp.aluno.aplication.controller.utils.ApplicationContext;
 import br.edu.ifsp.aluno.aplication.repository.inMemory.*;
-import br.edu.ifsp.aluno.aplication.repository.sqlite.DAO.SqliteGroupDAO;
-import br.edu.ifsp.aluno.aplication.repository.sqlite.DAO.SqliteParticipantDAO;
+import br.edu.ifsp.aluno.aplication.repository.sqlite.DAO.*;
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.entities.comment.Comment;
 import br.edu.ifsp.aluno.domain.entities.group.Group;
@@ -304,12 +303,6 @@ public class Main {
     }
 
     private static void configureInjection() {
-//        ParticipantDAO participantDAO = new InMemoryParticipantDAO();
-//        createParticipantUseCase = new CreateParticipantUseCase(participantDAO);
-//        updateParticipantUseCase = new UpdateParticipantUseCase(participantDAO);
-//        findParticipantUseCase = new FindParticipantUseCase(participantDAO);
-//        deleteParticipantUseCase = new DeleteParticipantUseCase(participantDAO);
-
         ParticipantDAO participantDAO = new SqliteParticipantDAO();
         createParticipantUseCase = new CreateParticipantUseCase(participantDAO);
         updateParticipantUseCase = new UpdateParticipantUseCase(participantDAO);
@@ -334,7 +327,7 @@ public class Main {
                 findGroupUseCase,
                 updateGroupUseCase);
 
-        MeetingMinutesDAO meetingMinutesDAO = new InMemoryMeetingMinutesDAO();
+        MeetingMinutesDAO meetingMinutesDAO = new SqliteMeetingMinutesDAO();
         createMeetingMinutesUseCase = new CreateMeetingMinutesUseCase(meetingMinutesDAO);
         findMeetingMinutesUseCase = new FindMeetingMinutesUseCase(meetingMinutesDAO);
         deleteMeetingMinuteUseCase = new DeleteMeetingMinuteUseCase(meetingMinutesDAO);
@@ -352,13 +345,13 @@ public class Main {
                 updateMeetingMinutesUseCase
         );
 
-        InformDAO informDAO = new InMemoryInformDAO();
+        InformDAO informDAO = new SqliteInformDAO();
         createInformUseCase = new CreateInformUseCase(informDAO);
         deleteInformUseCase = new DeleteInformUseCase(informDAO);
         findInformUseCase = new FindInformUseCase(informDAO);
         updateInformUseCase = new UpdateInformUseCase(informDAO);
 
-        ScheduleDAO scheduleDAO = new InMemoryScheduleDAO();
+        ScheduleDAO scheduleDAO = new SqliteScheduleDAO();
         createScheduleUseCase = new CreateScheduleUseCase(scheduleDAO);
         deleteScheduleUseCase = new DeleteScheduleUseCase(scheduleDAO);
         findScheduleUseCase = new FindScheduleUseCase(scheduleDAO);
@@ -374,13 +367,13 @@ public class Main {
                 updateScheduleUseCase
         );
 
-        CommentDAO commentDAO = new InMemoryCommentDAO();
+        CommentDAO commentDAO = new SqliteCommentDAO();
         createCommentUseCase = new CreateCommentUseCase(commentDAO);
         updateCommentUseCase = new UpdateCommentUseCase(commentDAO);
         deleteCommentUseCase = new DeleteCommentUseCase(commentDAO);
         findCommentUseCase = new FindCommentUseCase(commentDAO);
 
-        VotingDAO votingDAO = new InMemoryVotingDAO();
+        VotingDAO votingDAO = new SqliteVotingDAO();
         createVotingUseCase = new CreateVotingUseCase(votingDAO);
         updateVotingUseCase = new UpdateVotingUseCase(votingDAO);
         deleteVotingUseCase = new DeleteVotingUseCase(votingDAO);
@@ -391,7 +384,7 @@ public class Main {
                 updateVotingUseCase
         );
 
-        VoteDAO voteDAO = new InMemoryVoteDAO();
+        VoteDAO voteDAO = new SqliteVoteDAO();
         createVoteUseCase = new CreateVoteUseCase(voteDAO);
         updateVoteUseCase = new UpdateVoteUseCase(voteDAO);
         findVoteUseCase = new FindVoteUseCase(voteDAO);

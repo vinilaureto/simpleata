@@ -46,7 +46,7 @@ public class ManageMeetingMinutesUIController {
     private void bindColumnsToValueSource() {
         cIdentifier.setCellValueFactory(new PropertyValueFactory<>("identifier"));
         cTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-//        easy way
+        
         cGroup.setCellValueFactory(new PropertyValueFactory<>("groupName"));
         cStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
     }

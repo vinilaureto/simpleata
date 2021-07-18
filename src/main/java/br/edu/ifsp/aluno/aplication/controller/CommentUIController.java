@@ -31,10 +31,10 @@ public class CommentUIController {
 
     @FXML
     private void initialize() {
-        ApplicationContext applicationContext = ApplicationContext.getInstance();
-        group = applicationContext.getCurrentGroup();
-
-        cbParticipant.getItems().setAll(group.getParticipants());
+//        ApplicationContext applicationContext = ApplicationContext.getInstance();
+//        group = applicationContext.getCurrentGroup();
+//
+//        cbParticipant.getItems().setAll(group.getParticipants());
     }
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {

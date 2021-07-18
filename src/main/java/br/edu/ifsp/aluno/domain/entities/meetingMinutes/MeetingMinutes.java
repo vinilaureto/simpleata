@@ -7,6 +7,7 @@ import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MeetingMinutes {
     private Integer id;
@@ -52,6 +53,29 @@ public class MeetingMinutes {
         this.schedules = schedules;
         this.status = status;
         this.active = active;
+    }
+
+    public MeetingMinutes(Integer id, String logo, String identifier, String local, String title, LocalDate creationDate, LocalDate closingDate, MeetingMinutesStatus status) {
+        this.id = id;
+        this.logo = logo;
+        this.identifier = identifier;
+        this.local = local;
+        this.title = title;
+        this.creationDate = creationDate;
+        this.closingDate = closingDate;
+        this.status = status;
+    }
+
+    public MeetingMinutes(Integer id, String logo, String identifier, String local, String title, LocalDate creationDate, LocalDate closingDate, MeetingMinutesStatus status, Optional<Group> group) {
+        this.id = id;
+        this.logo = logo;
+        this.identifier = identifier;
+        this.local = local;
+        this.title = title;
+        this.creationDate = creationDate;
+        this.closingDate = closingDate;
+        this.status = status;
+        this.group = group.get();
     }
 
     public void closeMeetingMinute() {

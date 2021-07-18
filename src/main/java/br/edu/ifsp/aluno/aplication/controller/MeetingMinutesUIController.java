@@ -4,6 +4,7 @@ import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.inform.Inform;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
+import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import static br.edu.ifsp.aluno.aplication.main.Main.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class MeetingMinutesUIController {
@@ -77,8 +79,7 @@ public class MeetingMinutesUIController {
     }
 
     private void loadDataAndShow() {
-        List<Inform> informList = findInformUseCase.findByMeetingMinutes(meetingMinutes);
-
+        cbGroup.getItems().setAll(findGroupUseCase.findAll());
     }
 
     public void newSchedule(ActionEvent actionEvent) throws IOException {
@@ -107,7 +108,25 @@ public class MeetingMinutesUIController {
     public void meetingMinutesFindLogo(ActionEvent actionEvent) {
     }
 
-    public void saveOrUpdate(ActionEvent actionEvent) {
+    public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
+        getEntityFromView();
+        if (meetingMinutes.getId() == null) {
+            meetingMinutes.setCreationDate(LocalDate.now());
+            meetingMinutes.setClosingDate(LocalDate.now());
+            createMeetingMinutesUseCase.insert(meetingMinutes);
+        } else {
+            meetingMinutes.setClosingDate(LocalDate.now());
+            updateMeetingMinutesUseCase.update(meetingMinutes);
+        }
+        WindowLoader.setRoot("ManageMeetingMinutesUI");
+    }
+
+    private void getEntityFromView() {
+        if (meetingMinutes == null) {
+            meetingMinutes = new MeetingMinutes();
+        }
+        meetingMinutes.setTitle(txtMeetingMinutesTitle.getText());
+        meetingMinutes.setGroup(cbGroup.getValue());
     }
 
     public void backToPreviousScreen(ActionEvent actionEvent) throws IOException {
