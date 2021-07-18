@@ -1,5 +1,7 @@
 package br.edu.ifsp.aluno.domain.entities.vote;
 
+import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutesStatus;
+
 import java.util.Arrays;
 
 public enum VoteValue {

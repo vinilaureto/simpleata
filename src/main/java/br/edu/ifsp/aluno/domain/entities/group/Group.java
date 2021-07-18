@@ -34,6 +34,12 @@ public class Group {
         this.meetingMinutesList = meetingMinutesList;
     }
 
+    public Group(Integer id, String name, List<Participant> participants) {
+        this.id = id;
+        this.name = name;
+        this.participants = participants;
+    }
+
     public Group(Integer id, String name, List<Participant> participants, List<MeetingMinutes> meetingMinutesList) {
         this.id = id;
         this.name = name;

@@ -1,16 +1,19 @@
 package br.edu.ifsp.aluno.domain.entities.voting;
 
 
+import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.entities.vote.Vote;
 import br.edu.ifsp.aluno.domain.entities.vote.VoteValue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Voting {
     private Integer id;
     private VoteResult result;
     private List<Vote> votes = new ArrayList<>();
+    private Schedule schedule;
 
     public Voting() {
     }
@@ -24,6 +27,12 @@ public class Voting {
         this.id = id;
         this.result = result;
         this.votes = votes;
+    }
+
+    public Voting(Integer id, VoteResult result, Schedule schedule) {
+        this.id = id;
+        this.result = result;
+        this.schedule = schedule;
     }
 
     public void registerVote(Vote vote) {
@@ -61,13 +70,23 @@ public class Voting {
         return votes;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
+
+
 
     @Override
     public String toString() {

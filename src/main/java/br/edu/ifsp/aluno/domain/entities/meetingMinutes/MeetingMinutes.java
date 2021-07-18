@@ -66,7 +66,7 @@ public class MeetingMinutes {
         this.status = status;
     }
 
-    public MeetingMinutes(Integer id, String logo, String identifier, String local, String title, LocalDate creationDate, LocalDate closingDate, MeetingMinutesStatus status, Optional<Group> group) {
+    public MeetingMinutes(Integer id, String logo, String identifier, String local, String title, LocalDate creationDate, LocalDate closingDate, MeetingMinutesStatus status, Group group) {
         this.id = id;
         this.logo = logo;
         this.identifier = identifier;
@@ -75,7 +75,7 @@ public class MeetingMinutes {
         this.creationDate = creationDate;
         this.closingDate = closingDate;
         this.status = status;
-        this.group = group.get();
+        this.group = group;
     }
 
     public void closeMeetingMinute() {

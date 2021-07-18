@@ -1,16 +1,19 @@
 package br.edu.ifsp.aluno.domain.entities.schedule;
 
 import br.edu.ifsp.aluno.domain.entities.comment.Comment;
+import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.voting.Voting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Schedule {
     private Integer id;
     private String topic;
     private List<Comment> comments = new ArrayList<>();
     private Voting voting;
+    private MeetingMinutes meetingMinutes;
 
     public Schedule() {
     }
@@ -26,6 +29,20 @@ public class Schedule {
         this.topic = topic;
         this.comments = comments;
         this.voting = voting;
+    }
+
+    public Schedule(Integer id, String topic, List<Comment> comments, Voting voting,MeetingMinutes meetingMinutes) {
+        this.id = id;
+        this.topic = topic;
+        this.comments = comments;
+        this.voting = voting;
+        this.meetingMinutes = meetingMinutes;
+    }
+
+    public Schedule(Integer id, String topic, MeetingMinutes meetingMinutes) {
+        this.id = id;
+        this.topic = topic;
+        this.meetingMinutes = meetingMinutes;
     }
 
     public void addComment(Comment comment) {
@@ -66,6 +83,14 @@ public class Schedule {
 
     public void setVoting(Voting voting) {
         this.voting = voting;
+    }
+
+    public MeetingMinutes getMeetingMinutes() {
+        return meetingMinutes;
+    }
+
+    public void setMeetingMinutes(MeetingMinutes meetingMinutes) {
+        this.meetingMinutes = meetingMinutes;
     }
 
     @Override

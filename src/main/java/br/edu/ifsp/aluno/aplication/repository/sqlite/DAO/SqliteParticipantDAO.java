@@ -163,5 +163,20 @@ public class SqliteParticipantDAO implements ParticipantDAO {
         return deleteByKey(participant.getId());
     }
 
+    protected List<Participant> findParticipantsByGroup(Integer groupId) {
+        String sql = "SELECT * FROM participant p JOIN partcipant_groups pg ON p.id = pg.id_participant WHERE pg.id_groups = ?;";
+        List<Participant> participants = new ArrayList<>();
 
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmt.setInt(1, groupId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Participant participant = resultSetIntoEntity(rs);
+                participants.add(participant);
+            }
+        }   catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return participants;
+    }
 }
