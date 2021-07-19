@@ -1,5 +1,7 @@
 package br.edu.ifsp.aluno.domain.entities.participant;
 
+import java.util.Objects;
+
 public class Participant {
     private Integer id;
     private String name;
@@ -57,5 +59,18 @@ public class Participant {
     @Override
     public String toString() {
         return this.getName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(id, that.id) && Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email);
     }
 }
