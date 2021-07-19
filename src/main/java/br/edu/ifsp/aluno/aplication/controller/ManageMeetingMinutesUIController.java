@@ -3,6 +3,7 @@ package br.edu.ifsp.aluno.aplication.controller;
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
+import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -72,8 +73,13 @@ public class ManageMeetingMinutesUIController {
         WindowLoader.setRoot("MeetingMinutesUI");
     }
 
-    public void editMeetingMinutes(ActionEvent actionEvent) {
-
+    public void editMeetingMinutes(ActionEvent actionEvent) throws IOException {
+        MeetingMinutes selectedItem = tableView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            WindowLoader.setRoot("MeetingMinutesUI");
+            MeetingMinutesUIController controller = (MeetingMinutesUIController) WindowLoader.getController();
+            controller.setMeetingMinutes(selectedItem, UIMode.UPDATE);
+        }
     }
 
     public void removeMeetingMinutes(ActionEvent actionEvent) {

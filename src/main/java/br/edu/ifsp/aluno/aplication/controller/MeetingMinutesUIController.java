@@ -2,6 +2,7 @@ package br.edu.ifsp.aluno.aplication.controller;
 
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.entities.group.Group;
+
 import br.edu.ifsp.aluno.domain.entities.inform.Inform;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
@@ -53,6 +54,8 @@ public class MeetingMinutesUIController {
     private Button btnBackToPreviousScreen;
     @FXML
     private Button btnSaveOrUpdate;
+    @FXML
+    private Button btnCreateMeetingMinutes;
 
     private ObservableList<Inform> informObservableList;
     private ObservableList<Schedule> scheduleObservableList;
@@ -61,9 +64,11 @@ public class MeetingMinutesUIController {
 
     @FXML
     private void initialize() {
-        bindTableViewToItemsList();
-        bindColumnsToValueSource();
-        loadDataAndShow();
+        if (meetingMinutes != null) {
+            bindTableViewToItemsList();
+            bindColumnsToValueSource();
+            loadDataAndShow();
+        }
     }
 
     private void bindTableViewToItemsList() {
@@ -79,6 +84,10 @@ public class MeetingMinutesUIController {
     }
 
     private void loadDataAndShow() {
+        List<Inform> informList = findInformUseCase.findByMeetingMinutes(meetingMinutes);
+        informObservableList.clear();
+        informObservableList.addAll(informList);
+
         cbGroup.getItems().setAll(findGroupUseCase.findAll());
     }
 
@@ -97,9 +106,17 @@ public class MeetingMinutesUIController {
 
     public void newInform(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("InformUI");
+        InformUIController controller = (InformUIController) WindowLoader.getController();
+        controller.setMeetingMinutes(meetingMinutes);
     }
 
-    public void editInform(ActionEvent actionEvent) {
+    public void editInform(ActionEvent actionEvent) throws IOException {
+        Inform selectedItem = tableViewInform.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            WindowLoader.setRoot("InformUI");
+            InformUIController controller = (InformUIController) WindowLoader.getController();
+            controller.setInform(selectedItem);
+        }
     }
 
     public void removeInform(ActionEvent actionEvent) {
@@ -110,14 +127,8 @@ public class MeetingMinutesUIController {
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
         getEntityFromView();
-        if (meetingMinutes.getId() == null) {
-            meetingMinutes.setCreationDate(LocalDate.now());
-            meetingMinutes.setClosingDate(LocalDate.now());
-            createMeetingMinutesUseCase.insert(meetingMinutes);
-        } else {
-            meetingMinutes.setClosingDate(LocalDate.now());
-            updateMeetingMinutesUseCase.update(meetingMinutes);
-        }
+        meetingMinutes.setClosingDate(LocalDate.now());
+        updateMeetingMinutesUseCase.update(meetingMinutes);
         WindowLoader.setRoot("ManageMeetingMinutesUI");
     }
 
@@ -131,5 +142,48 @@ public class MeetingMinutesUIController {
 
     public void backToPreviousScreen(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("ManageMeetingMinutesUI");
+    }
+
+    public void setMeetingMinutes(MeetingMinutes meetingMinutes, UIMode uiMode) {
+        if (meetingMinutes == null) {
+            throw new IllegalArgumentException("Meeting Minutes can not be null.");
+        }
+
+        this.meetingMinutes = meetingMinutes;
+        setEntityIntoView();
+
+        if (uiMode == UIMode.UPDATE) {
+            enableEditFields();
+        }
+        initialize();
+    }
+
+    private void setEntityIntoView() {
+        txtMeetingMinutesTitle.setText(meetingMinutes.getTitle());
+        cbGroup.setValue(meetingMinutes.getGroup());
+    }
+
+    public void createMeetingMinutes(ActionEvent actionEvent) {
+        getEntityFromView();
+        meetingMinutes.setCreationDate(LocalDate.now());
+        meetingMinutes.setClosingDate(LocalDate.now());
+        Integer newMeetingMinutesId = createMeetingMinutesUseCase.insert(meetingMinutes);
+        meetingMinutes.setId(newMeetingMinutesId);
+        enableEditFields();
+    }
+
+    private void enableEditFields() {
+        cbGroup.setDisable(true);
+        btnCreateMeetingMinutes.setDisable(true);
+        btnMeetingMinutesFindLogo.setDisable(false);
+        tableViewInform.setDisable(false);
+        btnRemoveInform.setDisable(false);
+        btnEditInform.setDisable(false);
+        btnNewInform.setDisable(false);
+        tableViewSchedule.setDisable(false);
+        btnRemoveSchedule.setDisable(false);
+        btnEditSchedule.setDisable(false);
+        btnNewSchedule.setDisable(false);
+        btnBackToPreviousScreen.setVisible(false);
     }
 }
