@@ -82,17 +82,19 @@ public class GroupUIController {
         Participant selectedItem = allParticipants.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             tableDataAllParticipants.remove(selectedItem);
-            tableDataGroupParticipants.add(selectedItem);
             addParticipantToGroupUseCase.addParticipantToGroup(selectedItem, group);
+            tableDataGroupParticipants.clear();
+            tableDataGroupParticipants.addAll(group.getParticipants());
         }
     }
 
     public void btnRemoveParticipant(ActionEvent actionEvent) {
         Participant selectedItem = groupParticipants.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
-            tableDataGroupParticipants.remove(selectedItem);
             tableDataAllParticipants.add(selectedItem);
             removeParticipantFromGroupUseCase.removeParticipantFromGroup(selectedItem, group);
+            tableDataGroupParticipants.clear();
+            tableDataGroupParticipants.addAll(group.getParticipants());
         }
     }
 
@@ -115,11 +117,11 @@ public class GroupUIController {
         if (!list.isEmpty()) {
             tableDataAllParticipants.clear();
             tableDataAllParticipants.addAll(list);
-            group.getParticipants().forEach(p -> tableDataAllParticipants.remove(p));
+            tableDataAllParticipants.removeAll(group.getParticipants());
         } else {
             showAlert("Erro!", "Participante não encontrado", Alert.AlertType.ERROR);
             loadDataAndShow();
-            group.getParticipants().forEach(p -> tableDataAllParticipants.remove(p));
+            tableDataAllParticipants.removeAll(group.getParticipants());
         }
     }
 
@@ -129,7 +131,6 @@ public class GroupUIController {
         }
 
         this.group = group;
-        System.out.println(group);
         setEntityIntoView();
 
         if (mode == UIMode.VIEW) {
@@ -144,9 +145,9 @@ public class GroupUIController {
     private void setEntityIntoView() {
         txtGroupName.setText(group.getName());
 
-        group.getParticipants().forEach(p -> tableDataAllParticipants.remove(p));
-
-        tableDataGroupParticipants.clear();
+        tableDataAllParticipants.clear();
+        tableDataAllParticipants.addAll(findParticipantUseCase.findAll());
+        tableDataAllParticipants.removeAll(group.getParticipants());
         tableDataGroupParticipants.addAll(group.getParticipants());
     }
 
@@ -178,6 +179,8 @@ public class GroupUIController {
         Integer newGroupId = createGroupUseCase.insert(group);
         group.setId(newGroupId);
         enableEditFields();
+        setGroup(this.group, UIMode.UPDATE);
+        initialize();
     }
 
     private void enableEditFields() {

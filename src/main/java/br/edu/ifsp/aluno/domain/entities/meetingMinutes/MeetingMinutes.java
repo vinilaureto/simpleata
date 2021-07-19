@@ -7,6 +7,7 @@ import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class MeetingMinutes {
@@ -200,5 +201,18 @@ public class MeetingMinutes {
                 ", schedules=" + schedules +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MeetingMinutes that = (MeetingMinutes) o;
+        return Objects.equals(id, that.id) && Objects.equals(identifier, that.identifier) && Objects.equals(title, that.title) && Objects.equals(creationDate, that.creationDate) && Objects.equals(group, that.group);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, identifier, title, creationDate, group);
     }
 }
