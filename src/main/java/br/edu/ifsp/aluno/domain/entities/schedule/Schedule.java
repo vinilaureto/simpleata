@@ -6,6 +6,7 @@ import br.edu.ifsp.aluno.domain.entities.voting.Voting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Schedule {
@@ -101,5 +102,18 @@ public class Schedule {
                 ", comments=" + comments +
                 ", voting=" + voting +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Schedule schedule = (Schedule) o;
+        return Objects.equals(id, schedule.id) && Objects.equals(meetingMinutes, schedule.meetingMinutes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, meetingMinutes);
     }
 }

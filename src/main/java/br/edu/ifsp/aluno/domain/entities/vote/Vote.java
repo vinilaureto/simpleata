@@ -4,6 +4,7 @@ package br.edu.ifsp.aluno.domain.entities.vote;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.voting.Voting;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class Vote {
@@ -70,7 +71,7 @@ public class Vote {
         if (participant != null) {
             return participant.getName();
         }
-        return "anônimo";
+        return "Anônimo";
     }
 
     @Override
@@ -80,5 +81,18 @@ public class Vote {
                 ", participant=" + participant +
                 ", value=" + value +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vote vote = (Vote) o;
+        return Objects.equals(id, vote.id) && Objects.equals(participant, vote.participant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, participant);
     }
 }

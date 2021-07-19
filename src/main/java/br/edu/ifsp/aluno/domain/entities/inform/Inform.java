@@ -2,6 +2,7 @@ package br.edu.ifsp.aluno.domain.entities.inform;
 
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class Inform {
@@ -53,5 +54,18 @@ public class Inform {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Inform inform = (Inform) o;
+        return Objects.equals(id, inform.id) && Objects.equals(meetingMinutes, inform.meetingMinutes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, meetingMinutes);
     }
 }

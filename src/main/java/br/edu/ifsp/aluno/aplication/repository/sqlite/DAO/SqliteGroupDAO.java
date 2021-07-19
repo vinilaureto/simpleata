@@ -85,7 +85,6 @@ public class SqliteGroupDAO implements GroupDAO {
         }   catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(groups);
         return groups;
     }
 
@@ -153,7 +152,7 @@ public class SqliteGroupDAO implements GroupDAO {
             stmt.setInt(2, group.getId());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                String sqlRemove = "DELETE FROM partcipant_groups groups WHERE id_participant = ? AND id_groups = ?";
+                String sqlRemove = "DELETE FROM partcipant_groups WHERE id_participant = ? AND id_groups = ?";
                 PreparedStatement stmtRemove = ConnectionFactory.createPreparedStatement(sqlRemove);
                 stmtRemove.setInt(1, participant.getId());
                 stmtRemove.setInt(2, group.getId());
