@@ -4,6 +4,7 @@ import br.edu.ifsp.aluno.aplication.controller.utils.ApplicationContext;
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.entities.comment.Comment;
 import br.edu.ifsp.aluno.domain.entities.group.Group;
+import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.entities.vote.Vote;
@@ -24,6 +25,8 @@ public class ScheduleUIController {
 
     @FXML
     private TextField txtScheduleTopic;
+    @FXML
+    private Button btnCreateSchedule;
     @FXML
     private TableView<Comment> tableViewComments;
     @FXML
@@ -59,16 +62,19 @@ public class ScheduleUIController {
     private ObservableList<Vote> tableDataVote;
 
     private Schedule schedule;
-    private Group group;
+    private MeetingMinutes meetingMinutes;
+    private Voting voting;
 
     @FXML
     private void initialize() {
 //        ApplicationContext applicationContext = ApplicationContext.getInstance();
 //        group = applicationContext.getCurrentGroup();
 
-//        bindTableViewToItemsList();
-//        bindColumnsToValueSource();
-//        loadDataAndShow();
+        if (schedule != null) {
+            bindTableViewToItemsList();
+            bindColumnsToValueSource();
+            loadDataAndShow();
+        }
     }
 
     private void bindTableViewToItemsList() {
@@ -78,7 +84,7 @@ public class ScheduleUIController {
         tableDataVote = FXCollections.observableArrayList();
         tableViewVotes.setItems(tableDataVote);
 
-        // Radio goes here
+        // TODO: 19/07/2021  Radio goes here
     }
 
     private void bindColumnsToValueSource() {
@@ -90,11 +96,127 @@ public class ScheduleUIController {
     }
 
     private void loadDataAndShow() {
+        List<Comment> comments = findCommentUseCase.findBySchedule(schedule);
+        tableDataComment.clear();
+        tableDataComment.addAll(comments);
 
+        if (voting != null) {
+            List<Vote> votes = findVoteUseCase.findByVoting(voting);
+            tableDataVote.clear();
+            tableDataVote.addAll(votes);
+        }
     }
 
+    public void setMeetingMinutesAndSchedule(MeetingMinutes meetingMinutes, Schedule schedule, UIMode mode) {
+        if (meetingMinutes == null) {
+            throw new IllegalArgumentException("Meeting Minutes can not be null.");
+        }
+        this.meetingMinutes = meetingMinutes;
+
+        if (schedule == null) {
+            throw new IllegalArgumentException("Schedule can not be null.");
+        }
+        this.schedule = schedule;
+
+        setEntityIntoView();
+
+        if (mode == UIMode.UPDATE) {
+            enableEditFields();
+        }
+        initialize();
+    }
+
+    public void setMeetingMinutes(MeetingMinutes meetingMinutes,UIMode mode) {
+        if (meetingMinutes == null) {
+            throw new IllegalArgumentException("Meeting Minutes can not be null.");
+        }
+        this.meetingMinutes = meetingMinutes;
+        setEntityIntoView();
+
+        if (mode == UIMode.UPDATE) {
+            enableEditFields();
+        }
+        initialize();
+    }
+
+    public void setSchedule(Schedule schedule, UIMode mode) {
+        if (schedule == null) {
+            throw new IllegalArgumentException("Schedule can not be null.");
+        }
+
+        this.schedule = schedule;
+        setEntityIntoView();
+
+        if (mode == UIMode.UPDATE) {
+            initialize();
+        }
+    }
+
+    private void enableEditFields() {
+        btnCreateSchedule.setVisible(false);
+        tableViewComments.setDisable(false);
+        btnRemoveComment.setDisable(false);
+        btnEditComment.setDisable(false);
+        btnNewComment.setDisable(false);
+        rdNoVoting.setDisable(false);
+        rdVotingNamed.setDisable(false);
+        rdVotingAnonymous.setDisable(false);
+        tableViewVotes.setDisable(false);
+        btnRemoveVote.setDisable(false);
+        btnBackToPreviousScene.setDisable(false);
+        btnSaveOrUpdate.setDisable(false);
+    }
+
+    public void createSchedule(ActionEvent actionEvent) {
+        getEntityFromView();
+        schedule.setTopic(txtScheduleTopic.getText());
+        schedule.setMeetingMinutes(meetingMinutes);
+        schedule.setId(createScheduleUseCase.insert(schedule));
+        enableEditFields();
+    }
+
+    public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
+        getEntityFromView();
+        if (schedule.getId() == null) {
+            createScheduleUseCase.insert(schedule);
+        } else {
+            updateScheduleUseCase.update(schedule);
+        }
+        WindowLoader.setRoot("MeetingMinutesUI");
+        MeetingMinutesUIController controller = (MeetingMinutesUIController) WindowLoader.getController();
+        controller.setMeetingMinutes(meetingMinutes,UIMode.UPDATE);
+    }
+
+    public void getEntityFromView() {
+        if (schedule == null) {
+            schedule = new Schedule();
+        } else {
+            schedule.setTopic(txtScheduleTopic.getText());
+            schedule.setMeetingMinutes(meetingMinutes);
+        }
+    }
+
+    private void configureMode() {
+    }
+
+
+    private void setEntityIntoView() {
+        txtScheduleTopic.setText(schedule.getTopic());
+    }
+
+    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("MeetingMinutesUI");
+        MeetingMinutesUIController controller = (MeetingMinutesUIController) WindowLoader.getController();
+        controller.setMeetingMinutes(meetingMinutes,UIMode.UPDATE);
+    }
+
+    // *****************
+    // COMMENT MANAGEMENT
     public void newComment(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("CommentUI");
+        CommentUIController controller = (CommentUIController) WindowLoader.getController();
+        controller.setMeetingMinutes(meetingMinutes);
+        controller.setSchedule(schedule);
     }
 
     public void editComment(ActionEvent actionEvent) throws IOException {
@@ -107,13 +229,23 @@ public class ScheduleUIController {
             WindowLoader.setRoot("CommentUI");
             CommentUIController controller = (CommentUIController) WindowLoader.getController();
             controller.setComment(selectedItem, mode);
+            controller.setMeetingMinutes(meetingMinutes);
+            controller.setSchedule(schedule);
         }
     }
 
     public void removeComment(ActionEvent actionEvent) {
+        Comment selectedItem = tableViewComments.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            deleteCommentUseCase.delete(selectedItem);
+            loadDataAndShow();
+        }
     }
 
+    // *****************
+    // VOTING MANAGEMENT
     public void addVote(ActionEvent actionEvent) {
+
     }
 
     public void removeVote(ActionEvent actionEvent) {
@@ -126,45 +258,5 @@ public class ScheduleUIController {
         alert.setHeaderText(null);
         alert.showAndWait();
     }
-
-
-
-    public void saveOrUpdate(ActionEvent actionEvent) {
-        getEntityFromView();
-        if (schedule.getId() == null) {
-            createScheduleUseCase.insert(schedule);
-        } else {
-            updateScheduleUseCase.update(schedule);
-        }
-        // mandar o window para onde?
-    }
-
-    public void getEntityFromView() {
-        if (schedule == null) {
-            schedule = new Schedule();
-        } else {
-            // fazer os sets no schedule aqui
-        }
-    }
-
-    public void setSchedule(Schedule schedule, UIMode uiMode) {
-        if (schedule == null) {
-            throw new IllegalArgumentException("Schedule can not be null.");
-        }
-
-        this.schedule = schedule;
-        setEntityIntoView();
-    }
-
-
-
-    private void setEntityIntoView() {
-
-    }
-
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
-        WindowLoader.setRoot("MeetingMinutesUI");
-    }
-
-
 }
+

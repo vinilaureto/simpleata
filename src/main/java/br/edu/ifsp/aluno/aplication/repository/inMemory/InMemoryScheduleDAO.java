@@ -1,5 +1,6 @@
 package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
+import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.usecases.schedule.ScheduleDAO;
 
@@ -52,5 +53,10 @@ public class InMemoryScheduleDAO implements ScheduleDAO {
     @Override
     public boolean delete(Schedule schedule) {
         return deleteByKey(schedule.getId());
+    }
+
+    @Override
+    public List<Schedule> findByMeetingMinutes(MeetingMinutes meetingMinutes) {
+        return null;
     }
 }

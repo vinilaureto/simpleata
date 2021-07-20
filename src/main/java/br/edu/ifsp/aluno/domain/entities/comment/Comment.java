@@ -63,7 +63,7 @@ public class Comment {
         this.id = id;
     }
 
-    public String getParticipanName() {
+    public String getParticipantName() {
         return participant.getName();
     }
 

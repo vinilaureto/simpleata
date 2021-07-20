@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.aplication.repository.sqlite.DAO;
 
 import br.edu.ifsp.aluno.aplication.repository.sqlite.utils.ConnectionFactory;
+import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.usecases.schedule.ScheduleDAO;
@@ -106,5 +107,23 @@ public class SqliteScheduleDAO implements ScheduleDAO {
             throw new IllegalArgumentException("Schedule or schedule ID must not be null.");
         }
         return deleteByKey(schedule.getId());
+    }
+
+    @Override
+    public List<Schedule> findByMeetingMinutes(MeetingMinutes meetingMinutes) {
+        String sql = "SELECT * FROM schedule WHERE id_meeting_minutes = ?";
+        List<Schedule> schedules = new ArrayList<>();
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmt.setInt(1, meetingMinutes.getId());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Schedule schedule = resultSetIntoEntity(rs);
+                schedules.add(schedule);
+            }
+        }   catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return schedules;
     }
 }

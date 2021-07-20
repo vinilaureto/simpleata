@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.domain.usecases.vote;
 
 import br.edu.ifsp.aluno.domain.entities.vote.Vote;
+import br.edu.ifsp.aluno.domain.entities.voting.Voting;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,5 +22,9 @@ public class FindVoteUseCase {
 
     public List<Vote> findAll() {
         return voteDAO.findAll();
+    }
+
+    public List<Vote> findByVoting(Voting voting) {
+        return voteDAO.findByVoting(voting);
     }
 }

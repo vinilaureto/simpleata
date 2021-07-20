@@ -1,5 +1,6 @@
 package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
+import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.entities.voting.Voting;
 import br.edu.ifsp.aluno.domain.usecases.voting.VotingDAO;
 
@@ -52,5 +53,10 @@ public class InMemoryVotingDAO implements VotingDAO {
     @Override
     public boolean delete(Voting voting) {
         return deleteByKey(voting.getId());
+    }
+
+    @Override
+    public Optional<Voting> findBySchedule(Schedule schedule) {
+        return Optional.empty();
     }
 }

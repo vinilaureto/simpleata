@@ -28,7 +28,7 @@ public class ParticipantUIController {
     private Participant participant;
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
-        getEntityToView();
+        getEntityFromView();
         if (participant.getId() == null) {
             createParticipantUseCase.insert(participant);
         } else {
@@ -37,7 +37,7 @@ public class ParticipantUIController {
         WindowLoader.setRoot("ManageParticipantUI");
     }
 
-    private void getEntityToView() {
+    private void getEntityFromView() {
         if (participant == null) {
             participant = new Participant();
         }
@@ -56,14 +56,14 @@ public class ParticipantUIController {
         }
 
         this.participant = participant;
-        setEntityToView();
+        setEntityIntoView();
 
         if (mode == UIMode.VIEW) {
             configureViewMode();
         }
     }
 
-    private void setEntityToView() {
+    private void setEntityIntoView() {
         txtName.setText(participant.getName());
         txtEmail.setText(participant.getEmail());
         txtTitle.setText(participant.getTitle());

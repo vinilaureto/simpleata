@@ -24,28 +24,19 @@ public class InformUIController {
     private MeetingMinutes meetingMinutes;
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
-        getEntityToView();
+        getEntityFromView();
         if (inform.getId() == null) {
             createInformUseCase.insert(inform);
         } else {
             updateInformUseCase.update(inform);
         }
+        System.out.println(meetingMinutes.getTitle());
         WindowLoader.setRoot("MeetingMinutesUI");
+        MeetingMinutesUIController controller = (MeetingMinutesUIController) WindowLoader.getController();
+        controller.setMeetingMinutes(meetingMinutes, UIMode.UPDATE);
     }
 
-    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
-        WindowLoader.setRoot("MeetingMinutesUI");
-    }
-
-    public void setInform(Inform inform) {
-        if (inform == null) {
-            throw new IllegalArgumentException("Inform can not be null.");
-        }
-        this.inform = inform;
-        setEntityToView();
-    }
-
-    private void getEntityToView() {
+    private void getEntityFromView() {
         if (inform == null) {
             inform = new Inform();
         }
@@ -53,8 +44,26 @@ public class InformUIController {
         inform.setMeetingMinutes(meetingMinutes);
     }
 
-    private void setEntityToView() {
+    public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("MeetingMinutesUI");
+        MeetingMinutesUIController controller = (MeetingMinutesUIController) WindowLoader.getController();
+        controller.setMeetingMinutes(meetingMinutes, UIMode.UPDATE);
+    }
+
+    public void setInform(Inform inform, UIMode mode) {
+        if (inform == null) {
+            throw new IllegalArgumentException("Inform can not be null.");
+        }
+        this.inform = inform;
+        setEntityIntoView();
+    }
+
+    private void setEntityIntoView() {
         txtInform.setText(inform.getDescription());
+    }
+
+    // TODO: ver ser precisa implementar, isso requer avaliar parâmetos talvez desencessários de outros métodos
+    private void configureViewMode() {
     }
 
     public void setMeetingMinutes(MeetingMinutes meetingMinutes) {

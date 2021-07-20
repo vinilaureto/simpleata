@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
 import br.edu.ifsp.aluno.domain.entities.vote.Vote;
+import br.edu.ifsp.aluno.domain.entities.voting.Voting;
 import br.edu.ifsp.aluno.domain.usecases.vote.VoteDAO;
 
 import java.util.*;
@@ -52,5 +53,10 @@ public class InMemoryVoteDAO implements VoteDAO {
     @Override
     public boolean delete(Vote vote) {
         return deleteByKey(vote.getId());
+    }
+
+    @Override
+    public List<Vote> findByVoting(Voting voting) {
+        return null;
     }
 }

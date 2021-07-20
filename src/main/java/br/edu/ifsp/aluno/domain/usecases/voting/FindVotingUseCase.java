@@ -2,7 +2,6 @@ package br.edu.ifsp.aluno.domain.usecases.voting;
 
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.entities.voting.Voting;
-import br.edu.ifsp.aluno.domain.usecases.utils.Validator;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,5 +22,12 @@ public class FindVotingUseCase {
 
     public List<Voting> findAll() {
         return votingDAO.findAll();
+    }
+
+    public Optional<Voting> findBySchedule(Schedule schedule) {
+        if (schedule == null) {
+            throw new IllegalArgumentException("Schedule can not be null");
+        }
+        return votingDAO.findBySchedule(schedule);
     }
 }

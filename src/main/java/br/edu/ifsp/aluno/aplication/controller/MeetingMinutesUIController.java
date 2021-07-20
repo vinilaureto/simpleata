@@ -84,83 +84,16 @@ public class MeetingMinutesUIController {
     }
 
     private void loadDataAndShow() {
+        cbGroup.getItems().setAll(findGroupUseCase.findAll());
+
         List<Inform> informList = findInformUseCase.findByMeetingMinutes(meetingMinutes);
         informObservableList.clear();
         informObservableList.addAll(informList);
 
-        cbGroup.getItems().setAll(findGroupUseCase.findAll());
-    }
+        List<Schedule> scheduleList = findScheduleUseCase.findByMeetingMinutes(meetingMinutes);
+        scheduleObservableList.clear();
+        scheduleObservableList.addAll(scheduleList);
 
-    public void newSchedule(ActionEvent actionEvent) throws IOException {
-        WindowLoader.setRoot("ScheduleUI");
-    }
-
-    public void editSchedule(ActionEvent actionEvent) {
-    }
-
-    public void removeSchedule(ActionEvent actionEvent) {
-    }
-
-    public void exportMeetingMinutes(ActionEvent actionEvent) {
-    }
-
-    public void newInform(ActionEvent actionEvent) throws IOException {
-        WindowLoader.setRoot("InformUI");
-        InformUIController controller = (InformUIController) WindowLoader.getController();
-        controller.setMeetingMinutes(meetingMinutes);
-    }
-
-    public void editInform(ActionEvent actionEvent) throws IOException {
-        Inform selectedItem = tableViewInform.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            WindowLoader.setRoot("InformUI");
-            InformUIController controller = (InformUIController) WindowLoader.getController();
-            controller.setInform(selectedItem);
-        }
-    }
-
-    public void removeInform(ActionEvent actionEvent) {
-    }
-
-    public void meetingMinutesFindLogo(ActionEvent actionEvent) {
-    }
-
-    public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
-        getEntityFromView();
-        meetingMinutes.setClosingDate(LocalDate.now());
-        updateMeetingMinutesUseCase.update(meetingMinutes);
-        WindowLoader.setRoot("ManageMeetingMinutesUI");
-    }
-
-    private void getEntityFromView() {
-        if (meetingMinutes == null) {
-            meetingMinutes = new MeetingMinutes();
-        }
-        meetingMinutes.setTitle(txtMeetingMinutesTitle.getText());
-        meetingMinutes.setGroup(cbGroup.getValue());
-    }
-
-    public void backToPreviousScreen(ActionEvent actionEvent) throws IOException {
-        WindowLoader.setRoot("ManageMeetingMinutesUI");
-    }
-
-    public void setMeetingMinutes(MeetingMinutes meetingMinutes, UIMode uiMode) {
-        if (meetingMinutes == null) {
-            throw new IllegalArgumentException("Meeting Minutes can not be null.");
-        }
-
-        this.meetingMinutes = meetingMinutes;
-        setEntityIntoView();
-
-        if (uiMode == UIMode.UPDATE) {
-            enableEditFields();
-        }
-        initialize();
-    }
-
-    private void setEntityIntoView() {
-        txtMeetingMinutesTitle.setText(meetingMinutes.getTitle());
-        cbGroup.setValue(meetingMinutes.getGroup());
     }
 
     public void createMeetingMinutes(ActionEvent actionEvent) {
@@ -170,6 +103,14 @@ public class MeetingMinutesUIController {
         Integer newMeetingMinutesId = createMeetingMinutesUseCase.insert(meetingMinutes);
         meetingMinutes.setId(newMeetingMinutesId);
         enableEditFields();
+    }
+
+    private void getEntityFromView() {
+        if (meetingMinutes == null) {
+            meetingMinutes = new MeetingMinutes();
+        }
+        meetingMinutes.setTitle(txtMeetingMinutesTitle.getText());
+        meetingMinutes.setGroup(cbGroup.getValue());
     }
 
     private void enableEditFields() {
@@ -185,5 +126,106 @@ public class MeetingMinutesUIController {
         btnEditSchedule.setDisable(false);
         btnNewSchedule.setDisable(false);
         btnBackToPreviousScreen.setVisible(false);
+    }
+
+    public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
+        getEntityFromView();
+        meetingMinutes.setClosingDate(LocalDate.now());
+        updateMeetingMinutesUseCase.update(meetingMinutes);
+        WindowLoader.setRoot("ManageMeetingMinutesUI");
+    }
+
+    public void backToPreviousScreen(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("ManageMeetingMinutesUI");
+    }
+
+    public void setMeetingMinutes(MeetingMinutes meetingMinutes, UIMode mode) {
+        if (meetingMinutes == null) {
+            throw new IllegalArgumentException("Meeting Minutes can not be null.");
+        }
+
+        this.meetingMinutes = meetingMinutes;
+        setEntityIntoView();
+
+        if (mode == UIMode.UPDATE) {
+            enableEditFields();
+        }
+        initialize();
+    }
+
+    private void setEntityIntoView() {
+        txtMeetingMinutesTitle.setText(meetingMinutes.getTitle());
+        cbGroup.setValue(meetingMinutes.getGroup());
+    }
+
+    public void exportMeetingMinutes(ActionEvent actionEvent) {
+    }
+
+    // *****************
+    // LOGO MANAGEMENT
+
+    public void meetingMinutesFindLogo(ActionEvent actionEvent) {
+    }
+    // *****************
+    // INFORM MANAGEMENT
+
+    public void newInform(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("InformUI");
+        InformUIController inFormController = (InformUIController) WindowLoader.getController();
+        inFormController.setMeetingMinutes(meetingMinutes);
+    }
+
+    public void editInform(ActionEvent actionEvent) throws IOException {
+        showInformInMode(UIMode.UPDATE);
+    }
+
+    private void showInformInMode(UIMode mode) throws IOException {
+        Inform selectedItem = tableViewInform.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            WindowLoader.setRoot("InformUI");
+            InformUIController controller = (InformUIController) WindowLoader.getController();
+            controller.setInform(selectedItem, mode);
+            controller.setMeetingMinutes(this.meetingMinutes);
+        }
+    }
+
+    public void removeInform(ActionEvent actionEvent) {
+        Inform selectedItem = tableViewInform.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            deleteInformUseCase.delete(selectedItem);
+            loadDataAndShow();
+        }
+    }
+
+    // *****************
+    // SCHEDULE MANAGEMENT
+
+    public void newSchedule(ActionEvent actionEvent) throws IOException {
+        WindowLoader.setRoot("ScheduleUI");
+        ScheduleUIController controller = (ScheduleUIController) WindowLoader.getController();
+        controller.setMeetingMinutes(meetingMinutes, UIMode.CREATE);
+    }
+
+    public void editSchedule(ActionEvent actionEvent) throws IOException {
+        showScheduleInMode(UIMode.UPDATE);
+    }
+
+    private void showScheduleInMode(UIMode mode) throws IOException {
+        Schedule selectedItem = tableViewSchedule.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            WindowLoader.setRoot("ScheduleUI");
+            ScheduleUIController controller = (ScheduleUIController) WindowLoader.getController();
+            controller.setMeetingMinutesAndSchedule(meetingMinutes, selectedItem, mode);
+//            controller.setSchedule(selectedItem, mode);
+//            controller.setMeetingMinutes(this.meetingMinutes, mode);
+        }
+    }
+
+    public void removeSchedule(ActionEvent actionEvent) {
+        Schedule selectedItem = tableViewSchedule.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            deleteScheduleUseCase.delete(selectedItem);
+            loadDataAndShow();
+        }
     }
 }

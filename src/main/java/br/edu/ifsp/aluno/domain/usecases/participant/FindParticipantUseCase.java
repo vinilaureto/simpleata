@@ -1,5 +1,6 @@
 package br.edu.ifsp.aluno.domain.usecases.participant;
 
+import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.usecases.utils.Validator;
 
@@ -43,5 +44,9 @@ public class FindParticipantUseCase {
 
     public List<Participant> findAll() {
         return participantDAO.findAll();
+    }
+
+    public List<Participant> findAllinGroup(Group group) {
+        return participantDAO.findAllinGroup(group);
     }
 }

@@ -4,6 +4,7 @@ import br.edu.ifsp.aluno.aplication.repository.sqlite.utils.ConnectionFactory;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.vote.Vote;
 import br.edu.ifsp.aluno.domain.entities.vote.VoteValue;
+import br.edu.ifsp.aluno.domain.entities.voting.Voting;
 import br.edu.ifsp.aluno.domain.usecases.vote.VoteDAO;
 import static br.edu.ifsp.aluno.aplication.main.Main.*;
 
@@ -109,5 +110,25 @@ public class SqliteVoteDAO implements VoteDAO {
             throw new IllegalArgumentException("Vote or vote ID must not be null.");
         }
         return deleteByKey(vote.getId());
+    }
+
+    // TODO: 19/07/2021 LOGO
+    @Override
+    public List<Vote> findByVoting(Voting voting) {
+        String sql = "SELECT * FROM vote WHERE id_voting = ?";
+        List<Vote> votes = new ArrayList<>();
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmt.setInt(1, voting.getId());
+            stmt.execute();
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Vote vote = resultSetIntoEntity(rs);
+                votes.add(vote);
+            }
+        }   catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return votes;
     }
 }

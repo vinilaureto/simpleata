@@ -1,5 +1,6 @@
 package br.edu.ifsp.aluno.domain.usecases.schedule;
 
+import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.usecases.utils.Validator;
@@ -23,5 +24,9 @@ public class FindScheduleUseCase {
 
     public List<Schedule> findAll() {
         return scheduleDAO.findAll();
+    }
+
+    public List<Schedule> findByMeetingMinutes(MeetingMinutes meetingMinutes) {
+        return scheduleDAO.findByMeetingMinutes(meetingMinutes);
     }
 }
