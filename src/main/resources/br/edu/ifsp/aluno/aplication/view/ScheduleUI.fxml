@@ -14,25 +14,26 @@
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Tópico da pauta:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
       <TextField fx:id="txtScheduleTopic" layoutX="14.0" layoutY="37.0" prefHeight="25.0" prefWidth="282.0" promptText="Tópico da pauta" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="37.0" />
+      <Button fx:id="btnCreateSchedule" layoutX="503.0" layoutY="35.0" mnemonicParsing="false" onAction="#createSchedule" prefHeight="25.0" prefWidth="98.0" text="Criar ata" AnchorPane.leftAnchor="503.0" AnchorPane.topAnchor="35.0" />
       <Label layoutX="14.0" layoutY="88.0" text="Comentários" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="88.0" />
-      <TableView fx:id="tableViewComments" layoutX="14.0" layoutY="112.0" prefHeight="152.0" prefWidth="576.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="112.0">
+      <TableView fx:id="tableViewComments" disable="true" layoutX="14.0" layoutY="112.0" prefHeight="152.0" prefWidth="576.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="112.0">
         <columns>
           <TableColumn fx:id="cCommentParticipantName" prefWidth="174.0" text="Participante" />
           <TableColumn fx:id="cCommentComment" prefWidth="401.0" text="Comentário" />
         </columns>
       </TableView>
-      <Button fx:id="btnNewComment" layoutX="463.0" layoutY="272.0" mnemonicParsing="false" onAction="#newComment" prefHeight="25.0" prefWidth="125.0" text="Novo comentário" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="272.0" />
-      <Button fx:id="btnEditComment" layoutX="329.0" layoutY="272.0" mnemonicParsing="false" onAction="#editComment" prefHeight="25.0" prefWidth="125.0" text="Editar comentário" AnchorPane.rightAnchor="146.0" AnchorPane.topAnchor="272.0" />
-      <Button fx:id="btnRemoveComment" layoutX="189.0" layoutY="272.0" mnemonicParsing="false" onAction="#removeComment" prefHeight="25.0" prefWidth="131.0" text="Remover comentário" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="272.0" />
+      <Button fx:id="btnNewComment" disable="true" layoutX="463.0" layoutY="272.0" mnemonicParsing="false" onAction="#newComment" prefHeight="25.0" prefWidth="125.0" text="Novo comentário" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="272.0" />
+      <Button fx:id="btnEditComment" disable="true" layoutX="329.0" layoutY="272.0" mnemonicParsing="false" onAction="#editComment" prefHeight="25.0" prefWidth="125.0" text="Editar comentário" AnchorPane.rightAnchor="146.0" AnchorPane.topAnchor="272.0" />
+      <Button fx:id="btnRemoveComment" disable="true" layoutX="189.0" layoutY="272.0" mnemonicParsing="false" onAction="#removeComment" prefHeight="25.0" prefWidth="131.0" text="Remover comentário" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="272.0" />
       <Label layoutX="14.0" layoutY="337.0" text="Votação:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="337.0" />
-      <RadioButton fx:id="rdNoVoting" layoutX="15.0" layoutY="361.0" mnemonicParsing="false" selected="true" text="Sem votação" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="361.0">
+      <RadioButton fx:id="rdNoVoting" disable="true" layoutX="15.0" layoutY="361.0" mnemonicParsing="false" selected="true" text="Sem votação" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="361.0">
          <toggleGroup>
             <ToggleGroup fx:id="voting" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="rdVotingNamed" layoutX="145.0" layoutY="361.0" mnemonicParsing="false" text="Votação nominal" toggleGroup="$voting" AnchorPane.leftAnchor="145.0" AnchorPane.topAnchor="361.0" />
-      <RadioButton fx:id="rdVotingAnonymous" layoutX="292.0" layoutY="361.0" mnemonicParsing="false" text="Votação anônima" toggleGroup="$voting" AnchorPane.leftAnchor="292.0" AnchorPane.topAnchor="361.0" />
-      <TableView fx:id="tableViewVotes" layoutX="14.0" layoutY="427.0" prefHeight="152.0" prefWidth="576.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="427.0">
+      <RadioButton fx:id="rdVotingNamed" disable="true" layoutX="145.0" layoutY="361.0" mnemonicParsing="false" text="Votação nominal" toggleGroup="$voting" AnchorPane.leftAnchor="145.0" AnchorPane.topAnchor="361.0" />
+      <RadioButton fx:id="rdVotingAnonymous" disable="true" layoutX="292.0" layoutY="361.0" mnemonicParsing="false" text="Votação anônima" toggleGroup="$voting" AnchorPane.leftAnchor="292.0" AnchorPane.topAnchor="361.0" />
+      <TableView fx:id="tableViewVotes" disable="true" layoutX="14.0" layoutY="427.0" prefHeight="152.0" prefWidth="576.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="427.0">
          <columns>
             <TableColumn fx:id="cVoteParticipantName" prefWidth="174.0" text="Participante" />
             <TableColumn fx:id="cVoteVote" prefWidth="401.0" text="Voto" />
@@ -41,8 +42,8 @@
       <ComboBox fx:id="cbParticipant" disable="true" layoutX="15.0" layoutY="392.0" prefHeight="25.0" prefWidth="219.0" promptText="Participante" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="392.0" />
       <ComboBox fx:id="cpVoteValue" disable="true" layoutX="249.0" layoutY="392.0" prefHeight="25.0" prefWidth="169.0" promptText="Valor do voto" AnchorPane.leftAnchor="249.0" AnchorPane.topAnchor="392.0" />
       <Button fx:id="btnAddVote" disable="true" layoutX="434.0" layoutY="392.0" mnemonicParsing="false" onAction="#addVote" prefHeight="25.0" prefWidth="155.0" text="Adicionar voto" AnchorPane.leftAnchor="434.0" AnchorPane.topAnchor="392.0" />
-      <Button fx:id="btnRemoveVote" layoutX="434.0" layoutY="588.0" mnemonicParsing="false" onAction="#removeVote" prefHeight="25.0" prefWidth="155.0" text="Remover voto" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="588.0" />
-      <Button fx:id="btnSaveOrUpdate" layoutX="499.0" layoutY="679.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="25.0" prefWidth="89.0" text="Salvar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="12.0" />
+      <Button fx:id="btnRemoveVote" disable="true" layoutX="434.0" layoutY="588.0" mnemonicParsing="false" onAction="#removeVote" prefHeight="25.0" prefWidth="155.0" text="Remover voto" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="588.0" />
+      <Button fx:id="btnSaveOrUpdate" disable="true" layoutX="499.0" layoutY="679.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="25.0" prefWidth="89.0" text="Salvar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="12.0" />
       <Button fx:id="btnBackToPreviousScene" layoutX="401.0" layoutY="679.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="25.0" prefWidth="89.0" text="Cancelar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="110.0" />
    </children>
 </AnchorPane>

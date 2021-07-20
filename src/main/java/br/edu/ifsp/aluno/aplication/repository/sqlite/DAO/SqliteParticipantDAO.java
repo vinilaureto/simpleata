@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.aplication.repository.sqlite.DAO;
 
 import br.edu.ifsp.aluno.aplication.repository.sqlite.utils.ConnectionFactory;
+import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.usecases.participant.ParticipantDAO;
 
@@ -169,6 +170,24 @@ public class SqliteParticipantDAO implements ParticipantDAO {
 
         try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             stmt.setInt(1, groupId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Participant participant = resultSetIntoEntity(rs);
+                participants.add(participant);
+            }
+        }   catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return participants;
+    }
+
+    @Override
+    public List<Participant> findAllinGroup(Group group) {
+        String sql = "SELECT * FROM participant p JOIN partcipant_groups pg ON p.id = pg.id_participant WHERE pg.id_groups = ?;";
+        List<Participant> participants = new ArrayList<>();
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+            stmt.setInt(1, group.getId());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Participant participant = resultSetIntoEntity(rs);

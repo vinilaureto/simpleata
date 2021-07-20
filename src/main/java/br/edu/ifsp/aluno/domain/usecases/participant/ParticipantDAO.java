@@ -1,5 +1,6 @@
 package br.edu.ifsp.aluno.domain.usecases.participant;
 
+import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.usecases.utils.DAO;
 
@@ -12,4 +13,6 @@ public interface ParticipantDAO extends DAO<Participant, Integer> {
     List<Participant> findByName(String name);
 
     List<Participant> findByTitle(String title);
+
+    List<Participant> findAllinGroup(Group group);
 }

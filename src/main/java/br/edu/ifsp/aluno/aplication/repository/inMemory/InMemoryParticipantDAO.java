@@ -1,5 +1,6 @@
 package br.edu.ifsp.aluno.aplication.repository.inMemory;
 
+import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.usecases.participant.ParticipantDAO;
 
@@ -71,5 +72,10 @@ public class InMemoryParticipantDAO implements ParticipantDAO {
     @Override
     public boolean delete(Participant participant) {
         return deleteByKey(participant.getId());
+    }
+
+    @Override
+    public List<Participant> findAllinGroup(Group group) {
+        return null;
     }
 }

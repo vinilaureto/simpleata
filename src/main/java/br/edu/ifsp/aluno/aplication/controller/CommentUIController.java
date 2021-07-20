@@ -3,8 +3,9 @@ package br.edu.ifsp.aluno.aplication.controller;
 import br.edu.ifsp.aluno.aplication.controller.utils.ApplicationContext;
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.entities.comment.Comment;
-import br.edu.ifsp.aluno.domain.entities.group.Group;
+import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
+import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,15 +27,18 @@ public class CommentUIController {
     @FXML
     private Button btnSaveOrUpdate;
 
-    private Group group;
     private Comment comment;
+    private MeetingMinutes meetingMinutes;
+    private Schedule schedule;
 
     @FXML
     private void initialize() {
 //        ApplicationContext applicationContext = ApplicationContext.getInstance();
 //        group = applicationContext.getCurrentGroup();
 //
-//        cbParticipant.getItems().setAll(group.getParticipants());
+        if (meetingMinutes != null) {
+            cbParticipant.getItems().setAll(findParticipantUseCase.findAllinGroup(meetingMinutes.getGroup()));
+        }
     }
 
     public void saveOrUpdate(ActionEvent actionEvent) throws IOException {
@@ -45,10 +49,18 @@ public class CommentUIController {
             updateCommentUseCase.update(comment);
         }
         WindowLoader.setRoot("ScheduleUI");
+        ScheduleUIController controller = (ScheduleUIController) WindowLoader.getController();
+        controller.setMeetingMinutesAndSchedule(meetingMinutes, schedule, UIMode.UPDATE);
+//        controller.setSchedule(schedule, UIMode.UPDATE);
+//        controller.setMeetingMinutes(meetingMinutes, UIMode.UPDATE);
     }
 
     public void backToPreviousScene(ActionEvent actionEvent) throws IOException {
         WindowLoader.setRoot("ScheduleUI");
+        ScheduleUIController controller = (ScheduleUIController) WindowLoader.getController();
+        controller.setMeetingMinutesAndSchedule(meetingMinutes, schedule, UIMode.UPDATE);
+//        controller.setSchedule(schedule, UIMode.UPDATE);
+//        controller.setMeetingMinutes(meetingMinutes, UIMode.UPDATE);
     }
 
     public void setComment(Comment comment, UIMode mode) {
@@ -71,6 +83,7 @@ public class CommentUIController {
 
         comment.setMessage(txtComment.getText());
         comment.setParticipant(cbParticipant.getValue());
+        comment.setSchedule(schedule);
     }
 
     private void setEntityIntoView() {
@@ -87,5 +100,22 @@ public class CommentUIController {
 
         txtComment.setDisable(true);
         cbParticipant.setDisable(true);
+    }
+
+    public void setMeetingMinutes(MeetingMinutes meetingMinutes) {
+        if (meetingMinutes == null) {
+            throw new IllegalArgumentException("Meeting minutes can not be null.");
+        }
+        this.meetingMinutes = meetingMinutes;
+        cbParticipant.getItems().setAll(findParticipantUseCase.findAllinGroup(meetingMinutes.getGroup()));
+
+    }
+
+    public void setSchedule(Schedule schedule) {
+        if (schedule == null) {
+            throw new IllegalArgumentException("Schedule can not be null.");
+        }
+        System.out.println(schedule);
+        this.schedule = schedule;
     }
 }
