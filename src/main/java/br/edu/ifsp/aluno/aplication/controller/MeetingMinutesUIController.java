@@ -48,8 +48,6 @@ public class MeetingMinutesUIController {
     @FXML
     private Button btnNewSchedule;
     @FXML
-    private Button btnExportMeetingMinutes;
-    @FXML
     private Button btnBackToPreviousScreen;
     @FXML
     private Button btnSaveOrUpdate;
@@ -155,9 +153,6 @@ public class MeetingMinutesUIController {
     private void setEntityIntoView() {
         txtMeetingMinutesTitle.setText(meetingMinutes.getTitle());
         cbGroup.setValue(meetingMinutes.getGroup());
-    }
-
-    public void exportMeetingMinutes(ActionEvent actionEvent) {
     }
 
     // *****************

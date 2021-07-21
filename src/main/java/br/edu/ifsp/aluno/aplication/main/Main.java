@@ -80,8 +80,6 @@ public class Main {
 //        populateFakeDatabase();
         simulate();
         WindowLoader.main(args);
-        ExportMeetingMinutesPDF exportMeetingMinutesPDF = new ExportMeetingMinutesPDF();
-        exportMeetingMinutesPDF.exportPDF(findMeetingMinutesUseCase.findOne(10).get());
     }
 
     /*private static void populateFakeDatabase() {

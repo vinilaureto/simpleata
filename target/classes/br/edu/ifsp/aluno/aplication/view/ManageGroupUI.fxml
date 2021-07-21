@@ -7,12 +7,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.aluno.aplication.controller.ManageGroupUIController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.aluno.aplication.controller.ManageGroupUIController">
    <children>
       <TableView fx:id="tableView" layoutX="18.0" layoutY="71.0" prefHeight="271.0" prefWidth="565.0" AnchorPane.bottomAnchor="58.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="71.0">
         <columns>
-          <TableColumn fx:id="cGroup" prefWidth="162.0" text="Nome" />
-          <TableColumn fx:id="cParticipants" prefWidth="402.0" text="Participantes" />
+          <TableColumn fx:id="cGroup" prefWidth="307.0" text="Nome" />
+          <TableColumn fx:id="cParticipants" prefWidth="857.0" text="Participantes" />
         </columns>
       </TableView>
       <Button fx:id="btnBackToPreviousScene" layoutX="18.0" layoutY="361.0" mnemonicParsing="false" onAction="#backToPreviousScene" text="Voltar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="18.0" />

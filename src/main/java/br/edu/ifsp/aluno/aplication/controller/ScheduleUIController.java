@@ -371,5 +371,8 @@ public class ScheduleUIController {
         alert.setHeaderText(null);
         alert.showAndWait();
     }
+
+    public void editVote(ActionEvent actionEvent) {
+    }
 }
 

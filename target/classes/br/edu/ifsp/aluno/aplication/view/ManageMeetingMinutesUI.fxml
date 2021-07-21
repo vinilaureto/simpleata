@@ -9,14 +9,14 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.aluno.aplication.controller.ManageMeetingMinutesUIController">
+<AnchorPane prefHeight="700.0" prefWidth="1198.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.aluno.aplication.controller.ManageMeetingMinutesUIController">
    <children>
       <TableView fx:id="tableView" layoutX="24.0" layoutY="112.0" prefHeight="236.0" prefWidth="553.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="112.0">
         <columns>
-          <TableColumn fx:id="cIdentifier" prefWidth="102.0" text="Identificador" />
-          <TableColumn fx:id="cTitle" prefWidth="221.0" text="Título" />
-            <TableColumn fx:id="cGroup" prefWidth="114.0" text="Grupo" />
-            <TableColumn fx:id="cStatus" prefWidth="115.0" text="Status" />
+          <TableColumn fx:id="cIdentifier" prefWidth="133.0" text="Identificador" />
+          <TableColumn fx:id="cTitle" prefWidth="528.0" text="Título" />
+            <TableColumn fx:id="cGroup" prefWidth="270.0" text="Grupo" />
+            <TableColumn fx:id="cStatus" prefWidth="219.0" text="Status" />
         </columns>
       </TableView>
       <Label layoutX="24.0" layoutY="13.0" text="Buscar ata:" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="13.0" />
@@ -35,5 +35,7 @@
       <Button fx:id="btnNewMeetingMinutes" layoutX="493.0" layoutY="361.0" mnemonicParsing="false" onAction="#newMeetingMinutes" prefHeight="25.0" prefWidth="84.0" text="Nova ata" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="23.0" />
       <Button fx:id="btnEditMeetingMinutes" layoutX="402.0" layoutY="361.0" mnemonicParsing="false" onAction="#editMeetingMinutes" prefHeight="25.0" prefWidth="84.0" text="Editar ata" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="114.0" />
       <Button fx:id="btnRemoveMeetingMinutes" layoutX="306.0" layoutY="361.0" mnemonicParsing="false" onAction="#removeMeetingMinutes" prefHeight="25.0" prefWidth="88.0" text="Remover ata" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="206.0" />
+      <Button fx:id="btnExportMeetingMinutes" layoutX="1025.0" layoutY="59.0" mnemonicParsing="false" onAction="#exportMeetingMinutes" prefHeight="25.0" prefWidth="150.0" text="Exportar ata em PDF" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="59.0" />
+      <Label fx:id="lbExportMeetingMinutes" layoutX="1056.0" layoutY="88.0" textFill="#0200ff" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="88.0" />
    </children>
 </AnchorPane>
