@@ -62,10 +62,6 @@ public class InformUIController {
         txtInform.setText(inform.getDescription());
     }
 
-    // TODO: ver ser precisa implementar, isso requer avaliar parâmetos talvez desencessários de outros métodos
-    private void configureViewMode() {
-    }
-
     public void setMeetingMinutes(MeetingMinutes meetingMinutes) {
         if (meetingMinutes == null) {
             throw new IllegalArgumentException("Meeting Minutes can not be null.");

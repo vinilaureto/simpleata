@@ -17,10 +17,12 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static br.edu.ifsp.aluno.aplication.main.Main.*;
 
@@ -63,14 +65,20 @@ public class ScheduleUIController {
     @FXML
     private Button btnAddVote;
     @FXML
+    private Button btnEditVote;
+    @FXML
     private Button btnRemoveVote;
+    @FXML
+    private Button btnSaveOrUpdate;
     @FXML
     private Button btnBackToPreviousScene;
     @FXML
-    private Button btnSaveOrUpdate;
+    private Label lbVotingResult;
 
     private ObservableList<Comment> tableDataComment;
     private ObservableList<Vote> tableDataVote;
+    private ObservableList<Participant> comboParticipant;
+    private ObservableList<VoteValue> comboVoteValue;
 
     private Schedule schedule;
     private MeetingMinutes meetingMinutes;
@@ -83,12 +91,11 @@ public class ScheduleUIController {
 
         if (schedule != null) {
             findVotingUseCase.findBySchedule(schedule).ifPresent(v -> voting = v);
-            if (voting != null) {
-                schedule.setVoting(voting);
-                bindTableViewToItemsList();
-                bindColumnsToValueSource();
-                loadDataAndShow();
-            }
+
+            schedule.setVoting(voting);
+            bindTableViewToItemsList();
+            bindColumnsToValueSource();
+            loadDataAndShow();
         }
     }
 
@@ -98,6 +105,12 @@ public class ScheduleUIController {
 
         tableDataVote = FXCollections.observableArrayList();
         tableViewVotes.setItems(tableDataVote);
+
+        comboParticipant = FXCollections.observableArrayList();
+        cbParticipant.setItems(comboParticipant);
+
+        comboVoteValue = FXCollections.observableArrayList();
+        cbVoteValue.getItems().setAll(VoteValue.values());
 
         rdNoVoting.setToggleGroup(tgVoting);
         rdVotingNamed.setToggleGroup(tgVoting);
@@ -114,17 +127,27 @@ public class ScheduleUIController {
     }
 
     private void loadDataAndShow() {
-        System.out.println("Pauta " + schedule);
         List<Comment> comments = findCommentUseCase.findBySchedule(schedule);
         tableDataComment.clear();
         tableDataComment.addAll(comments);
 
-        if (schedule.getVoting() != null) {
+        findVotingUseCase.findBySchedule(schedule).ifPresent(v -> voting = v);
+        if (voting != null) {
             voting = findVotingUseCase.findBySchedule(schedule).get();
             List<Vote> votes = findVoteUseCase.findByVoting(voting);
+            if (!votes.isEmpty()) {
+                votes.stream().iterator().next().setVoting(voting);
+            }
+            schedule.setVoting(voting);
             tableDataVote.clear();
             tableDataVote.addAll(votes);
+
+            if (!tableViewVotes.getItems().isEmpty()){
+                voting.resolveVoting();
+                lbVotingResult.setText(voting.getResult().toString());
+            }
         }
+
     }
 
     public void setMeetingMinutesAndSchedule(MeetingMinutes meetingMinutes, Schedule schedule, UIMode mode) {
@@ -181,7 +204,7 @@ public class ScheduleUIController {
         rdVotingNamed.setDisable(false);
         rdVotingAnonymous.setDisable(false);
         tableViewVotes.setDisable(false);
-        btnBackToPreviousScene.setDisable(false);
+        btnBackToPreviousScene.setVisible(false);
         btnSaveOrUpdate.setDisable(false);
     }
 
@@ -214,10 +237,6 @@ public class ScheduleUIController {
         }
     }
 
-    private void configureMode() {
-    }
-
-
     private void setEntityIntoView() {
         txtScheduleTopic.setText(schedule.getTopic());
     }
@@ -226,19 +245,6 @@ public class ScheduleUIController {
         WindowLoader.setRoot("MeetingMinutesUI");
         MeetingMinutesUIController controller = (MeetingMinutesUIController) WindowLoader.getController();
         controller.setMeetingMinutes(meetingMinutes,UIMode.UPDATE);
-    }
-
-    public void setSelectedVoting() {
-        if (voting == null) {
-            tgVoting.selectToggle(rdNoVoting);
-        } else {
-            List<Vote> votes = findVoteUseCase.findByVoting(voting);
-            if (!votes.isEmpty() && votes.get(0).getParticipant() == null) {
-                tgVoting.selectToggle(rdVotingAnonymous);
-            } else if (!votes.isEmpty() && votes.get(0).getParticipant() != null) {
-                tgVoting.selectToggle(rdVotingNamed);
-            }
-        }
     }
 
     // *****************
@@ -285,6 +291,8 @@ public class ScheduleUIController {
         if (voting != null) {
             deleteVotingUseCase.delete(voting);
             voting = null;
+            comboParticipant.clear();
+            loadDataAndShow();
         }
     }
 
@@ -292,6 +300,7 @@ public class ScheduleUIController {
         cbParticipant.setDisable(true);
         cbVoteValue.setDisable(true);
         btnAddVote.setDisable(true);
+        btnEditVote.setDisable(true);
         btnRemoveVote.setDisable(true);
     }
 
@@ -300,6 +309,9 @@ public class ScheduleUIController {
         deleteVotingIfItExists();
         if (rdVotingNamed.isSelected()) {
             setVotingIntoView();
+            if (!tableDataVote.isEmpty()) {
+                lbVotingResult.setDisable(false);
+            }
         }
         this.schedule.setVoting(voting);
     }
@@ -308,6 +320,7 @@ public class ScheduleUIController {
         cbParticipant.setDisable(false);
         cbVoteValue.setDisable(false);
         btnAddVote.setDisable(false);
+        btnEditVote.setDisable(false);
         btnRemoveVote.setDisable(false);
     }
 
@@ -318,8 +331,11 @@ public class ScheduleUIController {
             voting.setId(createVotingUseCase.insert(voting));
             this.voting = voting;
         }
-        cbParticipant.getItems().setAll(findParticipantUseCase.findAllinGroup(meetingMinutes.getGroup()));
-        cbVoteValue.getItems().setAll(VoteValue.values());
+        List<Participant> leftToVote = findParticipantUseCase.findAllinGroup(meetingMinutes.getGroup());
+        List<Participant> hasVoted = tableViewVotes.getItems().stream().map(v -> v.getParticipant()).collect(Collectors.toList());
+        leftToVote.removeAll(hasVoted);
+        comboParticipant.addAll(leftToVote);
+        loadDataAndShow();
     }
 
     public void voteAnonymous(ActionEvent actionEvent) {
@@ -335,14 +351,20 @@ public class ScheduleUIController {
         cbParticipant.setDisable(true);
         cbVoteValue.setDisable(false);
         btnAddVote.setDisable(false);
+        btnEditVote.setDisable(false);
         btnRemoveVote.setDisable(false);
     }
 
     public void addVote(ActionEvent actionEvent) {
-        if (rdVotingNamed.isSelected()) {
-            insertNewVote(cbParticipant.getValue());
+        Participant selecetdParticipant = cbParticipant.getValue();
+        if (rdVotingNamed.isSelected() && selecetdParticipant != null) {
+            comboParticipant.remove(selecetdParticipant);
+            insertNewVote(selecetdParticipant);
+
         }
-        if (rdVotingAnonymous.isSelected()) {
+        int numberOfMaximumVotes = comboParticipant.size();
+        if (rdVotingAnonymous.isSelected() && numberOfMaximumVotes != 0) {
+            comboParticipant.remove(0);
             insertNewVote(null);
         }
     }
@@ -352,13 +374,37 @@ public class ScheduleUIController {
         vote.setVoting(this.voting);
         vote.setParticipant(participant);
         vote.setValue(cbVoteValue.getValue());
-        createVoteUseCase.insert(vote);
+        vote.setId(createVoteUseCase.insert(vote));
+        registerVoteToVoting.registerVoteToVoting(vote, voting);
         loadDataAndShow();
+    }
+
+    public void editVote(ActionEvent actionEvent) {
+        Vote selectedItem = tableViewVotes.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            selectedItem.setParticipant(cbParticipant.getSelectionModel().getSelectedItem());
+            selectedItem.setValue(cbVoteValue.getSelectionModel().getSelectedItem());
+            updateVoteUseCase.update(selectedItem);
+            loadDataAndShow();
+        }
+    }
+
+    public void getContent(MouseEvent mouseEvent) {
+        Vote selectedItem = tableViewVotes.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            btnAddVote.setVisible(false);
+            cbParticipant.getSelectionModel().select(selectedItem.getParticipant());
+            cbVoteValue.getSelectionModel().select(selectedItem.getValue());
+        }
+        if (mouseEvent.isAltDown()) {
+            btnAddVote.setVisible(true);
+        }
     }
 
     public void removeVote(ActionEvent actionEvent) {
         Vote selectedItem = tableViewVotes.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
+            cbParticipant.getItems().add(selectedItem.getParticipant());
             deleteVoteUseCase.delete(selectedItem);
             loadDataAndShow();
         }
@@ -372,7 +418,21 @@ public class ScheduleUIController {
         alert.showAndWait();
     }
 
-    public void editVote(ActionEvent actionEvent) {
+    public void setSelectedVoting() {
+        if (voting == null) {
+            tgVoting.selectToggle(rdNoVoting);
+            disableVotingFields();
+        } else {
+            List<Vote> votes = findVoteUseCase.findByVoting(voting);
+            if (!votes.isEmpty() && votes.get(0).getParticipant() == null) {
+                tgVoting.selectToggle(rdVotingAnonymous);
+                enableAnonymousVotingFields();
+            } else if (!votes.isEmpty() && votes.get(0).getParticipant() != null) {
+                tgVoting.selectToggle(rdVotingNamed);
+                enableNamedVotingFields();
+            }
+        }
+        setVotingIntoView();
     }
 }
 

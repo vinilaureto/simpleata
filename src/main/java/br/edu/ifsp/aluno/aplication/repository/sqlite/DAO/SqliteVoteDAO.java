@@ -87,18 +87,18 @@ public class SqliteVoteDAO implements VoteDAO {
         }
 
 //        SE PRECISAR
-//        Voting voting;
-//        if (findVotingUseCase.findOne(rs.getInt("id_voting")).isEmpty()) {
-//            voting = null;
-//        } else {
-//            voting = findVotingUseCase.findOne(rs.getInt("id_voting")).get();
-//        }
+        Voting voting;
+        if (findVotingUseCase.findOne(rs.getInt("id_voting")).isEmpty()) {
+            voting = null;
+        } else {
+            voting = findVotingUseCase.findOne(rs.getInt("id_voting")).get();
+        }
 
         return new Vote(
                 rs.getInt("id"),
                 participant,
                 VoteValue.toEnun(rs.getString("value")),
-                findVotingUseCase.findOne(rs.getInt("id_voting")).get()
+                voting
         );
     }
 
@@ -154,7 +154,6 @@ public class SqliteVoteDAO implements VoteDAO {
         return deleteByKey(vote.getId());
     }
 
-    // TODO: 19/07/2021 LOGO
     @Override
     public List<Vote> findByVoting(Voting voting) {
         String sql = "SELECT * FROM vote WHERE id_voting = ?";

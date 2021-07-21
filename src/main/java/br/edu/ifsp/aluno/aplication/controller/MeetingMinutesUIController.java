@@ -61,6 +61,8 @@ public class MeetingMinutesUIController {
 
     @FXML
     private void initialize() {
+        cbGroup.getItems().setAll(findGroupUseCase.findAll());
+
         if (meetingMinutes != null) {
             bindTableViewToItemsList();
             bindColumnsToValueSource();
@@ -81,7 +83,7 @@ public class MeetingMinutesUIController {
     }
 
     private void loadDataAndShow() {
-        cbGroup.getItems().setAll(findGroupUseCase.findAll());
+        cbGroup.setValue(meetingMinutes.getGroup());
 
         List<Inform> informList = findInformUseCase.findByMeetingMinutes(meetingMinutes);
         informObservableList.clear();
