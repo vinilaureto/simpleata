@@ -13,6 +13,9 @@ public class Vote {
     private VoteValue value;
     private Voting voting;
 
+    public Vote() {
+    }
+
     public Vote(Participant participant, VoteValue value) {
         this.participant = participant;
         this.value = value;

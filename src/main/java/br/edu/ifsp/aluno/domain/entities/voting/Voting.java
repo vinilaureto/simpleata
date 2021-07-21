@@ -8,7 +8,6 @@ import br.edu.ifsp.aluno.domain.entities.vote.VoteValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Voting {
     private Integer id;
@@ -17,6 +16,7 @@ public class Voting {
     private Schedule schedule;
 
     public Voting() {
+        this.result = VoteResult.IN_PROGRESS;
     }
 
     public Voting(VoteResult result, List<Vote> votes) {

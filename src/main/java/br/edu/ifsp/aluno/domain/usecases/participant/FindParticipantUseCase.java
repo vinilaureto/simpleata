@@ -15,9 +15,6 @@ public class FindParticipantUseCase {
     }
 
     public Optional<Participant> findOne(Integer id) {
-        if (id == 0) {
-            throw new IllegalArgumentException("Id can not be 0.");
-        }
         return participantDAO.findOne(id);
     }
 

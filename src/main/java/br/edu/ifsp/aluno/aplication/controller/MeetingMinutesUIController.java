@@ -5,7 +5,6 @@ import br.edu.ifsp.aluno.domain.entities.group.Group;
 
 import br.edu.ifsp.aluno.domain.entities.inform.Inform;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
-import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -208,6 +207,8 @@ public class MeetingMinutesUIController {
 
     public void editSchedule(ActionEvent actionEvent) throws IOException {
         showScheduleInMode(UIMode.UPDATE);
+        ScheduleUIController controller = (ScheduleUIController) WindowLoader.getController();
+        controller.setSelectedVoting();
     }
 
     private void showScheduleInMode(UIMode mode) throws IOException {
