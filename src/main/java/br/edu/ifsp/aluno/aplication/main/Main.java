@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.aplication.main;
 
 import br.edu.ifsp.aluno.aplication.controller.utils.ApplicationContext;
+import br.edu.ifsp.aluno.aplication.controller.utils.ExportMeetingMinutesPDF;
 import br.edu.ifsp.aluno.aplication.repository.inMemory.*;
 import br.edu.ifsp.aluno.aplication.repository.sqlite.DAO.*;
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
@@ -18,7 +19,9 @@ import br.edu.ifsp.aluno.domain.usecases.participant.*;
 import br.edu.ifsp.aluno.domain.usecases.schedule.*;
 import br.edu.ifsp.aluno.domain.usecases.vote.*;
 import br.edu.ifsp.aluno.domain.usecases.voting.*;
+import com.itextpdf.text.DocumentException;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 public class Main {
@@ -72,11 +75,13 @@ public class Main {
     public static FindVoteUseCase findVoteUseCase;
     public static DeleteVoteUseCase deleteVoteUseCase;*/
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DocumentException, FileNotFoundException {
 //        configureDependencies();
 //        populateFakeDatabase();
         simulate();
         WindowLoader.main(args);
+        ExportMeetingMinutesPDF exportMeetingMinutesPDF = new ExportMeetingMinutesPDF();
+        exportMeetingMinutesPDF.exportPDF(findMeetingMinutesUseCase.findOne(10).get());
     }
 
     /*private static void populateFakeDatabase() {

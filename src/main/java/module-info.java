@@ -3,6 +3,7 @@ module br.edu.ifsp.aluno {
     requires javafx.fxml;
     requires java.sql;
     requires sqlite.jdbc;
+    requires itextpdf;
 
     opens br.edu.ifsp.aluno.aplication.view to javafx.fxml;
     opens br.edu.ifsp.aluno.aplication.controller to javafx.fxml;
