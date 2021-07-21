@@ -3,6 +3,7 @@ package br.edu.ifsp.aluno.domain.entities.voting;
 import java.util.Arrays;
 
 public enum VoteResult {
+    IN_PROGRESS ("Em andamento"),
     APPROVED ("Aprovado"),
     REJECTED ("Reprovado"),
     DRAW ("Empate");
