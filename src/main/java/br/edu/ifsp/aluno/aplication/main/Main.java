@@ -1,16 +1,7 @@
 package br.edu.ifsp.aluno.aplication.main;
 
-import br.edu.ifsp.aluno.aplication.controller.utils.ApplicationContext;
-import br.edu.ifsp.aluno.aplication.controller.utils.ExportMeetingMinutesPDF;
-import br.edu.ifsp.aluno.aplication.repository.inMemory.*;
 import br.edu.ifsp.aluno.aplication.repository.sqlite.DAO.*;
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
-import br.edu.ifsp.aluno.domain.entities.comment.Comment;
-import br.edu.ifsp.aluno.domain.entities.group.Group;
-import br.edu.ifsp.aluno.domain.entities.inform.Inform;
-import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
-import br.edu.ifsp.aluno.domain.entities.participant.Participant;
-import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.usecases.comment.*;
 import br.edu.ifsp.aluno.domain.usecases.group.*;
 import br.edu.ifsp.aluno.domain.usecases.inform.*;
@@ -22,99 +13,12 @@ import br.edu.ifsp.aluno.domain.usecases.voting.*;
 import com.itextpdf.text.DocumentException;
 
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
 
 public class Main {
-    /*public static CreateParticipantUseCase createParticipantUseCase;
-    public static FindParticipantUseCase findParticipantUseCase;
-    public static DeleteParticipantUseCase deleteParticipantUseCase;
-    public static UpdateParticipantUseCase updateParticipantUseCase;
-
-    public static CreateGroupUseCase createGroupUseCase;
-    public static FindGroupUseCase findGroupUseCase;
-    public static DeleteGroupUseCase deleteGroupUseCase;
-    public static UpdateGroupUseCase updateGroupUseCase;
-    public static AddParticipantToGroupUseCase addParticipantToGroupUseCase;
-    public static RemoveParticipantFromGroupUseCase removeParticipantFromGroupUseCase;
-    public static RegisterMeetingMinutesToGroup registerMeetingMinutesToGroup;
-
-    public static CreateMeetingMinutesUseCase createMeetingMinutesUseCase;
-    public static FindMeetingMinutesUseCase findMeetingMinutesUseCase;
-    public static DeleteMeetingMinuteUseCase deleteMeetingMinuteUseCase;
-    public static UpdateMeetingMinutesUseCase updateMeetingMinutesUseCase;
-    public static ChangeStatusMeetingMinutesUseCase changeStatusMeetingMinutesUseCase;
-    public static IncludeInformToMeetingMinutesUseCase includeInformToMeetingMinutesUseCase;
-    public static IncludeLogoToMeetingMinuteUseCase includeLogoToMeetingMinuteUseCase;
-    public static IncludeScheduleToMeetingMinutesUseCase includeScheduleToMeetingMinutesUseCase;
-
-    public static CreateInformUseCase createInformUseCase;
-    public static DeleteInformUseCase deleteInformUseCase;
-    public static FindInformUseCase findInformUseCase;
-    public static UpdateInformUseCase updateInformUseCase;
-
-    public static CreateScheduleUseCase createScheduleUseCase;
-    public static FindScheduleUseCase findScheduleUseCase;
-    public static DeleteScheduleUseCase deleteScheduleUseCase;
-    public static UpdateScheduleUseCase updateScheduleUseCase;
-    public static RegisterVotingToScheduleUseCase registerVotingToScheduleUseCase;
-    public static RegisterCommentToScheduleUseCase registerCommentToScheduleUseCase;
-
-    public static CreateCommentUseCase createCommentUseCase;
-    public static UpdateCommentUseCase updateCommentUseCase;
-    public static DeleteCommentUseCase deleteCommentUseCase;
-    public static FindCommentUseCase findCommentUseCase;
-
-    public static CreateVotingUseCase createVotingUseCase;
-    public static UpdateVotingUseCase updateVotingUseCase;
-    public static DeleteVotingUseCase deleteVotingUseCase;
-    public static FindVotingUseCase findVotingUseCase;
-    public static RegisterVoteToVoting registerVoteToVoting;
-
-    public static CreateVoteUseCase createVoteUseCase;
-    public static UpdateVoteUseCase updateVoteUseCase;
-    public static FindVoteUseCase findVoteUseCase;
-    public static DeleteVoteUseCase deleteVoteUseCase;*/
-
     public static void main(String[] args) throws DocumentException, FileNotFoundException {
-//        configureDependencies();
-//        populateFakeDatabase();
-        simulate();
+        configureInjection();
         WindowLoader.main(args);
     }
-
-    /*private static void populateFakeDatabase() {
-        Participant participant1 = new Participant("João da Silva", "joao@gmail.com", "Professor(a)");
-        createParticipantUseCase.insert(participant1);
-        Participant participant2 = new Participant("Maria da Silva", "maria@gmail.com", "Doutor(a)");
-        createParticipantUseCase.insert(participant2);
-    }
-
-    private static void configureDependencies() {
-        MeetingMinutesDAO meetingMinutesDAO = new InMemoryMeetingMinutesDAO();
-        findMeetingMinutesUseCase = new FindMeetingMinutesUseCase(meetingMinutesDAO);
-
-        ParticipantDAO participantDAO = new InMemoryParticipantDAO();
-        createParticipantUseCase = new CreateParticipantUseCase(participantDAO);
-        findParticipantUseCase = new FindParticipantUseCase(participantDAO);
-        updateParticipantUseCase = new UpdateParticipantUseCase(participantDAO);
-        deleteParticipantUseCase = new DeleteParticipantUseCase(participantDAO);
-    }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public static CreateParticipantUseCase createParticipantUseCase;
     public static FindParticipantUseCase findParticipantUseCase;
@@ -167,18 +71,9 @@ public class Main {
     public static FindVoteUseCase findVoteUseCase;
     public static DeleteVoteUseCase deleteVoteUseCase;
 
+    // Testes feitos na memória
 
-
-
-    private static void simulate() {
-        configureInjection();
-
-
-
-
-        //configureInjection();
-
-        // TESTES COM PARTICIPANTES
+//    TESTES COM PARTICIPANTES
 //        Participant participant1 = new Participant("João", "joao@gmail.com", "Dr");
 //        Participant participant2 = new Participant("João2", "joao2@gmail.com", "Dr");
 //        Participant participant3 = new Participant("João3", "joao3@gmail.com", "Dr");
@@ -304,7 +199,6 @@ public class Main {
 //        ApplicationContext applicationContext = ApplicationContext.getInstance();
 //        applicationContext.setCurrentGroup(group1);
 
-    }
 
     private static void configureInjection() {
         ParticipantDAO participantDAO = new SqliteParticipantDAO();
@@ -376,7 +270,6 @@ public class Main {
         updateCommentUseCase = new UpdateCommentUseCase(commentDAO);
         deleteCommentUseCase = new DeleteCommentUseCase(commentDAO);
         findCommentUseCase = new FindCommentUseCase(commentDAO);
-
 
 
         VoteDAO voteDAO = new SqliteVoteDAO();

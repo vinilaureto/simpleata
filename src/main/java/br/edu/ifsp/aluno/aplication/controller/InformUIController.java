@@ -30,7 +30,6 @@ public class InformUIController {
         } else {
             updateInformUseCase.update(inform);
         }
-        System.out.println(meetingMinutes.getTitle());
         WindowLoader.setRoot("MeetingMinutesUI");
         MeetingMinutesUIController controller = (MeetingMinutesUIController) WindowLoader.getController();
         controller.setMeetingMinutes(meetingMinutes, UIMode.UPDATE);

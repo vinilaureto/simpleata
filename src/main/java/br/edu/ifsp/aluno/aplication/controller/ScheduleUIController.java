@@ -86,8 +86,6 @@ public class ScheduleUIController {
 
     @FXML
     private void initialize() {
-//        ApplicationContext applicationContext = ApplicationContext.getInstance();
-//        group = applicationContext.getCurrentGroup();
 
         if (schedule != null) {
             findVotingUseCase.findBySchedule(schedule).ifPresent(v -> voting = v);
@@ -135,12 +133,15 @@ public class ScheduleUIController {
         if (voting != null) {
             voting = findVotingUseCase.findBySchedule(schedule).get();
             List<Vote> votes = findVoteUseCase.findByVoting(voting);
+            voting.setVotes(votes);
             if (!votes.isEmpty()) {
                 votes.stream().iterator().next().setVoting(voting);
             }
             schedule.setVoting(voting);
             tableDataVote.clear();
             tableDataVote.addAll(votes);
+            voting.resolveVoting();
+            updateVotingUseCase.update(voting);
 
             if (!tableViewVotes.getItems().isEmpty()){
                 voting.resolveVoting();
@@ -375,7 +376,6 @@ public class ScheduleUIController {
         vote.setParticipant(participant);
         vote.setValue(cbVoteValue.getValue());
         vote.setId(createVoteUseCase.insert(vote));
-        registerVoteToVoting.registerVoteToVoting(vote, voting);
         loadDataAndShow();
     }
 
@@ -386,6 +386,7 @@ public class ScheduleUIController {
             selectedItem.setValue(cbVoteValue.getSelectionModel().getSelectedItem());
             updateVoteUseCase.update(selectedItem);
             loadDataAndShow();
+            btnAddVote.setVisible(true);
         }
     }
 
@@ -396,9 +397,6 @@ public class ScheduleUIController {
             cbParticipant.getSelectionModel().select(selectedItem.getParticipant());
             cbVoteValue.getSelectionModel().select(selectedItem.getValue());
         }
-        if (mouseEvent.isAltDown()) {
-            btnAddVote.setVisible(true);
-        }
     }
 
     public void removeVote(ActionEvent actionEvent) {
@@ -406,6 +404,7 @@ public class ScheduleUIController {
         if (selectedItem != null) {
             cbParticipant.getItems().add(selectedItem.getParticipant());
             deleteVoteUseCase.delete(selectedItem);
+            //unregisterVoteToVoting.unregisterVoteToVoting(selectedItem, voting);
             loadDataAndShow();
         }
     }

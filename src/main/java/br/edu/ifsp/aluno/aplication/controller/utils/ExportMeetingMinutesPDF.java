@@ -115,7 +115,11 @@ public class ExportMeetingMinutesPDF {
                     scheduleText.append(comment.getMessage() + " ");
                 }
 
-                Voting voting = findVotingUseCase.findBySchedule(schedule).get();
+                Voting voting = null;
+                if (findVotingUseCase.findBySchedule(schedule).isPresent()) {
+                    voting = findVotingUseCase.findBySchedule(schedule).get();
+                }
+
                 if (voting != null) {
                     String votingType;
                     List<Vote>votes = findVoteUseCase.findByVoting(voting);

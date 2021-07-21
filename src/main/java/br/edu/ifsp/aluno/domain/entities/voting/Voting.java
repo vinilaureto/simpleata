@@ -36,6 +36,13 @@ public class Voting {
         this.schedule = schedule;
     }
 
+    public Voting(Integer id, VoteResult result, List<Vote> votes, Schedule schedule) {
+        this.id = id;
+        this.result = result;
+        this.votes = votes;
+        this.schedule = schedule;
+    }
+
     public void registerVote(Vote vote) {
         votes.add(vote);
     }
@@ -87,7 +94,9 @@ public class Voting {
         this.schedule = schedule;
     }
 
-
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
+    }
 
     @Override
     public String toString() {

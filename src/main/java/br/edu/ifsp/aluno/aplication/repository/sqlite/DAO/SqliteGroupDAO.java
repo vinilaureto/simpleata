@@ -30,11 +30,11 @@ public class SqliteGroupDAO implements GroupDAO {
 
     @Override
     public Optional<Group> findByName(String name) {
-        String sql = "SELECT * FROM groups WHERE name = ?";
+        String sql = "SELECT * FROM groups WHERE name LIKE ?";
         Group group = null;
 
         try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            stmt.setString(1, name);
+            stmt.setString(1, "%" + name + "%");
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 group = resultSetIntoEntity(rs);

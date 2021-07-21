@@ -53,6 +53,7 @@ public class SqliteVotingDAO implements VotingDAO {
         return new Voting(
             rs.getInt("id"),
             VoteResult.toEnun(rs.getString("vote_result")),
+
             findScheduleUseCase.findOne(rs.getInt("id_schedule")).get()
         );
     }

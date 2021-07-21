@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.aluno.aplication.controller.ScheduleUIController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.aluno.aplication.controller.ScheduleUIController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Tópico da pauta:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
       <TextField fx:id="txtScheduleTopic" layoutX="14.0" layoutY="37.0" prefHeight="25.0" prefWidth="282.0" promptText="Tópico da pauta" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="37.0" />
@@ -39,12 +46,12 @@
       </TableView>
       <ComboBox fx:id="cbParticipant" disable="true" layoutX="15.0" layoutY="392.0" prefHeight="25.0" prefWidth="219.0" promptText="Participante" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="392.0" />
       <ComboBox fx:id="cbVoteValue" disable="true" layoutX="249.0" layoutY="392.0" prefHeight="25.0" prefWidth="169.0" promptText="Valor do voto" AnchorPane.leftAnchor="249.0" AnchorPane.topAnchor="392.0" />
-      <Button fx:id="btnAddVote" disable="true" layoutX="434.0" layoutY="392.0" mnemonicParsing="false" onAction="#addVote" prefHeight="25.0" prefWidth="155.0" text="Adicionar voto" AnchorPane.leftAnchor="434.0" AnchorPane.topAnchor="392.0" />
+      <Button fx:id="btnAddVote" disable="true" layoutX="434.0" layoutY="392.0" mnemonicParsing="false" onAction="#addVote" prefHeight="25.0" prefWidth="155.0" text="Salvar voto" AnchorPane.leftAnchor="434.0" AnchorPane.topAnchor="392.0" />
       <Button fx:id="btnEditVote" disable="true" layoutX="852.0" layoutY="588.0" mnemonicParsing="false" onAction="#editVote" prefHeight="25.0" prefWidth="175.0" text="Editar voto" AnchorPane.rightAnchor="173.0" AnchorPane.topAnchor="588.0" />
       <Button fx:id="btnRemoveVote" disable="true" layoutX="434.0" layoutY="588.0" mnemonicParsing="false" onAction="#removeVote" prefHeight="25.0" prefWidth="155.0" text="Remover voto" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="588.0" />
       <Button fx:id="btnSaveOrUpdate" disable="true" layoutX="499.0" layoutY="679.0" mnemonicParsing="false" onAction="#saveOrUpdate" prefHeight="25.0" prefWidth="89.0" text="Salvar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="12.0" />
       <Button fx:id="btnBackToPreviousScene" layoutX="401.0" layoutY="679.0" mnemonicParsing="false" onAction="#backToPreviousScene" prefHeight="25.0" prefWidth="89.0" text="Cancelar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="110.0" />
-      <Label layoutX="15.0" layoutY="588.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="588.0" />
-      <Label fx:id="lbVotingResult" disable="true" layoutX="142.0" layoutY="588.0" text="Resultado da votação:" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="588.0" />
+      <Label layoutX="15.0" layoutY="588.0" text="Resultado da votação:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="588.0" />
+      <Label fx:id="lbVotingResult" layoutX="142.0" layoutY="588.0" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="588.0" />
    </children>
 </AnchorPane>
