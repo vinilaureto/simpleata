@@ -16,7 +16,7 @@ public class Voting {
     private Schedule schedule;
 
     public Voting() {
-        this.result = VoteResult.IN_PROGRESS;
+        this.result = VoteResult.DRAW;
     }
 
     public Voting(VoteResult result, List<Vote> votes) {

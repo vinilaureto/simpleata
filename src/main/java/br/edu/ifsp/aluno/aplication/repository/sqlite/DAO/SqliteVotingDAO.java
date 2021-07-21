@@ -113,7 +113,6 @@ public class SqliteVotingDAO implements VotingDAO {
         return deleteByKey(voting.getId());
     }
 
-    // TODO: 19/07/2021 LOGO 
     @Override
     public Optional<Voting> findBySchedule(Schedule schedule) {
         String sql = "SELECT * FROM voting WHERE id_schedule = ?";

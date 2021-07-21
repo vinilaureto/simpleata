@@ -160,6 +160,7 @@ public class Main {
     public static DeleteVotingUseCase deleteVotingUseCase;
     public static FindVotingUseCase findVotingUseCase;
     public static RegisterVoteToVoting registerVoteToVoting;
+    public static UnregisterVoteToVoting unregisterVoteToVoting;
 
     public static CreateVoteUseCase createVoteUseCase;
     public static UpdateVoteUseCase updateVoteUseCase;
@@ -376,22 +377,27 @@ public class Main {
         deleteCommentUseCase = new DeleteCommentUseCase(commentDAO);
         findCommentUseCase = new FindCommentUseCase(commentDAO);
 
-        VotingDAO votingDAO = new SqliteVotingDAO();
-        createVotingUseCase = new CreateVotingUseCase(votingDAO);
-        updateVotingUseCase = new UpdateVotingUseCase(votingDAO);
-        deleteVotingUseCase = new DeleteVotingUseCase(votingDAO);
-        findVotingUseCase = new FindVotingUseCase(votingDAO);
-        registerVoteToVoting = new RegisterVoteToVoting(
-                findVoteUseCase,
-                findVotingUseCase,
-                updateVotingUseCase
-        );
+
 
         VoteDAO voteDAO = new SqliteVoteDAO();
         createVoteUseCase = new CreateVoteUseCase(voteDAO);
         updateVoteUseCase = new UpdateVoteUseCase(voteDAO);
         findVoteUseCase = new FindVoteUseCase(voteDAO);
         deleteVoteUseCase = new DeleteVoteUseCase(voteDAO);
+
+        VotingDAO votingDAO = new SqliteVotingDAO();
+        createVotingUseCase = new CreateVotingUseCase(votingDAO);
+        updateVotingUseCase = new UpdateVotingUseCase(votingDAO);
+        deleteVotingUseCase = new DeleteVotingUseCase(votingDAO);
+        findVotingUseCase = new FindVotingUseCase(votingDAO);
+        registerVoteToVoting = new RegisterVoteToVoting(
+                votingDAO,
+                voteDAO
+        );
+        unregisterVoteToVoting = new UnregisterVoteToVoting(
+                votingDAO,
+                voteDAO
+        );
     }
 
 }
