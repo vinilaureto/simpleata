@@ -115,7 +115,6 @@ public class CommentUIController {
         if (schedule == null) {
             throw new IllegalArgumentException("Schedule can not be null.");
         }
-        System.out.println(schedule);
         this.schedule = schedule;
     }
 }

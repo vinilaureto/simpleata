@@ -59,11 +59,11 @@ public class SqliteParticipantDAO implements ParticipantDAO {
 
     @Override
     public List<Participant> findByName(String name) {
-        String sql = "SELECT * FROM participant WHERE name = ?";
+        String sql = "SELECT * FROM participant WHERE name LIKE ?";
         List<Participant> participants = new ArrayList<>();
 
         try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            stmt.setString(1, name);
+            stmt.setString(1, "%" + name + "%");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Participant participant = resultSetIntoEntity(rs);

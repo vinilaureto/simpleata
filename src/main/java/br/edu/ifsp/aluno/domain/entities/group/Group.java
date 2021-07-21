@@ -80,7 +80,6 @@ public class Group {
         return participants;
     }
 
-//   todo: Verificar se precisa; parece que sim
     public void setParticipants(List<Participant> participants) {
         this.participants = participants;
     }
@@ -106,12 +105,7 @@ public class Group {
 
     @Override
     public String toString() {
-        return "Group{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", participants=" + participants +
-                ", meetingMinutesList=" + meetingMinutesList +
-                '}';
+        return getName();
     }
 
     @Override

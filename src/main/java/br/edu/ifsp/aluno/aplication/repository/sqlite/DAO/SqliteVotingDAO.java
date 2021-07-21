@@ -52,7 +52,8 @@ public class SqliteVotingDAO implements VotingDAO {
     private Voting resultSetIntoEntity(ResultSet rs) throws SQLException {
         return new Voting(
             rs.getInt("id"),
-            VoteResult.toEnun(rs.getString("value")),
+            VoteResult.toEnun(rs.getString("vote_result")),
+
             findScheduleUseCase.findOne(rs.getInt("id_schedule")).get()
         );
     }
@@ -90,9 +91,13 @@ public class SqliteVotingDAO implements VotingDAO {
 
     @Override
     public boolean deleteByKey(Integer id) {
+        //COMO NÃO FIZEMOS DELETE CASCADE, ESTOU PENSANDO NESSA SOLUÇÃO
         String sql = "DELETE FROM voting WHERE id = ?";
-        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+        String sql2 = "DELETE FROM vote WHERE id_voting = ?";
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql);
+            PreparedStatement stmt2 = ConnectionFactory.createPreparedStatement(sql2)) {
             stmt.setInt(1, id);
+            stmt2.setInt(1, id);
             stmt.execute();
             return true;
         }   catch (SQLException e) {
@@ -109,7 +114,6 @@ public class SqliteVotingDAO implements VotingDAO {
         return deleteByKey(voting.getId());
     }
 
-    // TODO: 19/07/2021 LOGO 
     @Override
     public Optional<Voting> findBySchedule(Schedule schedule) {
         String sql = "SELECT * FROM voting WHERE id_schedule = ?";

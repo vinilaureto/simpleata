@@ -18,19 +18,45 @@ import java.util.Optional;
 public class SqliteVoteDAO implements VoteDAO {
     @Override
     public Integer insert(Vote vote) {
-        String sql = "INSERT INTO vote (value, id_participant, id_voting) values (?, ?, ?)";
+        if (vote.getParticipant() == null) {
+            String sql = "INSERT INTO vote (value, id_voting) values (?, ?)";
 
-        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            stmt.setString(1, vote.getValue().toString());
-            stmt.setInt(2, vote.getParticipant().getId());
-            stmt.setInt(3, vote.getVoting().getId());
-            stmt.execute();
+            try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+                stmt.setString(1, vote.getValue().toString());
+                stmt.setInt(2, vote.getVoting().getId());
+                stmt.execute();
+                ResultSet resultSet = stmt.getGeneratedKeys();
+                return resultSet.getInt(1);
+            }   catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            String sql = "INSERT INTO vote (value, id_participant, id_voting) values (?, ?, ?)";
 
-            ResultSet resultSet = stmt.getGeneratedKeys();
-            return resultSet.getInt(1);
-        }   catch (SQLException e) {
-            e.printStackTrace();
+            try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+                stmt.setString(1, vote.getValue().toString());
+                stmt.setInt(2, vote.getParticipant().getId());
+                stmt.setInt(3, vote.getVoting().getId());
+                stmt.execute();
+                ResultSet resultSet = stmt.getGeneratedKeys();
+                return resultSet.getInt(1);
+            }   catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+//        String sql = "INSERT INTO vote (value, id_participant, id_voting) values (?, ?, ?)";
+//
+//        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
+//            stmt.setString(1, vote.getValue().toString());
+//            stmt.setInt(2, vote.getParticipant().getId());
+//            stmt.setInt(3, vote.getVoting().getId());
+//            stmt.execute();
+//            ResultSet resultSet = stmt.getGeneratedKeys();
+//            return resultSet.getInt(1);
+//        }   catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return null;
     }
 
@@ -52,11 +78,27 @@ public class SqliteVoteDAO implements VoteDAO {
     }
 
     private Vote resultSetIntoEntity(ResultSet rs) throws SQLException {
+//        MUDEI
+        Participant participant;
+        if (findParticipantUseCase.findOne(rs.getInt("id_participant")).isEmpty()) {
+            participant = null;
+        } else {
+            participant = findParticipantUseCase.findOne(rs.getInt("id_participant")).get();
+        }
+
+//        SE PRECISAR
+        Voting voting;
+        if (findVotingUseCase.findOne(rs.getInt("id_voting")).isEmpty()) {
+            voting = null;
+        } else {
+            voting = findVotingUseCase.findOne(rs.getInt("id_voting")).get();
+        }
+
         return new Vote(
                 rs.getInt("id"),
-                findParticipantUseCase.findOne(rs.getInt("id_participant")).get(),
+                participant,
                 VoteValue.toEnun(rs.getString("value")),
-                findVotingUseCase.findOne(rs.getInt("id_voting")).get()
+                voting
         );
     }
 
@@ -112,7 +154,6 @@ public class SqliteVoteDAO implements VoteDAO {
         return deleteByKey(vote.getId());
     }
 
-    // TODO: 19/07/2021 LOGO
     @Override
     public List<Vote> findByVoting(Voting voting) {
         String sql = "SELECT * FROM vote WHERE id_voting = ?";

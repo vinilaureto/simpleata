@@ -8,7 +8,6 @@ import br.edu.ifsp.aluno.domain.entities.vote.VoteValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Voting {
     private Integer id;
@@ -17,6 +16,7 @@ public class Voting {
     private Schedule schedule;
 
     public Voting() {
+        this.result = VoteResult.DRAW;
     }
 
     public Voting(VoteResult result, List<Vote> votes) {
@@ -33,6 +33,13 @@ public class Voting {
     public Voting(Integer id, VoteResult result, Schedule schedule) {
         this.id = id;
         this.result = result;
+        this.schedule = schedule;
+    }
+
+    public Voting(Integer id, VoteResult result, List<Vote> votes, Schedule schedule) {
+        this.id = id;
+        this.result = result;
+        this.votes = votes;
         this.schedule = schedule;
     }
 
@@ -87,7 +94,9 @@ public class Voting {
         this.schedule = schedule;
     }
 
-
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
+    }
 
     @Override
     public String toString() {

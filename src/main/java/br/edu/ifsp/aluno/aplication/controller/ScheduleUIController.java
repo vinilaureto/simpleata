@@ -1,23 +1,28 @@
 package br.edu.ifsp.aluno.aplication.controller;
 
-import br.edu.ifsp.aluno.aplication.controller.utils.ApplicationContext;
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.entities.comment.Comment;
-import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import br.edu.ifsp.aluno.domain.entities.vote.Vote;
+import br.edu.ifsp.aluno.domain.entities.vote.VoteValue;
 import br.edu.ifsp.aluno.domain.entities.voting.Voting;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static br.edu.ifsp.aluno.aplication.main.Main.*;
 
@@ -40,6 +45,8 @@ public class ScheduleUIController {
     @FXML
     private Button btnNewComment;
     @FXML
+    final private ToggleGroup tgVoting = new ToggleGroup();
+    @FXML
     private RadioButton rdNoVoting;
     @FXML
     private RadioButton rdVotingNamed;
@@ -52,14 +59,26 @@ public class ScheduleUIController {
     @FXML
     private TableColumn<Vote, String> cVoteVote;
     @FXML
+    private ComboBox<Participant> cbParticipant;
+    @FXML
+    private ComboBox<VoteValue> cbVoteValue;
+    @FXML
+    private Button btnAddVote;
+    @FXML
+    private Button btnEditVote;
+    @FXML
     private Button btnRemoveVote;
+    @FXML
+    private Button btnSaveOrUpdate;
     @FXML
     private Button btnBackToPreviousScene;
     @FXML
-    private Button btnSaveOrUpdate;
+    private Label lbVotingResult;
 
     private ObservableList<Comment> tableDataComment;
     private ObservableList<Vote> tableDataVote;
+    private ObservableList<Participant> comboParticipant;
+    private ObservableList<VoteValue> comboVoteValue;
 
     private Schedule schedule;
     private MeetingMinutes meetingMinutes;
@@ -67,10 +86,11 @@ public class ScheduleUIController {
 
     @FXML
     private void initialize() {
-//        ApplicationContext applicationContext = ApplicationContext.getInstance();
-//        group = applicationContext.getCurrentGroup();
 
         if (schedule != null) {
+            findVotingUseCase.findBySchedule(schedule).ifPresent(v -> voting = v);
+
+            schedule.setVoting(voting);
             bindTableViewToItemsList();
             bindColumnsToValueSource();
             loadDataAndShow();
@@ -84,7 +104,16 @@ public class ScheduleUIController {
         tableDataVote = FXCollections.observableArrayList();
         tableViewVotes.setItems(tableDataVote);
 
-        // TODO: 19/07/2021  Radio goes here
+        comboParticipant = FXCollections.observableArrayList();
+        cbParticipant.setItems(comboParticipant);
+
+        comboVoteValue = FXCollections.observableArrayList();
+        cbVoteValue.getItems().setAll(VoteValue.values());
+
+        rdNoVoting.setToggleGroup(tgVoting);
+        rdVotingNamed.setToggleGroup(tgVoting);
+        rdVotingAnonymous.setToggleGroup(tgVoting);
+
     }
 
     private void bindColumnsToValueSource() {
@@ -100,11 +129,26 @@ public class ScheduleUIController {
         tableDataComment.clear();
         tableDataComment.addAll(comments);
 
+        findVotingUseCase.findBySchedule(schedule).ifPresent(v -> voting = v);
         if (voting != null) {
+            voting = findVotingUseCase.findBySchedule(schedule).get();
             List<Vote> votes = findVoteUseCase.findByVoting(voting);
+            voting.setVotes(votes);
+            if (!votes.isEmpty()) {
+                votes.stream().iterator().next().setVoting(voting);
+            }
+            schedule.setVoting(voting);
             tableDataVote.clear();
             tableDataVote.addAll(votes);
+            voting.resolveVoting();
+            updateVotingUseCase.update(voting);
+
+            if (!tableViewVotes.getItems().isEmpty()){
+                voting.resolveVoting();
+                lbVotingResult.setText(voting.getResult().toString());
+            }
         }
+
     }
 
     public void setMeetingMinutesAndSchedule(MeetingMinutes meetingMinutes, Schedule schedule, UIMode mode) {
@@ -131,7 +175,6 @@ public class ScheduleUIController {
             throw new IllegalArgumentException("Meeting Minutes can not be null.");
         }
         this.meetingMinutes = meetingMinutes;
-        setEntityIntoView();
 
         if (mode == UIMode.UPDATE) {
             enableEditFields();
@@ -162,8 +205,7 @@ public class ScheduleUIController {
         rdVotingNamed.setDisable(false);
         rdVotingAnonymous.setDisable(false);
         tableViewVotes.setDisable(false);
-        btnRemoveVote.setDisable(false);
-        btnBackToPreviousScene.setDisable(false);
+        btnBackToPreviousScene.setVisible(false);
         btnSaveOrUpdate.setDisable(false);
     }
 
@@ -195,10 +237,6 @@ public class ScheduleUIController {
             schedule.setMeetingMinutes(meetingMinutes);
         }
     }
-
-    private void configureMode() {
-    }
-
 
     private void setEntityIntoView() {
         txtScheduleTopic.setText(schedule.getTopic());
@@ -244,11 +282,131 @@ public class ScheduleUIController {
 
     // *****************
     // VOTING MANAGEMENT
-    public void addVote(ActionEvent actionEvent) {
+    public void doNotVote(ActionEvent actionEvent) {
+        disableVotingFields();
+        deleteVotingIfItExists();
+        this.schedule.setVoting(voting);
+    }
 
+    private void deleteVotingIfItExists() {
+        if (voting != null) {
+            deleteVotingUseCase.delete(voting);
+            voting = null;
+            comboParticipant.clear();
+            loadDataAndShow();
+        }
+    }
+
+    private void disableVotingFields() {
+        cbParticipant.setDisable(true);
+        cbVoteValue.setDisable(true);
+        btnAddVote.setDisable(true);
+        btnEditVote.setDisable(true);
+        btnRemoveVote.setDisable(true);
+    }
+
+    public void voteNamed(ActionEvent actionEvent) {
+        enableNamedVotingFields();
+        deleteVotingIfItExists();
+        if (rdVotingNamed.isSelected()) {
+            setVotingIntoView();
+            if (!tableDataVote.isEmpty()) {
+                lbVotingResult.setDisable(false);
+            }
+        }
+        this.schedule.setVoting(voting);
+    }
+
+    private void enableNamedVotingFields() {
+        cbParticipant.setDisable(false);
+        cbVoteValue.setDisable(false);
+        btnAddVote.setDisable(false);
+        btnEditVote.setDisable(false);
+        btnRemoveVote.setDisable(false);
+    }
+
+    private void setVotingIntoView() {
+        if (voting == null) {
+            Voting voting = new Voting();
+            voting.setSchedule(schedule);
+            voting.setId(createVotingUseCase.insert(voting));
+            this.voting = voting;
+        }
+        List<Participant> leftToVote = findParticipantUseCase.findAllinGroup(meetingMinutes.getGroup());
+        List<Participant> hasVoted = tableViewVotes.getItems().stream().map(v -> v.getParticipant()).collect(Collectors.toList());
+        leftToVote.removeAll(hasVoted);
+        comboParticipant.addAll(leftToVote);
+        loadDataAndShow();
+    }
+
+    public void voteAnonymous(ActionEvent actionEvent) {
+        enableAnonymousVotingFields();
+        deleteVotingIfItExists();
+        if (rdVotingAnonymous.isSelected()) {
+            setVotingIntoView();
+        }
+        this.schedule.setVoting(voting);
+    }
+
+    private void enableAnonymousVotingFields() {
+        cbParticipant.setDisable(true);
+        cbVoteValue.setDisable(false);
+        btnAddVote.setDisable(false);
+        btnEditVote.setDisable(false);
+        btnRemoveVote.setDisable(false);
+    }
+
+    public void addVote(ActionEvent actionEvent) {
+        Participant selecetdParticipant = cbParticipant.getValue();
+        if (rdVotingNamed.isSelected() && selecetdParticipant != null) {
+            comboParticipant.remove(selecetdParticipant);
+            insertNewVote(selecetdParticipant);
+
+        }
+        int numberOfMaximumVotes = comboParticipant.size();
+        if (rdVotingAnonymous.isSelected() && numberOfMaximumVotes != 0) {
+            comboParticipant.remove(0);
+            insertNewVote(null);
+        }
+    }
+
+    private void insertNewVote(Participant participant) {
+        Vote vote = new Vote();
+        vote.setVoting(this.voting);
+        vote.setParticipant(participant);
+        vote.setValue(cbVoteValue.getValue());
+        vote.setId(createVoteUseCase.insert(vote));
+        loadDataAndShow();
+    }
+
+    public void editVote(ActionEvent actionEvent) {
+        Vote selectedItem = tableViewVotes.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            selectedItem.setParticipant(cbParticipant.getSelectionModel().getSelectedItem());
+            selectedItem.setValue(cbVoteValue.getSelectionModel().getSelectedItem());
+            updateVoteUseCase.update(selectedItem);
+            loadDataAndShow();
+            btnAddVote.setVisible(true);
+        }
+    }
+
+    public void getContent(MouseEvent mouseEvent) {
+        Vote selectedItem = tableViewVotes.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            btnAddVote.setVisible(false);
+            cbParticipant.getSelectionModel().select(selectedItem.getParticipant());
+            cbVoteValue.getSelectionModel().select(selectedItem.getValue());
+        }
     }
 
     public void removeVote(ActionEvent actionEvent) {
+        Vote selectedItem = tableViewVotes.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            cbParticipant.getItems().add(selectedItem.getParticipant());
+            deleteVoteUseCase.delete(selectedItem);
+            //unregisterVoteToVoting.unregisterVoteToVoting(selectedItem, voting);
+            loadDataAndShow();
+        }
     }
 
     private void showAlert(String title, String message, Alert.AlertType type){
@@ -257,6 +415,23 @@ public class ScheduleUIController {
         alert.setContentText(message);
         alert.setHeaderText(null);
         alert.showAndWait();
+    }
+
+    public void setSelectedVoting() {
+        if (voting == null) {
+            tgVoting.selectToggle(rdNoVoting);
+            disableVotingFields();
+        } else {
+            List<Vote> votes = findVoteUseCase.findByVoting(voting);
+            if (!votes.isEmpty() && votes.get(0).getParticipant() == null) {
+                tgVoting.selectToggle(rdVotingAnonymous);
+                enableAnonymousVotingFields();
+            } else if (!votes.isEmpty() && votes.get(0).getParticipant() != null) {
+                tgVoting.selectToggle(rdVotingNamed);
+                enableNamedVotingFields();
+            }
+        }
+        setVotingIntoView();
     }
 }
 

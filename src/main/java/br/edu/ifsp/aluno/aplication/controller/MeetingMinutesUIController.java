@@ -5,7 +5,6 @@ import br.edu.ifsp.aluno.domain.entities.group.Group;
 
 import br.edu.ifsp.aluno.domain.entities.inform.Inform;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
-import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import br.edu.ifsp.aluno.domain.entities.schedule.Schedule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,8 +48,6 @@ public class MeetingMinutesUIController {
     @FXML
     private Button btnNewSchedule;
     @FXML
-    private Button btnExportMeetingMinutes;
-    @FXML
     private Button btnBackToPreviousScreen;
     @FXML
     private Button btnSaveOrUpdate;
@@ -64,6 +61,8 @@ public class MeetingMinutesUIController {
 
     @FXML
     private void initialize() {
+        cbGroup.getItems().setAll(findGroupUseCase.findAll());
+
         if (meetingMinutes != null) {
             bindTableViewToItemsList();
             bindColumnsToValueSource();
@@ -84,7 +83,7 @@ public class MeetingMinutesUIController {
     }
 
     private void loadDataAndShow() {
-        cbGroup.getItems().setAll(findGroupUseCase.findAll());
+        cbGroup.setValue(meetingMinutes.getGroup());
 
         List<Inform> informList = findInformUseCase.findByMeetingMinutes(meetingMinutes);
         informObservableList.clear();
@@ -158,9 +157,6 @@ public class MeetingMinutesUIController {
         cbGroup.setValue(meetingMinutes.getGroup());
     }
 
-    public void exportMeetingMinutes(ActionEvent actionEvent) {
-    }
-
     // *****************
     // LOGO MANAGEMENT
 
@@ -208,6 +204,8 @@ public class MeetingMinutesUIController {
 
     public void editSchedule(ActionEvent actionEvent) throws IOException {
         showScheduleInMode(UIMode.UPDATE);
+        ScheduleUIController controller = (ScheduleUIController) WindowLoader.getController();
+        controller.setSelectedVoting();
     }
 
     private void showScheduleInMode(UIMode mode) throws IOException {

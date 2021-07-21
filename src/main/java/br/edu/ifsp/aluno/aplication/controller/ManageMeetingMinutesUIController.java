@@ -1,19 +1,24 @@
 package br.edu.ifsp.aluno.aplication.controller;
 
+import br.edu.ifsp.aluno.aplication.controller.utils.ExportMeetingMinutesPDF;
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.entities.group.Group;
 import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
+import com.itextpdf.text.DocumentException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import static br.edu.ifsp.aluno.aplication.main.Main.findMeetingMinutesUseCase;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,6 +34,10 @@ public class ManageMeetingMinutesUIController {
     private TableColumn<MeetingMinutes, String> cGroup;
     @FXML
     private TableColumn<MeetingMinutes, String> cStatus;
+    @FXML
+    private Button btnExportMeetingMinutes;
+    @FXML
+    private Label lbExportMeetingMinutes;
 
     private ObservableList<MeetingMinutes> tableData;
 
@@ -83,5 +92,14 @@ public class ManageMeetingMinutesUIController {
     }
 
     public void removeMeetingMinutes(ActionEvent actionEvent) {
+    }
+
+    public void exportMeetingMinutes(ActionEvent actionEvent) throws DocumentException, FileNotFoundException {
+        MeetingMinutes selectedItem = tableView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            ExportMeetingMinutesPDF exportMeetingMinutesPDF = new ExportMeetingMinutesPDF();
+            exportMeetingMinutesPDF.exportPDF(selectedItem);
+            lbExportMeetingMinutes.setText("Ata exportada em PDF");
+        }
     }
 }

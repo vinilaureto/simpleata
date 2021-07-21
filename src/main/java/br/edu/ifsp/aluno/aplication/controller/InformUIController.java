@@ -30,7 +30,6 @@ public class InformUIController {
         } else {
             updateInformUseCase.update(inform);
         }
-        System.out.println(meetingMinutes.getTitle());
         WindowLoader.setRoot("MeetingMinutesUI");
         MeetingMinutesUIController controller = (MeetingMinutesUIController) WindowLoader.getController();
         controller.setMeetingMinutes(meetingMinutes, UIMode.UPDATE);
@@ -60,10 +59,6 @@ public class InformUIController {
 
     private void setEntityIntoView() {
         txtInform.setText(inform.getDescription());
-    }
-
-    // TODO: ver ser precisa implementar, isso requer avaliar parâmetos talvez desencessários de outros métodos
-    private void configureViewMode() {
     }
 
     public void setMeetingMinutes(MeetingMinutes meetingMinutes) {

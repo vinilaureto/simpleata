@@ -17,9 +17,9 @@ public class DatabaseBuilder {
 
     private void buildTables() {
         try (Statement statement = ConnectionFactory.createStatement()) {
-            statement.addBatch(createXxxTable());
-            statement.addBatch(createXxxTable());
-            statement.addBatch(createXxxTable());
+            //statement.addBatch(createXxxTable());
+            //statement.addBatch(createXxxTable());
+            //statement.addBatch(createXxxTable());
             statement.executeBatch();
 
             System.out.println("Database successfully created.");
@@ -28,7 +28,8 @@ public class DatabaseBuilder {
         }
     }
 
-    private String createXxxTable() {           //todo: Fazer um método similar para cada tabela
+    // todo: Fazer um método similar para cada tabela
+    /*private String createXxxTable() {
         StringBuilder builder = new StringBuilder();
 
         builder.append("cada linha da criação da tabela");
@@ -39,5 +40,5 @@ public class DatabaseBuilder {
         System.out.println(builder.toString());
 
         return builder.toString();
-    }
+    }*/
 }

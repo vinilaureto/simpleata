@@ -1,7 +1,6 @@
 package br.edu.ifsp.aluno.aplication.controller;
 
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
-import br.edu.ifsp.aluno.domain.entities.meetingMinutes.MeetingMinutes;
 import br.edu.ifsp.aluno.domain.entities.participant.Participant;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
