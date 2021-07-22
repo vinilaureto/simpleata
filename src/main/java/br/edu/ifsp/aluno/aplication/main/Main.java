@@ -1,6 +1,7 @@
 package br.edu.ifsp.aluno.aplication.main;
 
 import br.edu.ifsp.aluno.aplication.repository.sqlite.DAO.*;
+import br.edu.ifsp.aluno.aplication.repository.sqlite.utils.DatabaseBuilder;
 import br.edu.ifsp.aluno.aplication.view.WindowLoader;
 import br.edu.ifsp.aluno.domain.usecases.comment.*;
 import br.edu.ifsp.aluno.domain.usecases.group.*;
@@ -17,7 +18,13 @@ import java.io.FileNotFoundException;
 public class Main {
     public static void main(String[] args) throws DocumentException, FileNotFoundException {
         configureInjection();
+        setupDatabase();
         WindowLoader.main(args);
+    }
+
+    private static void setupDatabase() {
+        DatabaseBuilder dbBuilder = new DatabaseBuilder();
+        dbBuilder.buildDatabaseIfMissing();
     }
 
     public static CreateParticipantUseCase createParticipantUseCase;
